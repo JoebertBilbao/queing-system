@@ -8,7 +8,7 @@ if (!isset($_SESSION['department'])) {
     exit;
 }
 
-$department = $_SESSION['department'];
+$department = $_SESSION['department'];      
 
 $sql = "SELECT id, name, email, course, year_level, status, semester, step_status FROM users WHERE step_status = 'step 2' AND course = ?";
 $stmt = $conn->prepare($sql);

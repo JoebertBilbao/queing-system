@@ -83,6 +83,18 @@
                                 <span class="nav-link-text">Student List</span>
                             </a>
                         </li>
+                           <!-- New nav item for Student Record -->
+                           <li class="nav-item">
+                            <a class="nav-link" href="studentrecord.php">
+                                <span class="nav-icon">
+                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M3 14s-1 0-1-1 1-4 4-4 4 3 4 4-1 1-1 1H3zm6.5-5.5a.5.5 0 0 1 .5-.5h.5a.5.5 0 0 1 .5.5v.5a.5.5 0 0 1-.5.5h-.5a.5.5 0 0 1-.5-.5v-.5z" />
+                                        <path d="M8 4a3 3 0 1 1 0 6 3 3 0 0 1 0-6z" />
+                                    </svg>
+                                </span>
+                                <span class="nav-link-text">Student Record</span>
+                            </a>
+                        </li>
                     </ul>
             </div>
             </li>
