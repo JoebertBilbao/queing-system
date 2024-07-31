@@ -1,8 +1,8 @@
 <?php
 
 $servername = "localhost";
-$username = "mccsystem";
-$password = "1Mccsystem";
+$username = "root";
+$password = "";
 $dbname = "mccsystem";
 
 // Create connection
