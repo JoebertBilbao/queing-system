@@ -44,7 +44,7 @@
       <a href="index.html" class="logo d-flex align-items-center me-auto">
         <!-- Uncomment the line below if you also wish to use an image logo -->
         <img src="assets/image/download.png" alt="">
-        <h1 class="sitename">MCC QUEUING SYSTEM</h1>
+        <h1 class="sitename">MCC QUEUEING SYSTEM</h1>
       </a>
 
       <nav id="navmenu" class="navmenu">
@@ -68,7 +68,7 @@
       <div class="container">
         <div class="row gy-4">
           <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center">
-            <h1>MCC QUEUING SYSTEM</h1>
+            <h1>MCC QUEUEING SYSTEM</h1>
             <p>Please Select Portal to proceed.</p>
             <div class="d-flex">
               <a href="portal.php" class="btn-get-started">Portal</a>
