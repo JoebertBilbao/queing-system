@@ -17,7 +17,7 @@ if (isset($_SESSION['email'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title> Login | ADMIN</title>
+    <title> Login | Admin</title>
     <link rel="stylesheet" href="style.css">
     <link href="assets/image/image1.png" rel="icon">
     <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">

@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Guidance Office</title>
+   <title>Admin | Dashboard</title>
 
     <!-- Meta -->
     <meta charset="utf-8">

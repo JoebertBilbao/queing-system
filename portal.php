@@ -62,19 +62,93 @@ $conn->close();
     <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-3d"></script> -->
 
     <style>
-    body { display: flex; flex-direction: row; min-height: 100vh; margin: 0; font-family: 'Roboto', sans-serif; }
-    .sidebar { width: 250px; background-color: rgba(255, 255, 255, 0.8); padding: 15px; height: 100vh; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); position: fixed; top: 0; left: 0; overflow-y: auto; }
-    .sidebar .nav-link { display: flex; align-items: center; padding: 10px; text-decoration: none; color: #333; border-radius: 5px; transition: background-color 0.3s ease; }
-    .sidebar .nav-link:hover { background-color: #e9ecef; }
-    .sidebar .nav-link i { margin-right: 10px; }
-    .sidebar .dashboard-link { margin-bottom: 20px; font-weight: bold; }
-    .main-content { margin-left: 270px; padding: 20px; flex: 1; }
-    .header { text-align: center; margin-bottom: 40px; padding: 20px 0; background-color: transparent; }
-    .header img { max-width: 100%; margin-bottom: 10px; opacity: 0.8; }
-    .header p { margin: 0; }
-    .charts-container { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
-    .chart-container { width: 100%; height: 400px; }
-    .chart-right { grid-column: 2; }
+ body {
+    display: flex;
+    flex-direction: row;
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background-image: url('assets/image/mccback.jpg'); /* Update this path */
+    background-size: cover; /* Adjust to cover the whole page */
+    background-attachment: fixed; /* Optional: to make the background fixed during scrolling */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Ensure the image doesn't repeat */
+}
+
+.sidebar {
+    width: 250px;
+    background-color: rgba(255, 255, 255, 0.8); /* Solid background color or slight transparency */
+    height: 100vh;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-y: auto; /* Ensure content in the sidebar is scrollable if necessary */
+    z-index: 1000; /* Ensure sidebar stays above other content */
+}
+
+.sidebar .nav-link {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    text-decoration: none;
+    color: #333;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar .nav-link:hover {
+    background-color: #e9ecef;
+}
+
+.sidebar .nav-link i {
+    margin-right: 10px;
+}
+
+.sidebar .dashboard-link {
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.main-content {
+    margin-left: 250px; /* Match the width of the sidebar */
+    padding: 20px;
+    flex: 1;
+    overflow-y: auto; /* Ensure content is scrollable if necessary */
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 20px 0;
+    background-color: transparent;
+}
+
+.header img {
+    max-width: 100%;
+    margin-bottom: 10px;
+    opacity: 0.8;
+}
+
+.header p {
+    margin: 0;
+}
+
+.charts-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.chart-container {
+    width: 100%;
+    height: 400px;
+}
+
+.chart-right {
+    grid-column: 2;
+}
+
     </style>
 </head>
 <body class="bg-light">
@@ -83,7 +157,7 @@ $conn->close();
             <img src="assets/image/download.png" alt="Madridejos Community College Logo" width="100" height="80">
             <p>MADRIDEJOS COMMUNITY COLLEGE</p>   
         </div>
-        <a href="admin/index.php" class="nav-link"><i class="bi bi-calendar-check"></i>ADMIN</a>
+        <a href="admin/index.php" class="nav-link"><i class="bi bi-person-lock"></i>Admin Dashboard</a>
         <a href="guidance/index.php" class="nav-link"><i class="bi bi-calendar-check"></i> Guidance Office</a>
         <a href="head/index.php" class="nav-link"><i class="bi bi-person-circle"></i> Department Head</a>
         <a href="registrar/index.php" class="nav-link"><i class="bi bi-file-earmark-text"></i> Registrar Office</a>
