@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 26, 2024 at 05:18 AM
+-- Generation Time: Aug 02, 2024 at 06:07 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -20,6 +20,26 @@ SET time_zone = "+00:00";
 --
 -- Database: `mccsystem`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admin`
+--
+
+CREATE TABLE `admin` (
+  `id` int(11) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `admin`
+--
+
+INSERT INTO `admin` (`id`, `email`, `password`, `created_at`) VALUES
+(1, 'admin@gmail.com', '$2y$10$pW0sskaQoHP6hDiAgNn/zuyFWjfuj98hkBGjDyDF1SOchTxEXXHI.', '2024-08-03 06:22:05');
 
 -- --------------------------------------------------------
 
@@ -370,46 +390,6 @@ INSERT INTO `ssc` (`id`, `email`, `password`, `registration_date`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `transactions`
---
-
-CREATE TABLE `transactions` (
-  `id` int(11) NOT NULL,
-  `product_name` varchar(255) NOT NULL,
-  `customer_name` varchar(255) NOT NULL,
-  `order_date` datetime NOT NULL,
-  `order_status` enum('Paid','Pending') NOT NULL,
-  `order_total` decimal(10,2) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `transactions`
---
-
-INSERT INTO `transactions` (`id`, `product_name`, `customer_name`, `order_date`, `order_status`, `order_total`, `created_at`) VALUES
-(1, 'Hey', 'Joebert', '2024-07-02 04:06:00', 'Pending', 450.00, '2024-07-04 07:06:53'),
-(4, 'sad', 'sad', '2024-07-18 15:10:00', 'Paid', 34.00, '2024-07-04 07:10:16');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `uniform_requests`
---
-
-CREATE TABLE `uniform_requests` (
-  `id` int(11) NOT NULL,
-  `firstname` varchar(50) NOT NULL,
-  `lastname` varchar(50) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `uniform_size` varchar(10) NOT NULL,
-  `message` text DEFAULT NULL,
-  `submission_date` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `users`
 --
 
@@ -431,16 +411,13 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `year_level`, `status`, `semester`, `email`, `password`, `course`, `created_at`, `step_status`) VALUES
-(18, 'Joebert Bilbao', '1st_year', 'new_student', '1st_semester', 'jbbilbao80@gmail.com', '$2y$10$Nc59WVK6P2hSK9qhRwroe.2QsmX.mAqoK/.8ujVtYcEts1pj/b2o.', 'bsit', '2024-07-21 22:59:00', 'Completed'),
-(32, 'Joshua', '1st_year', 'new_student', '1st_semester', 'joshua@gmail.com', '$2y$10$hPQ5zZH/hTliZU/swAzpHe0.0D9wdnuzO76txgIiUWNLLtq9wDNY6', 'bsit', '2024-07-25 23:44:51', 'Completed'),
-(33, 'mercy', '1st_year', 'new_student', '1st_semester', 'mercy@gmail.com', '$2y$10$QwaZskviXXIS.RzzxnV85OYGn0gU1OwKLPYytIIhqCxHq.Ob00Hcm', 'bsit', '2024-07-26 00:09:09', 'Completed'),
-(34, 'test', '1st_year', 'new_student', '1st_semester', 'test@gmail.com', '$2y$10$v5LFVSfEOt9HjrpBZ0pas.GY7QrsYv4I4cadV70Kzhf7Vp7cgOj1.', 'bsit', '2024-07-26 00:27:34', 'Completed'),
-(35, 'testing', '1st_year', 'new_student', '1st_semester', 'testing@gmail.com', '$2y$10$4WLs9J/OJLoKjhVxli.je.8rc.XadbezEzcUF3wrHqK060hMg93G2', 'bsit', '2024-07-26 01:07:14', 'Completed'),
-(36, 'alfred', '1st_year', 'new_student', '1st_semester', 'alfred@gmail.com', '$2y$10$qcci6JahWlcSheVH4xdyROBM4D/Yu4anzFnCI7C7aEIOHvotpuyyC', 'bsit', '2024-07-26 02:03:55', 'Completed'),
-(37, 'ikaw lang', '1st_year', 'new_student', '1st_semester', 'ikaw@gmail.com', '$2y$10$7sFD.5m4hBeF95aT6YvAWexZdy6S4OtzrXDX1BejvhyFXRO.P7926', 'bsit', '2024-07-26 02:26:23', 'step 5'),
-(38, 'edong', '1st_year', 'new_student', '1st_semester', 'edong@gmail.com', '$2y$10$espraICTZn5OCHAm1ItOselRSN4wmp3WN2ivZKRajO81n3QtkJbpu', 'bsit', '2024-07-26 02:31:19', 'step 5'),
-(39, 'hekdog', '1st_year', 'new_student', '1st_semester', 'hekdog@gmail.com', '$2y$10$IvU6vEIdiQpXvXGiQABgdOeZINGES9hA0YQX6ZwHIhveJad811A5q', 'bsit', '2024-07-26 02:35:09', 'step 7'),
-(40, 'lastly', '1st_year', 'new_student', '1st_semester', 'last@gmail.com', '$2y$10$Tmh3QuUOGir4v6qoQgGTt.Qt65nfmkeKAWu4URTdtysB1j3cybUfy', 'bsit', '2024-07-26 02:57:12', 'step 4');
+(44, 'Joebert Bilbao', '1st_year', 'new_student', '1st_semester', 'jbbilbao80@gmail.com', '$2y$10$d1ohlQfEcKWVVNUhCzh9v.nGnInjK5WXSF4Lr9ccVp3PehXLWOatS', 'bsit', '2024-07-30 16:00:55', 'step 4'),
+(45, 'jonas dabalos', '1st_year', 'new_student', '1st_semester', 'jonas@gmail.com', '$2y$10$FTwL22Mv9UAKbHoliS1gruxXhmOfiSTikfvWkzkz1PFArpgbYBkGa', 'bshm', '2024-07-30 21:35:18', 'not started'),
+(46, 'jasmine carascal', '1st_year', 'new_student', '1st_semester', 'jasmine@gmail.com', '$2y$10$XOhtL.W9k2Jz2uVQxQIazezk/8hRUqayo5tZW3/frD0pIOsrcA3US', 'beed', '2024-07-30 21:36:10', 'step 2'),
+(47, 'ryan palana', '1st_year', 'new_student', '1st_semester', 'ryan@gmail.com', '$2y$10$2SWXN77fZJ0pPnkL4EOPzecdCJEHrdjumaTl9Wlrs1FXJc2tV29r6', 'bsed', '2024-07-30 21:37:08', 'not started'),
+(48, 'joe gwapo', '1st_year', 'new_student', '1st_semester', 'joe@gmail.com', '$2y$10$rtG09trhTHdwKMI19WZtsurBygVgO3FAn9yhJalrYfmsRfo9AMfhW', 'beed', '2024-07-30 21:37:43', 'not started'),
+(49, 'bryan james desuyo', '1st_year', 'new_student', '1st_semester', 'james@gmail.com', '$2y$10$4TR4QaH9Aw8ss4nJhV07lOp1iEMN3AXJGNdeXCe/rE1JBtKRwXlFe', 'bsit', '2024-07-30 21:38:22', 'not started'),
+(50, 'james', '1st_year', 'new_student', '1st_semester', 'jamesgwapo@gmail.com', '$2y$10$ptAbzJcAFkfIx7SuAS9jn.GnFOX9aW9uWbSIxXNFxg4z1khpHlFVu', 'bsba', '2024-07-30 21:49:17', 'in process');
 
 -- --------------------------------------------------------
 
@@ -474,11 +451,26 @@ INSERT INTO `user_sessions` (`id`, `session_id`, `user_id`, `expires`) VALUES
 (12, '914304e155d25d64e25be270f44997a3', 38, '2024-08-25 04:33:11'),
 (13, '4cd2c89b653b007aadd43b3c92d596f7', 39, '2024-08-25 04:35:13'),
 (14, 'f5b2d75644c6193f000ef05acbc67c3d', 40, '2024-08-25 04:57:17'),
-(15, '53b9b4b3bc87a06df8d808bed04b5458', 40, '2024-08-25 04:57:48');
+(15, '53b9b4b3bc87a06df8d808bed04b5458', 40, '2024-08-25 04:57:48'),
+(16, '90974d8586e1410e7dec35083e675826', 18, '2024-08-25 22:40:59'),
+(17, 'fd88d5fac4106ad8e41180b30c7152d8', 18, '2024-08-25 22:42:08'),
+(18, '55aa44d4bb606fdd601c96aa145ff922', 43, '2024-08-27 23:10:04'),
+(19, '3919b247ad648b632b289e69c670fc21', 44, '2024-08-29 18:01:03'),
+(20, 'e1b25f7a0fef682b0ef94c6364d3fd8e', 44, '2024-08-29 23:06:21'),
+(21, 'b225921858526f706a03013165180903', 44, '2024-08-29 23:10:58'),
+(22, '523efb6484e9c5d679ebd6e783b12fea', 46, '2024-08-29 23:40:50'),
+(23, 'da6659c3749cdec4b8dd5eecce68a8d5', 50, '2024-08-30 00:05:30');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`);
 
 --
 -- Indexes for table `admins`
@@ -574,18 +566,6 @@ ALTER TABLE `ssc`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `transactions`
---
-ALTER TABLE `transactions`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `uniform_requests`
---
-ALTER TABLE `uniform_requests`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -602,6 +582,12 @@ ALTER TABLE `user_sessions`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `admin`
+--
+ALTER TABLE `admin`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `admins`
@@ -694,28 +680,16 @@ ALTER TABLE `ssc`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `transactions`
---
-ALTER TABLE `transactions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `uniform_requests`
---
-ALTER TABLE `uniform_requests`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT for table `user_sessions`
 --
 ALTER TABLE `user_sessions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

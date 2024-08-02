@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             // Redirect to dashboard or wherever needed
             echo "<script>
-                    window.location.href = '../admin/index.php';
+                    window.location.href = '../admin/admin.php';
                   </script>";
             exit;
         } else {

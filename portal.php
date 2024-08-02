@@ -57,9 +57,9 @@ $conn->close();
     <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
     <link href="assets/css/main.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-3d"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-3d"></script> -->
 
     <style>
     body { display: flex; flex-direction: row; min-height: 100vh; margin: 0; font-family: 'Roboto', sans-serif; }
@@ -83,7 +83,7 @@ $conn->close();
             <img src="assets/image/download.png" alt="Madridejos Community College Logo" width="100" height="80">
             <p>MADRIDEJOS COMMUNITY COLLEGE</p>   
         </div>
-        <a href="admin/index.php" class="nav-link"><i class="bi bi-calendar-check"></i> Dashboard</a>
+        <a href="admin/index.php" class="nav-link"><i class="bi bi-calendar-check"></i>ADMIN</a>
         <a href="guidance/index.php" class="nav-link"><i class="bi bi-calendar-check"></i> Guidance Office</a>
         <a href="head/index.php" class="nav-link"><i class="bi bi-person-circle"></i> Department Head</a>
         <a href="registrar/index.php" class="nav-link"><i class="bi bi-file-earmark-text"></i> Registrar Office</a>
@@ -93,7 +93,7 @@ $conn->close();
         <a href="cor/index.php" class="nav-link"><i class="bi bi-file-earmark-code"></i> COR</a>
         <a href="./index.php" class="nav-link"><i class="bi bi-house-door"></i> Back to Home</a>
     </div>
-    <div class="main-content">
+    <!-- <div class="main-content">
         <div class="charts-container">
             <div class="chart-container">
                 <canvas id="courseChart"></canvas>
@@ -336,7 +336,7 @@ $conn->close();
             }
         }
     });
-</script>
+</script> -->
 
     </div>
 </body>
