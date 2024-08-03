@@ -83,6 +83,7 @@ $conn->close();
             <img src="assets/image/download.png" alt="Madridejos Community College Logo" width="100" height="80">
             <p>MADRIDEJOS COMMUNITY COLLEGE</p>   
         </div>
+        <a href="admin/index.php" class="nav-link"><i class="bi bi-calendar-check"></i> Dashboard</a>
         <a href="guidance/index.php" class="nav-link"><i class="bi bi-calendar-check"></i> Guidance Office</a>
         <a href="head/index.php" class="nav-link"><i class="bi bi-person-circle"></i> Department Head</a>
         <a href="registrar/index.php" class="nav-link"><i class="bi bi-file-earmark-text"></i> Registrar Office</a>
