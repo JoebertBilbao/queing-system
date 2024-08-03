@@ -162,7 +162,7 @@
     </div>
     <div class="main-content">
         <div class="login-box">
-            <h2>Login as Admin</h2><p>Welcome Administrators</p>
+            <h2>Login as Admin to View The Dashboard</h2><p>Welcome Administrators.</p>
             <!-- Add form elements if needed here -->
         </div>
     </div>
