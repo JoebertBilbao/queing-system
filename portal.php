@@ -20,7 +20,7 @@
     min-height: 100vh;
     margin: 0;
     font-family: 'Roboto', sans-serif;
-    background-image: url('assets/image/mccback.jpg'); /* Update this path */
+    background-image: url('assets/image/bluredd.png'); /* Update this path */
     background-size: cover; /* Adjust to cover the whole page */
     background-attachment: fixed; /* Optional: to make the background fixed during scrolling */
     background-position: center; /* Center the image */
