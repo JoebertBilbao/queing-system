@@ -1,9 +1,9 @@
 <?php
 
-$servername = "localhost";
-$username = "mccsystem";
+$servername = "127.0.0.1";
+$username = "u510162695_mccsystem";
 $password = "1Mccsystem";
-$dbname = "mccsystem";
+$dbname = "u510162695_mccsystem";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
