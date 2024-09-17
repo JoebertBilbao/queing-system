@@ -1,3 +1,68 @@
+<?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+require 'vendor/autoload.php';
+include 'database/db.php';
+$msg = "";
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $name = $conn->real_escape_string($_POST['name']);
+    $year_level = $conn->real_escape_string($_POST['year_level']);
+    $status = $conn->real_escape_string($_POST['status']);
+    $semester = $conn->real_escape_string($_POST['semester']);
+    $email = $conn->real_escape_string($_POST['email']);
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    $course = $conn->real_escape_string($_POST['course']);
+    $created_at = date('Y-m-d H:i:s');
+    $step_status = 'pending'; // Assuming a default status
+    $code = $conn->real_escape_string(md5(rand())); // This might be redundant with verification_code
+
+    if (mysqli_num_rows(mysqli_query($conn, "SELECT * FROM users WHERE email='{$email}'")) > 0) {
+        $msg = "<div class='alert alert-danger'>{$email} - This email already exists.</div>";
+    } else {    
+        $sql = "INSERT INTO users (name, year_level, status, semester, email, password, course, created_at, step_status, code) 
+                VALUES ('$name', '$year_level', '$status', '$semester', '$email', '$password', '$course', '$created_at', '$step_status', '$code')";
+        $result = mysqli_query($conn, $sql);
+
+        if ($result) {
+            echo "<div style='display: none;'>";
+            $mail = new PHPMailer(true);
+
+            try {
+                $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+                $mail->isSMTP();
+                $mail->Host       = 'smtp.gmail.com';
+                $mail->SMTPAuth   = true;
+                $mail->Username   = 'jbbilbao80@gmail.com'; // Replace with your email
+                $mail->Password   = 'axgdjelbsziuzvxa'; // Replace with your app password
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+                $mail->Port       = 465;
+
+                $mail->setFrom('jbbilbao80@gmail.com', 'Madridejos Community College'); // Replace with your email and name
+                $mail->addAddress($email);
+
+                $mail->isHTML(true);
+                $mail->Subject = 'Email Verification';
+                $mail->Body    = 'Here is the verification link <b><a href="http://mccqueueingsystem.com/mccsystem/?verification='.$code.'">http://mccqueueingsystem.com/mccsystem/?verification='.$code.'</a></b>';
+
+                $mail->send();
+                echo 'Message has been sent';
+            } catch (Exception $e) {
+                echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+            }
+            echo "</div>";
+            $msg = "<div class='alert alert-info'>We've sent a verification link to your email address.</div>";
+        } else {
+            $msg = "<div class='alert alert-danger'>Something went wrong.</div>";
+        }
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,6 +75,8 @@
     <!-- <link rel="stylesheet" href="style.css"> -->
     <link href="assets/image/images.png" rel="icon">
     <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-o4XBMDyA6I3jFq70N4o+ZSHSHY8fP+tZnCZ4EXWvHo6MnW+spt9u9N5+M3gybgY6" crossorigin="anonymous">
+
     <style>
         body {
             margin: 0;
@@ -174,7 +241,8 @@
     <div class="container">
         <div class="registration">
             <header>Signup</header>
-            <form action="action/process_signup.php" method="post" class="form">
+            <?php echo $msg; ?>
+            <form  method="post" class="form">
                 <div class="form-group">
                     <label for="name">Full Name</label>
                     <input type="text" name="name" id="name" placeholder="Enter your fullname">
@@ -240,6 +308,8 @@
 
     <!-- Bootstrap Icons CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-uDyQso9LD2TCkAsPtASgZmEd6hfA5f/C6sEb+rRZKD+ljbV8qKoFVpqzUjK7m18a" crossorigin="anonymous"></script>
+
 
     <!-- JavaScript to handle password toggle -->
     <script>
