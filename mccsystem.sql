@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 02, 2024 at 06:07 PM
+-- Generation Time: Sep 17, 2024 at 05:13 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -29,17 +29,19 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `admin` (
   `id` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `OTP` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`id`, `email`, `password`, `created_at`) VALUES
-(1, 'admin@gmail.com', '$2y$10$pW0sskaQoHP6hDiAgNn/zuyFWjfuj98hkBGjDyDF1SOchTxEXXHI.', '2024-08-03 06:22:05');
+INSERT INTO `admin` (`id`, `name`, `email`, `password`, `created_at`, `OTP`) VALUES
+(1, '', 'admin@gmail.com', '$2y$10$pW0sskaQoHP6hDiAgNn/zuyFWjfuj98hkBGjDyDF1SOchTxEXXHI.', '2024-08-03 06:22:05', '0');
 
 -- --------------------------------------------------------
 
@@ -74,17 +76,19 @@ INSERT INTO `admins` (`id`, `email`, `password`, `created_at`) VALUES
 
 CREATE TABLE `clinic` (
   `id` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL,
   `email` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `registration_date` timestamp NOT NULL DEFAULT current_timestamp()
+  `registration_date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `OTP` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `clinic`
 --
 
-INSERT INTO `clinic` (`id`, `email`, `password`, `registration_date`) VALUES
-(4, 'clinic1@gmail.com', '$2y$10$wV2hY4DQxhf/Avv/b0xMn.lcS4YJaE9KGt..m4jTdqKG074GqUPam', '2024-07-23 06:55:07');
+INSERT INTO `clinic` (`id`, `name`, `email`, `password`, `registration_date`, `OTP`) VALUES
+(4, 'testinglngto', 'clinic1@gmail.com', '$2y$10$JSuQQgbCCwqsQ.VrxQ1oYOUYvZzX.UfzddX.HIq5frjyHb6q5n4Uu', '2024-07-23 06:55:07', '0');
 
 -- --------------------------------------------------------
 
@@ -122,18 +126,20 @@ INSERT INTO `clinic_forms` (`id`, `fullname`, `dob`, `contact`, `email`, `addres
 
 CREATE TABLE `cor` (
   `id` int(11) NOT NULL,
+  `name` varchar(250) NOT NULL,
   `email` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `registration_date` timestamp NOT NULL DEFAULT current_timestamp()
+  `registration_date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `OTP` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `cor`
 --
 
-INSERT INTO `cor` (`id`, `email`, `password`, `registration_date`) VALUES
-(1, 'itlaboratory@gmail.com', '$2y$10$sVwonExKWsGCYTcHTTq5nexg8eN5zfhrk1sx/89leeJ0HHwS7bHwG', '2024-07-14 18:09:26'),
-(2, 'cor123@gmail.com', '$2y$10$C2NbKsJzhIkpk0bockrHtezssgpxS5l71PNEyh20z8GGvvHpv.hLC', '2024-07-22 06:20:37');
+INSERT INTO `cor` (`id`, `name`, `email`, `password`, `registration_date`, `OTP`) VALUES
+(1, 'asd asda', 'itlaboratory@gmail.com', '$2y$10$sVwonExKWsGCYTcHTTq5nexg8eN5zfhrk1sx/89leeJ0HHwS7bHwG', '2024-07-14 18:09:26', ''),
+(2, 'asd', 'cor123@gmail.com', '$2y$10$C2NbKsJzhIkpk0bockrHtezssgpxS5l71PNEyh20z8GGvvHpv.hLC', '2024-07-22 06:20:37', '');
 
 -- --------------------------------------------------------
 
@@ -166,24 +172,26 @@ INSERT INTO `cor_forms` (`id`, `firstname`, `lastname`, `email`, `need`, `messag
 
 CREATE TABLE `department` (
   `id` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL,
   `email` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `department` varchar(50) NOT NULL
+  `department` varchar(50) NOT NULL,
+  `OTP` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `department`
 --
 
-INSERT INTO `department` (`id`, `email`, `password`, `department`) VALUES
-(4, 'bsit@gmail.com', '$2y$10$mTWO5OVnFMmC1zziLQvq4eLa2y/KMRPphEoGKiJ82Mo/tmlrM..vi', 'BSIT'),
-(5, 'bshm@gmail.com', '$2y$10$txN0ochTjKDwyWH8Z4Mw7uYol7NY6fWk2v.zaB4oYnqYxnRaYPCUq', 'BSHM'),
-(6, 'bsed@gmail.com', '$2y$10$EM2Qsv4XmC87QBECl4zH.uMm.oEEfaJBKtXn/UgGCLnbgZFCvkzk2', 'BEED'),
-(7, 'bsit123@gmail.com', '$2y$10$BWg6H0IEYRsvGnpz6XXWiehFjXepE8Pnt9bWc4qYm.FccpOtThiwy', 'BSIT'),
-(8, 'bshm123@gmail.com', '$2y$10$ag1ErqgHc.xWjA930quV4eTERsV.6K9h91Sl6869lxA4UHmmpzR2G', 'BSHM'),
-(9, 'bsed123@gmail.com', '$2y$10$3em0sy2cgAiMcK9X4vkVpOMRLT5yl9VMa8LBeVh8duer4lDE4iYUm', 'BSED'),
-(10, 'bsba123@gmail.com', '$2y$10$TOsvGCVYcs2j5ktaQAo7IOyK/YdFVFMDmmcyrYpwbv3dPqeG25wmq', 'BSBA'),
-(11, 'beed123@gmail.com', '$2y$10$1iUunu3SgXpsXMejeuCGs.6c4kh5OTWCLDeOv8L95wVc/LcKzm.6q', 'BEED');
+INSERT INTO `department` (`id`, `name`, `email`, `password`, `department`, `OTP`) VALUES
+(4, '0', 'bsit@gmail.com', '$2y$10$mTWO5OVnFMmC1zziLQvq4eLa2y/KMRPphEoGKiJ82Mo/tmlrM..vi', 'BSIT', '0'),
+(5, '0', 'bshm@gmail.com', '$2y$10$txN0ochTjKDwyWH8Z4Mw7uYol7NY6fWk2v.zaB4oYnqYxnRaYPCUq', 'BSHM', '0'),
+(6, '0', 'bsed@gmail.com', '$2y$10$EM2Qsv4XmC87QBECl4zH.uMm.oEEfaJBKtXn/UgGCLnbgZFCvkzk2', 'BEED', '0'),
+(7, '0', 'bsit123@gmail.com', '$2y$10$BWg6H0IEYRsvGnpz6XXWiehFjXepE8Pnt9bWc4qYm.FccpOtThiwy', 'BSIT', '0'),
+(8, '0', 'bshm123@gmail.com', '$2y$10$ag1ErqgHc.xWjA930quV4eTERsV.6K9h91Sl6869lxA4UHmmpzR2G', 'BSHM', '0'),
+(9, '0', 'bsed123@gmail.com', '$2y$10$3em0sy2cgAiMcK9X4vkVpOMRLT5yl9VMa8LBeVh8duer4lDE4iYUm', 'BSED', '0'),
+(10, '0', 'bsba123@gmail.com', '$2y$10$TOsvGCVYcs2j5ktaQAo7IOyK/YdFVFMDmmcyrYpwbv3dPqeG25wmq', 'BSBA', '0'),
+(11, '0', 'beed123@gmail.com', '$2y$10$1iUunu3SgXpsXMejeuCGs.6c4kh5OTWCLDeOv8L95wVc/LcKzm.6q', 'BEED', '0');
 
 -- --------------------------------------------------------
 
@@ -242,16 +250,18 @@ INSERT INTO `enroll_requests` (`id`, `firstname`, `lastname`, `email`, `need`, `
 
 CREATE TABLE `guidance` (
   `id` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL
+  `password` varchar(255) NOT NULL,
+  `OTP` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `guidance`
 --
 
-INSERT INTO `guidance` (`id`, `email`, `password`) VALUES
-(1, 'guidance@gmail.com', '$2y$10$AbuxWEPB26juHwWeKT2HHuuSpCv87qXiI/ilsv2vLfU14AIlBVi9q');
+INSERT INTO `guidance` (`id`, `name`, `email`, `password`, `OTP`) VALUES
+(1, 'dante', 'guidance@gmail.com', '$2y$10$AbuxWEPB26juHwWeKT2HHuuSpCv87qXiI/ilsv2vLfU14AIlBVi9q', '0');
 
 -- --------------------------------------------------------
 
@@ -261,18 +271,20 @@ INSERT INTO `guidance` (`id`, `email`, `password`) VALUES
 
 CREATE TABLE `mccea` (
   `id` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL,
   `email` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `registration_date` timestamp NOT NULL DEFAULT current_timestamp()
+  `registration_date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `OTP` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `mccea`
 --
 
-INSERT INTO `mccea` (`id`, `email`, `password`, `registration_date`) VALUES
-(1, 'mccea@gmail.com', '$2y$10$LTEIPOMSeEkjl5QBf3B31usZGuh3Rfpqrz/eRsMuKuX12te4CM1de', '2024-07-14 18:04:00'),
-(2, 'mccea123@gmail.com', '$2y$10$d.SXuUCQWQASgkocc3gGC.G4nXi2DylTdP5vXaokiAc32FYWVBjBG', '2024-07-22 06:15:59');
+INSERT INTO `mccea` (`id`, `name`, `email`, `password`, `registration_date`, `OTP`) VALUES
+(1, '', 'mccea@gmail.com', '$2y$10$LTEIPOMSeEkjl5QBf3B31usZGuh3Rfpqrz/eRsMuKuX12te4CM1de', '2024-07-14 18:04:00', '0'),
+(2, '', 'mccea123@gmail.com', '$2y$10$d.SXuUCQWQASgkocc3gGC.G4nXi2DylTdP5vXaokiAc32FYWVBjBG', '2024-07-22 06:15:59', '0');
 
 -- --------------------------------------------------------
 
@@ -282,18 +294,20 @@ INSERT INTO `mccea` (`id`, `email`, `password`, `registration_date`) VALUES
 
 CREATE TABLE `registrar` (
   `id` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL,
   `email` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `registration_date` timestamp NOT NULL DEFAULT current_timestamp()
+  `registration_date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `OTP` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `registrar`
 --
 
-INSERT INTO `registrar` (`id`, `email`, `password`, `registration_date`) VALUES
-(1, 'registrar@gmail.com', '$2y$10$pcpf.45SOwS2HtQdygSZPOLSbabeao8IOUDcO1ubOWtMkR0h/8Ese', '2024-07-14 17:25:19'),
-(2, 'registrar123@gmail.com', '$2y$10$86wPtigMPGb/dcTniB2x.eWld9X3gjKIwRYLMGwzV7HhUnhBeNVV2', '2024-07-22 06:06:01');
+INSERT INTO `registrar` (`id`, `name`, `email`, `password`, `registration_date`, `OTP`) VALUES
+(1, '0', 'registrar@gmail.com', '$2y$10$pcpf.45SOwS2HtQdygSZPOLSbabeao8IOUDcO1ubOWtMkR0h/8Ese', '2024-07-14 17:25:19', '0'),
+(2, '0', 'registrar123@gmail.com', '$2y$10$86wPtigMPGb/dcTniB2x.eWld9X3gjKIwRYLMGwzV7HhUnhBeNVV2', '2024-07-22 06:06:01', '0');
 
 -- --------------------------------------------------------
 
@@ -375,17 +389,19 @@ INSERT INTO `requests` (`id`, `full_name`, `course`, `request_date`, `score`) VA
 
 CREATE TABLE `ssc` (
   `id` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL,
   `email` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `registration_date` timestamp NOT NULL DEFAULT current_timestamp()
+  `registration_date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `OTP` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `ssc`
 --
 
-INSERT INTO `ssc` (`id`, `email`, `password`, `registration_date`) VALUES
-(3, 'scc1@gmail.com', '$2y$10$SKrRlKOAMZWNo.qqb8c/ae119rl4mmqv2fMTzI4zlnE9HG64NQgoC', '2024-07-23 06:51:27');
+INSERT INTO `ssc` (`id`, `name`, `email`, `password`, `registration_date`, `OTP`) VALUES
+(3, '0', 'scc1@gmail.com', '$2y$10$SKrRlKOAMZWNo.qqb8c/ae119rl4mmqv2fMTzI4zlnE9HG64NQgoC', '2024-07-23 06:51:27', '0');
 
 -- --------------------------------------------------------
 
@@ -403,21 +419,17 @@ CREATE TABLE `users` (
   `password` varchar(255) NOT NULL,
   `course` enum('bsit','bshm','bsba','bsed','beed') NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `step_status` varchar(255) DEFAULT 'not started'
+  `step_status` varchar(255) DEFAULT 'not started',
+  `verification_code` varchar(100) NOT NULL,
+  `code` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `year_level`, `status`, `semester`, `email`, `password`, `course`, `created_at`, `step_status`) VALUES
-(44, 'Joebert Bilbao', '1st_year', 'new_student', '1st_semester', 'jbbilbao80@gmail.com', '$2y$10$d1ohlQfEcKWVVNUhCzh9v.nGnInjK5WXSF4Lr9ccVp3PehXLWOatS', 'bsit', '2024-07-30 16:00:55', 'step 4'),
-(45, 'jonas dabalos', '1st_year', 'new_student', '1st_semester', 'jonas@gmail.com', '$2y$10$FTwL22Mv9UAKbHoliS1gruxXhmOfiSTikfvWkzkz1PFArpgbYBkGa', 'bshm', '2024-07-30 21:35:18', 'not started'),
-(46, 'jasmine carascal', '1st_year', 'new_student', '1st_semester', 'jasmine@gmail.com', '$2y$10$XOhtL.W9k2Jz2uVQxQIazezk/8hRUqayo5tZW3/frD0pIOsrcA3US', 'beed', '2024-07-30 21:36:10', 'step 2'),
-(47, 'ryan palana', '1st_year', 'new_student', '1st_semester', 'ryan@gmail.com', '$2y$10$2SWXN77fZJ0pPnkL4EOPzecdCJEHrdjumaTl9Wlrs1FXJc2tV29r6', 'bsed', '2024-07-30 21:37:08', 'not started'),
-(48, 'joe gwapo', '1st_year', 'new_student', '1st_semester', 'joe@gmail.com', '$2y$10$rtG09trhTHdwKMI19WZtsurBygVgO3FAn9yhJalrYfmsRfo9AMfhW', 'beed', '2024-07-30 21:37:43', 'not started'),
-(49, 'bryan james desuyo', '1st_year', 'new_student', '1st_semester', 'james@gmail.com', '$2y$10$4TR4QaH9Aw8ss4nJhV07lOp1iEMN3AXJGNdeXCe/rE1JBtKRwXlFe', 'bsit', '2024-07-30 21:38:22', 'not started'),
-(50, 'james', '1st_year', 'new_student', '1st_semester', 'jamesgwapo@gmail.com', '$2y$10$ptAbzJcAFkfIx7SuAS9jn.GnFOX9aW9uWbSIxXNFxg4z1khpHlFVu', 'bsba', '2024-07-30 21:49:17', 'in process');
+INSERT INTO `users` (`id`, `name`, `year_level`, `status`, `semester`, `email`, `password`, `course`, `created_at`, `step_status`, `verification_code`, `code`) VALUES
+(96, 'heyasdasd', '1st_year', 'new_student', '1st_semester', 'jbbilbao04@gmail.com', '$2y$10$SyVhHkEtUM0IXJfJ8z6RJ.WwiLcb1ZMOafr.7NKSI7voPebLGvY1K', 'bsit', '2024-09-10 08:10:15', 'pending', '', 'fc5ea62bc59e573145193202e4292791');
 
 -- --------------------------------------------------------
 
@@ -459,7 +471,8 @@ INSERT INTO `user_sessions` (`id`, `session_id`, `user_id`, `expires`) VALUES
 (20, 'e1b25f7a0fef682b0ef94c6364d3fd8e', 44, '2024-08-29 23:06:21'),
 (21, 'b225921858526f706a03013165180903', 44, '2024-08-29 23:10:58'),
 (22, '523efb6484e9c5d679ebd6e783b12fea', 46, '2024-08-29 23:40:50'),
-(23, 'da6659c3749cdec4b8dd5eecce68a8d5', 50, '2024-08-30 00:05:30');
+(23, 'da6659c3749cdec4b8dd5eecce68a8d5', 50, '2024-08-30 00:05:30'),
+(24, '9b35fb1230a9a9238f60cc0d4328a982', 56, '2024-10-08 17:39:37');
 
 --
 -- Indexes for dumped tables
@@ -683,13 +696,13 @@ ALTER TABLE `ssc`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
 
 --
 -- AUTO_INCREMENT for table `user_sessions`
 --
 ALTER TABLE `user_sessions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

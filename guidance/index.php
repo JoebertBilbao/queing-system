@@ -21,6 +21,8 @@ if (isset($_SESSION['email'])) {
     <link rel="stylesheet" href="style.css">
     <link href="assets/image/image1.png" rel="icon">
     <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+
     <style>
         .password-container {
             position: relative;
@@ -52,6 +54,7 @@ if (isset($_SESSION['email'])) {
                     <i class="toggle-password bi bi-eye-slash" id="togglePassword"></i>
                 </div>
                 <input type="submit" class="button" value="Login">
+                <a href="forgot-password.php" style=" float:right;">Forgot Password?</a>
             </form>
             <div class="signup">
                 <div class="text-center mt-3">
@@ -63,7 +66,8 @@ if (isset($_SESSION['email'])) {
 
     <!-- Bootstrap Icons CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
-
+  <!-- SweetAlert2 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- JavaScript to handle password toggle -->
     <script>
         const togglePassword = document.querySelector('#togglePassword');

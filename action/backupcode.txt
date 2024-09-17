@@ -1,0 +1,203 @@
+<?php
+session_start();
+include '../database/db.php'; // Your database connection
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require '../phpmailer/vendor/autoload.php'; // Adjust path as necessary
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $name = $_POST['name'];
+    $year_level = $_POST['year_level'];
+    $status = $_POST['status'];
+    $semester = $_POST['semester'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $confirm_password = $_POST['confirm_password'];
+    $course = $_POST['course'];
+
+    // Check if passwords match
+    if ($password != $confirm_password) {
+        echo "<script>
+                alert('Passwords do not match.');
+                window.history.back();
+              </script>";
+        exit();
+    }
+
+    // Hash the password
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+    // Generate a verification code
+    $verification_code = rand(100000, 999999);
+
+    // Insert user data into the database
+    $sql = "INSERT INTO users (name, year_level, status, semester, email, password, course, verification_code, is_verified) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0)";
+    $stmt = $conn->prepare($sql);
+
+    if (!$stmt) {
+        echo "<script>
+                alert('Database error: {$conn->error}');
+                window.history.back();
+              </script>";
+        exit();
+    }
+
+    $stmt->bind_param("ssssssss", $name, $year_level, $status, $semester, $email, $hashed_password, $course, $verification_code);
+
+    if ($stmt->execute()) {
+        // Send verification email
+        $mail = new PHPMailer(true);
+
+        try {
+            $mail->isSMTP();
+            $mail->Host = 'smtp.gmail.com';
+            $mail->SMTPAuth = true;
+            $mail->Username = 'your-email@gmail.com'; // Your email
+            $mail->Password = 'your-password'; // Your email password
+            $mail->SMTPSecure = 'tls';
+            $mail->Port = 587;
+
+            $mail->setFrom('your-email@gmail.com', 'Your Company');
+            $mail->addAddress($email, $name);
+
+            $mail->isHTML(true);
+            $mail->Subject = "Email Verification Code";
+            $mail->Body    = "
+            <html>
+            <head>
+                <title>Email Verification</title>
+            </head>
+            <body>
+                <p>Dear $name,</p>
+                <p>Your verification code is: <strong>$verification_code</strong></p>
+                <p>Please enter this code on the verification page to complete your registration.</p>
+                <p>Best regards,<br>Your Company</p>
+            </body>
+            </html>
+            ";
+
+            $mail->send();
+            echo "<script>
+                    alert('Signup successful. Please check your email for the verification code.');
+                    window.location.href = 'verify_code.php'; // Redirect to verification page
+                  </script>";
+        } catch (Exception $e) {
+            echo "<script>
+                    alert('Verification email could not be sent. Mailer Error: {$mail->ErrorInfo}');
+                    window.history.back();
+                  </script>";
+        }
+
+    } else {
+        echo "<script>
+                alert('Error: {$stmt->error}');
+                window.history.back();
+              </script>";
+    }
+
+    $stmt->close();
+    $conn->close();
+}
+?>
+
+<script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Registration Successful',
+                    text: 'You have been registered successfully!',
+                    confirmButtonColor: '#009688'
+                }).then(() => {
+                    window.location.href = '../login.php';
+                });
+              </script>"
+
+
+
+
+
+              <?php
+session_start(); // Start session at the beginning of the script
+require '../database/db.php';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    // Check if user exists
+    $sql = "SELECT * FROM department WHERE email='$email'";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        // Verify the password
+        $row = $result->fetch_assoc();
+        if (password_verify($password, $row['password'])) {
+            // Password is correct, set session variables
+            $_SESSION['email'] = $email;
+
+            // Redirect to dashboard or wherever needed
+            echo "<!DOCTYPE html>
+                  <html lang='en'>
+                  <head>
+                      <meta charset='UTF-8'>
+                      <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+                      <title>Redirecting...</title>
+                      <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+                  </head>
+                  <body>
+                      <script>
+                          Swal.fire({
+                              title: 'Success!',
+                              text: 'Login successful. Redirecting...',
+                              icon: 'success',
+                              timer: 1500,
+                              showConfirmButton: false
+                          }).then(() => {
+                              window.location.href = '../head/departmenthead.php';
+                          });
+                      </script>
+                  </body>
+                  </html>";
+            exit;
+        } else {
+            echo "
+                      <script>
+                          Swal.fire({
+                              title: 'Error!',
+                              text: 'Invalid password.',
+                              icon: 'error',
+                              confirmButtonText: 'Try Again'
+                          }).then(() => {
+                              window.location.href = '../head/index.php';
+                          });
+                      </script>
+                 ";
+        }
+    } else {
+        echo "<!DOCTYPE html>
+              <html lang='en'>
+              <head>
+                  <meta charset='UTF-8'>
+                  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+                  <title>Login Error</title>
+                  <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+              </head>
+              <body>
+                  <script>
+                      Swal.fire({
+                          title: 'Error!',
+                          text: 'No user found with this email.',
+                          icon: 'error',
+                          confirmButtonText: 'Try Again'
+                      }).then(() => {
+                          window.location.href = '../head/index.php';
+                      });
+                  </script>
+              </body>
+              </html>";
+    }
+
+    $conn->close();
+}
+?>

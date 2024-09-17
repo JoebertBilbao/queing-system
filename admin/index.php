@@ -52,6 +52,7 @@ if (isset($_SESSION['email'])) {
                     <i class="toggle-password bi bi-eye-slash" id="togglePassword"></i>
                 </div>
                 <input type="submit" class="button" value="Login">
+                <a href="forgot-password.php" style=" float:right;">Forgot Password?</a>
                 <!-- <a href ="signup.php"> asdsa </a> -->
             </form>
             <div class="signup">
@@ -64,6 +65,9 @@ if (isset($_SESSION['email'])) {
 
     <!-- Bootstrap Icons CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
+
+      <!-- SweetAlert2 JS -->
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- JavaScript to handle password toggle -->
     <script>

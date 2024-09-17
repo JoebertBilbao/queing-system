@@ -16,23 +16,68 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (password_verify($password, $row['password'])) {
             // Password is correct, set session variables
             $_SESSION['email'] = $email;
+            $_SESSION['name'] = $row['name'];
 
             // Redirect to dashboard or wherever needed
-            echo "<script>
-                    window.location.href = '../clinic/clinic.php';
-                  </script>";
+            echo "<!DOCTYPE html>
+                  <html lang='en'>
+                  <head>
+                      <meta charset='UTF-8'>
+                      <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+                      <title>Redirecting...</title>
+                      <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+                  </head>
+                  <body>
+                      <script>
+                          Swal.fire({
+                              title: 'Success!',
+                              text: 'Login successful. Redirecting...',
+                              icon: 'success',
+                              timer: 1500,
+                              showConfirmButton: false
+                          }).then(() => {
+                              window.location.href = '../clinic/clinic.php';
+                          });
+                      </script>
+                  </body>
+                  </html>";
             exit;
         } else {
-            echo "<script>
-                    alert('Invalid password.');
-                    window.location.href = '../clinic/index.php';
-                  </script>";
+            echo "
+                      <script>
+                          Swal.fire({
+                              title: 'Error!',
+                              text: 'Invalid password.',
+                              icon: 'error',
+                              confirmButtonText: 'Try Again'
+                          }).then(() => {
+                              window.location.href = '../clinic/index.php';
+                          });
+                      </script>
+                 ";
         }
     } else {
-        echo "<script>
-                alert('No user found with this email.');
-                window.location.href = '../clinic/index.php';
-              </script>";
+        echo "<!DOCTYPE html>
+              <html lang='en'>
+              <head>
+                  <meta charset='UTF-8'>
+                  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+                  <title>Login Error</title>
+                  <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+              </head>
+              <body>
+                  <script>
+                      Swal.fire({
+                          title: 'Error!',
+                          text: 'No user found with this email.',
+                          icon: 'error',
+                          confirmButtonText: 'Try Again'
+                      }).then(() => {
+                          window.location.href = '../clinic/index.php';
+                      });
+                  </script>
+              </body>
+              </html>";
     }
 
     $conn->close();

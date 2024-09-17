@@ -53,6 +53,7 @@ if (isset($_SESSION['email'])) {
                     <i class="toggle-password bi bi-eye-slash" id="togglePassword"></i>
                 </div>
                 <input type="submit" class="button" value="Login">
+                <a href="forgot-password.php" style=" float:right;">Forgot Password?</a>
             </form>
             <div class="signup">
                 <div class="text-center mt-3">
