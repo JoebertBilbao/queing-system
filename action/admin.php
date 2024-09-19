@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (password_verify($password, $row['password'])) {
             // Password is correct, set session variables
             $_SESSION['email'] = $email;
-            $_SESSION['name'] = $name;
+            $_SESSION['name'] = $row['name'];
 
             // Redirect to dashboard or wherever needed
             echo "<!DOCTYPE html>
