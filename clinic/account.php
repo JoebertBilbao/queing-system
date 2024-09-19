@@ -6,7 +6,7 @@
                     header('Location: index.php');
                     exit();
                 }
-                $userName = $_SESSION['name'];
+                $name = $_SESSION['name'];
                 ?>
      <div class="app-utility-item app-user-dropdown dropdown">
         <a class="dropdown-toggle" id="user-dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
