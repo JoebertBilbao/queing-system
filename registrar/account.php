@@ -8,9 +8,10 @@
                 }
                 $name = $_SESSION['name'];
                 ?>
-            
+                
+      <div class="app-utility-item app-user-dropdown dropdown">
         <a class="dropdown-toggle" id="user-dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
-            aria-expanded="false"> <?php echo htmlspecialchars($userName); ?> <i class="fas fa-user-circle"></i> </a>
+            aria-expanded="false">  <?php echo htmlspecialchars($name); ?> <img src="assets/images/user1.png" alt="user profile"></a>
         <ul class="dropdown-menu" aria-labelledby="user-dropdown-toggle">
             <li>
                 <hr class="dropdown-divider">
