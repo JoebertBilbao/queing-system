@@ -40,7 +40,7 @@
                         timer: 1500,
                         showConfirmButton: false
                     }).then(() => {
-                        window.location.href = '../action/logout.php'; // Path to your logout PHP script
+                        window.location.href = '../admin/logout.php'; // Path to your logout PHP script
                     });
                 }
             });

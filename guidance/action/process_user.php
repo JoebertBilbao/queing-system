@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             case 'add':
                 // Add user logic
                 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-                $stmt = $conn->prepare("INSERT INTO cor (name, email, password) VALUES (?, ?, ?)");
+                $stmt = $conn->prepare("INSERT INTO guidance (name, email, password) VALUES (?, ?, ?)");
                 $stmt->bind_param("sss", $name, $email, $hashed_password);
                 break;
             
@@ -26,17 +26,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Edit user logic
                 if (!empty($password)) {
                     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-                    $stmt = $conn->prepare("UPDATE cor SET name = ?, email = ?, password = ? WHERE id = ?");
+                    $stmt = $conn->prepare("UPDATE guidance SET name = ?, email = ?, password = ? WHERE id = ?");
                     $stmt->bind_param("sssi", $name, $email, $hashed_password, $id);
                 } else {
-                    $stmt = $conn->prepare("UPDATE cor SET name = ?, email = ? WHERE id = ?");
+                    $stmt = $conn->prepare("UPDATE guidance SET name = ?, email = ? WHERE id = ?");
                     $stmt->bind_param("ssi", $name, $email, $id);
                 }
                 break;
             
             case 'delete':
                 // Delete user logic
-                $stmt = $conn->prepare("DELETE FROM cor WHERE id = ?");
+                $stmt = $conn->prepare("DELETE FROM guidance WHERE id = ?");
                 $stmt->bind_param("i", $id);
                 break;
             
