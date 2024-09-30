@@ -68,8 +68,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               <body>
                   <script>
                       Swal.fire({
-                          title: 'Error!',
-                          text: 'No user found with this email.',
+                          title: 'WARNING! Notify to Admin!',
+                          text: 'Access Denied',
                           icon: 'error',
                           confirmButtonText: 'Try Again'
                       }).then(() => {
