@@ -69,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                   <script>
                       Swal.fire({
                           title: 'WARNING! Notify to Admin!',
-                          text: 'Access Denied',
+                          text: 'Access Denied!!',
                           icon: 'error',
                           confirmButtonText: 'Try Again'
                       }).then(() => {

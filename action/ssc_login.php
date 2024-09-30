@@ -67,11 +67,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </head>
         <body>
             <script>
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'No user found with this email.',
-                    icon: 'error',
-                    confirmButtonText: 'Try Again'
+            Swal.fire({
+                title: 'WARNING! Notify to Admin!',
+                text: 'Access Denied!!',
+                icon: 'error',
+                confirmButtonText: 'Try Again'
                 }).then(() => {
                     window.location.href = '../ssc/index.php';
                 });
