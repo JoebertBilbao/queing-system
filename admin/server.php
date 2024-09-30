@@ -16,7 +16,7 @@ $errors = array();
 
 
 //connect to database
-$con = mysqli_connect('localhost', 'root', '', 'mccsystem');
+$con = mysqli_connect('127.0.0.1', 'u510162695_mccsystem', '1Mccsystem', 'u510162695_mccsystem');
 
 //for verified email
 
@@ -32,13 +32,13 @@ $con = mysqli_connect('localhost', 'root', '', 'mccsystem');
             $run_query =  mysqli_query($con, $insert_code);
             if($run_query){
                 $subject = "Reset Password Notification";
-                $message = "<h2>windale Hardware inc.</h2>
+                $message = "<h2>MCC QUEUEING SYSTEM</h2>
                 <p>This is your OTP code:  <b>$code</b> <br><br>
                     Please use this code to set your new password.<br><br>
                     If you didn't request this code, you can disregard this message.
                 </p>
                 ";
-                $sender = "delacruzjohnanthon@gmail.com";
+                $sender = "Jbbilbao80@gmail.com";
                 //Load composer's autoloader
 
 // $insert_data = "INSERT INTO `messagein` (`Id`, `SendTime`, `MessageFrom`, `MessageTo`, `MessageText`) VALUES ('', '', 'MPLA', '$email', 'OTP code is $code')";
@@ -63,11 +63,11 @@ $con = mysqli_connect('localhost', 'root', '', 'mccsystem');
         $mail->Port = 465;                                   
 
         //Send Email
-        $mail->setFrom('jbbilbao80@gmail.com', 'Madridejos Community College');
+        $mail->setFrom('Jbbilbao80@gmail.com', 'Madridejos Community College');
         
         //Recipients
         $mail->addAddress($email);              
-        $mail->addReplyTo('jbbilbao80@gmail.com');
+        $mail->addReplyTo('Jbbilbao80@gmail.com');
         
         //Content
         $mail->isHTML(true);                     
