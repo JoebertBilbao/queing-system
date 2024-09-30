@@ -66,12 +66,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
         </head>
         <body>
-            <script>
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'No user found with this email.',
-                    icon: 'error',
-                    confirmButtonText: 'Try Again'
+        <script>
+        Swal.fire({
+            title: 'WARNING! Notify to Admin!',
+            text: 'Access Denied',
+            icon: 'error',
+            confirmButtonText: 'Try Again'
                 }).then(() => {
                     window.location.href = '../cor/index.php';
                 });
