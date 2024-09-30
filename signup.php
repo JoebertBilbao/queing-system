@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 $mail->isHTML(true);
                 $mail->Subject = 'Email Verification';
-                $mail->Body    = 'Here is the verification link <b><a href="http://mccqueueingsystem.com/mccsystem/?verification='.$code.'">http://mccqueueingsystem.com/mccsystem/?verification='.$code.'</a></b>';
+                $mail->Body    = 'Here is the verification link <b><a href="http://mccqueueingsystem.com/mccsystem/login.php?verification='.$code.'">http://mccqueueingsystem.com/mccsystem/login.php?verification='.$code.'</a></b>';
 
                 $mail->send();
                 echo 'Message has been sent';
