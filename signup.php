@@ -240,7 +240,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body>
     <div class="container">
         <div class="registration">
-            <header>Signup</header>
+            <header>Signuhjp</header>
             <?php echo $msg; ?>
             <form  method="post" class="form">
                 <div class="form-group">
