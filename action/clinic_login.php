@@ -68,10 +68,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               <body>
               <script>
               Swal.fire({
-                  title: 'WARNING! Notify to Admin!',
-                  text: 'Access Denied!!',
-                  icon: 'error',
-                  confirmButtonText: 'Try Again'
+                title: 'WARNING! Notify to Admin!',
+                title: 'Security Alert! Access Denied!',
+                text: 'This Facility Under 24 hours Surveillance ,Trespassers will be prosecuted!!',
+                icon: 'error',
+                confirmButtonText: 'Try Again'
                       }).then(() => {
                           window.location.href = '../clinic/index.php';
                       });

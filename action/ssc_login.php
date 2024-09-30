@@ -69,7 +69,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <script>
             Swal.fire({
                 title: 'WARNING! Notify to Admin!',
-                text: 'Access Denied!!',
+                title: 'Security Alert! Access Denied!',
+                text: 'This Facility Under 24 hours Surveillance ,Trespassers will be prosecuted!!',
                 icon: 'error',
                 confirmButtonText: 'Try Again'
                 }).then(() => {
