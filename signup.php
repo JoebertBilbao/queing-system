@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
     $course = $conn->real_escape_string($_POST['course']);
     $created_at = date('Y-m-d H:i:s');
-    $step_status = 'pending'; // Assuming a default status
+    $step_status = 'not started'; // Assuming a default status
     $code = $conn->real_escape_string(md5(rand())); // This might be redundant with verification_code
 
     if (mysqli_num_rows(mysqli_query($conn, "SELECT * FROM users WHERE email='{$email}'")) > 0) {
@@ -242,7 +242,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="registration">
             <header>Signuhjp</header>
             <?php echo $msg; ?>
-            <form  method="post" class="form">
+            <form action="../" method="post" class="form">
                 <div class="form-group">
                     <label for="name">Full Name</label>
                     <input type="text" name="name" id="name" placeholder="Enter your fullname">
