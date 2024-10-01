@@ -1,3 +1,32 @@
+<?php
+session_start();
+require_once 'database/db.php';
+
+function isStepReached($step) {
+    global $conn;
+    $sql = "SELECT COUNT(*) as count FROM users WHERE step_status = ? OR step_status IN (
+        SELECT step_status FROM (
+            SELECT 'step 2' as step_status
+            UNION SELECT 'step 3'
+            UNION SELECT 'step 4'
+            UNION SELECT 'step 5'
+            UNION SELECT 'step 6'
+            UNION SELECT 'step 7'
+            UNION SELECT 'Completed'
+        ) AS steps 
+        WHERE FIND_IN_SET(step_status, 'step 2,step 3,step 4,step 5,step 6,step 7,Completed') > 
+              FIND_IN_SET(?, 'step 2,step 3,step 4,step 5,step 6,step 7,Completed')
+    )";
+    
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ss", $step, $step);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    return $row['count'] > 0;
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -145,21 +174,40 @@
     </style>
 </head>
 <body class="bg-light">
-    <div class="sidebar">
-        <div class="header">
-            <img src="assets/image/download.png" alt="Madridejos Community College Logo" width="100" height="80">
-            <p>MADRIDEJOS COMMUNITY COLLEGE</p>   
-        </div>
-        <a href="admin/index.php" class="nav-link"><i class="bi bi-person-lock"></i>Admin Dashboard</a>
-        <a href="guidance/index.php" class="nav-link"><i class="bi bi-calendar-check"></i> Guidance Office</a>
-        <a href="head/index.php" class="nav-link"><i class="bi bi-person-circle"></i> Department Head</a>
-        <a href="registrar/index.php" class="nav-link"><i class="bi bi-file-earmark-text"></i> Registrar Office</a>
-        <a href="ssc/index.php" class="nav-link"><i class="bi bi-clipboard-data"></i> SSC Office</a>
-        <a href="clinic/index.php" class="nav-link"><i class="bi bi-heart"></i> Clinic Office</a>
-        <a href="mccea/index.php" class="nav-link"><i class="bi bi-gear"></i> MCCEA Office</a>
-        <a href="cor/index.php" class="nav-link"><i class="bi bi-file-earmark-code"></i> COR</a>
-        <a href="./index.php" class="nav-link"><i class="bi bi-house-door"></i> Back to Home</a>
+<div class="sidebar">
+    <div class="header">
+        <img src="assets/image/download.png" alt="Madridejos Community College Logo" width="100" height="80">
+        <p>MADRIDEJOS COMMUNITY COLLEGE</p>   
     </div>
+    <a href="admin/index.php" class="nav-link"><i class="bi bi-person-lock"></i>Admin Dashboard</a>
+    <a href="guidance/index.php" class="nav-link"><i class="bi bi-calendar-check"></i> Guidance Office</a>
+    
+    <?php if (isStepReached('step 2')): ?>
+    <a href="head/index.php" class="nav-link"><i class="bi bi-person-circle"></i> Department Head</a>
+    <?php endif; ?>
+    
+    <?php if (isStepReached('step 3')): ?>
+    <a href="registrar/index.php" class="nav-link"><i class="bi bi-file-earmark-text"></i> Registrar Office</a>
+    <?php endif; ?>
+    
+    <?php if (isStepReached('step 4')): ?>
+    <a href="ssc/index.php" class="nav-link"><i class="bi bi-clipboard-data"></i> SSC Office</a>
+    <?php endif; ?>
+    
+    <?php if (isStepReached('step 5')): ?>
+    <a href="clinic/index.php" class="nav-link"><i class="bi bi-heart"></i> Clinic Office</a>
+    <?php endif; ?>
+    
+    <?php if (isStepReached('step 6')): ?>
+    <a href="mccea/index.php" class="nav-link"><i class="bi bi-gear"></i> MCCEA Office</a>
+    <?php endif; ?>
+    
+    <?php if (isStepReached('step 7')): ?>
+    <a href="cor/index.php" class="nav-link"><i class="bi bi-file-earmark-code"></i> COR</a>
+    <?php endif; ?>
+    
+    <a href="./index.php" class="nav-link"><i class="bi bi-house-door"></i> Back to Home</a>
+</div>
     <div class="main-content">
         <div class="login-box">
             <h2>Login as Admin to View The Dashboard</h2><p>Welcome Administrators.</p>
