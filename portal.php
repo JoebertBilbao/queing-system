@@ -179,6 +179,8 @@ function isStepReached($step) {
         <img src="assets/image/download.png" alt="Madridejos Community College Logo" width="100" height="80">
         <p>MADRIDEJOS COMMUNITY COLLEGE</p>   
     </div>
+     <a href="./index.php" class="nav-link"><i class="bi bi-house-door"></i> Back To Home</a>
+    
     <a href="admin/index.php" class="nav-link"><i class="bi bi-person-lock"></i>Admin Dashboard</a>
     <a href="guidance/index.php" class="nav-link"><i class="bi bi-calendar-check"></i> Guidance Office</a>
     
@@ -206,7 +208,7 @@ function isStepReached($step) {
     <a href="cor/index.php" class="nav-link"><i class="bi bi-file-earmark-code"></i> COR</a>
     <?php endif; ?>
     
-    <a href="./index.php" class="nav-link"><i class="bi bi-house-door"></i> Back To Home</a>
+   
 </div>
     <div class="main-content">
         <div class="login-box">
