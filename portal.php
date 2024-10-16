@@ -174,11 +174,18 @@ function isStepReached($step) {
     </style>
 </head>
 <body class="bg-light">
+<div class="main-content">
+        <div class="login-box">
+            <h2>Login as Admin to View The Dashboard</h2><p>Welcome Administrators.</p>
+            <!-- Add form elements if needed here -->
+        </div>
 <div class="sidebar">
     <div class="header">
         <img src="assets/image/download.png" alt="Madridejos Community College Logo" width="100" height="80">
         <p>MADRIDEJOS COMMUNITY COLLEGE</p>   
     </div>
+     <a href="./index.php" class="nav-link"><i class="bi bi-house-door"></i> Home</a>
+    
     <a href="admin/index.php" class="nav-link"><i class="bi bi-person-lock"></i>Admin Dashboard</a>
     <a href="guidance/index.php" class="nav-link"><i class="bi bi-calendar-check"></i> Guidance Office</a>
     
@@ -206,7 +213,7 @@ function isStepReached($step) {
     <a href="cor/index.php" class="nav-link"><i class="bi bi-file-earmark-code"></i> COR</a>
     <?php endif; ?>
     
-    <a href="./index.php" class="nav-link"><i class="bi bi-house-door"></i> Back to Home</a>
+   
 </div>
     <div class="main-content">
         <div class="login-box">
