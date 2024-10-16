@@ -67,12 +67,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               </head>
               <body>
                   <script>
-                  Swal.fire({
-                    title: 'WARNING! Notify to Admin!',
-                    title: 'Security Alert! Access Denied!',
-                    text: 'This Facility Under 24 hours Surveillance ,Trespassers will be prosecuted!',
-                    icon: 'error',
-                    confirmButtonText: 'Try Again'
+                      Swal.fire({
+                          title: 'Error!',
+                          text: 'No user found with this email.',
+                          icon: 'error',
+                          confirmButtonText: 'Try Again'
                       }).then(() => {
                           window.location.href = '../guidance/index.php';
                       });
