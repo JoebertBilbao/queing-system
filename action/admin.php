@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         timer: 1500,
                         showConfirmButton: false
                     }).then(() => {
-                        window.location.href = '../admin/admin.php';
+                        window.location.href = '../admin/test.php';
                     });
                 </script>
             </body>
