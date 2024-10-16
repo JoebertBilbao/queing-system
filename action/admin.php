@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <script>
                     Swal.fire({
                         title: 'Success!',
-                        text: 'Login successful. Redirecting...',
+                        text: 'Login successful. Redirecting!...',
                         icon: 'success',
                         timer: 1500,
                         showConfirmButton: false
