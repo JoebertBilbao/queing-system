@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($result->num_rows > 0) {
         echo "<script>
-                alert('An account with this email already exists.');
+                alert('An account with this email already exists!.');
                 window.location.href = 'signup.html';
               </script>";
         exit;

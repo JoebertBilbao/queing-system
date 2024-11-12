@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 $mail->isHTML(true);
                 $mail->Subject = 'Email Verification';
-                $mail->Body    = 'Here is the verification link <b><a href="https://mccqueueingsystem.com/login.php/?verification='.$code.'">https://mccqueueingsystem.com/login.php/?verification='.$code.'</a></b>';
+                $mail->Body    = 'Here is the verification link <b><a href="http://localhost/mccsystemcapstone2/mccsystem/login.php/?verification='.$code.'">http://localhost/mccsystemcapstone2/mccsystem/login.php/?verification='.$code.'</a></b>';
 
                 $mail->send();
                 echo 'Message has been sent';
@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             echo "</div>";
             $msg = "<div class='alert alert-info'>We've sent a verification link to your email address.</div>";
         } else {
-            $msg = "<div class='alert alert-danger'>Something went wrong.</div>";
+            $msg = "<div class='alert alert-danger'>Something went wrong!.</div>";
         }
     }
 }
@@ -242,7 +242,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="registration">
             <header>Signup</header>
             <?php echo $msg; ?>
-            <form action="../" method="post" class="form">
+            <form  method="post" class="form">
                 <div class="form-group">
                     <label for="name">Full Name</label>
                     <input type="text" name="name" id="name" placeholder="Enter your fullname">
