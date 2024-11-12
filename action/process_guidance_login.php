@@ -49,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                               title: 'Error!',
                               text: 'Invalid password.',
                               icon: 'error',
-                              confirmButtonText: 'Try Again'
+                              confirmButtonText: 'Try Again!'
                           }).then(() => {
                               window.location.href = '../guidance/index.php';
                           });

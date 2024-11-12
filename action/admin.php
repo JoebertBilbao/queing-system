@@ -49,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         title: 'Error!',
                         text: 'Invalid password.',
                         icon: 'error',
-                        confirmButtonText: 'Try Again'
+                        confirmButtonText: 'Try Again!'
                     }).then(() => {
                         window.location.href = '../admin/index.php';
                     });
@@ -71,7 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     title: 'Error!',
                     text: 'No user found with this email.',
                     icon: 'error',
-                    confirmButtonText: 'Try Again'
+                    confirmButtonText: 'Try Again!'
                 }).then(() => {
                     window.location.href = '../admin/index.php';
                 });
