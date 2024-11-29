@@ -306,7 +306,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <i class="toggle-password bi bi-eye-slash" id="toggleConfirmPassword"></i>
                 </div>
                 <div class="form-group full-width">
-                    <label for="course">Course</label>
+                    <label for="course">Courses</label>
                     <select name="course" id="course" required>
                         <option value="bsit">Bachelor of Science in Information Technology (BSIT)</option>
                         <option value="bshm">Bachelor of Science in Hospitality Management (BSHM)</option>
