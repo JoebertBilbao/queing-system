@@ -11,72 +11,94 @@ include 'database/db.php';
 $msg = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $name = $conn->real_escape_string($_POST['name']);
-    $year_level = $conn->real_escape_string($_POST['year_level']);
-    $status = $conn->real_escape_string($_POST['status']);
-    $semester = $conn->real_escape_string($_POST['semester']);
-    $email = $conn->real_escape_string($_POST['email']);
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-    $course = $conn->real_escape_string($_POST['course']);
+    // Input validation and sanitization
+    $name = trim($_POST['name']);
+    $year_level = $_POST['year_level'];
+    $status = $_POST['status'];
+    $semester = $_POST['semester'];
+    $email = trim($_POST['email']);
+    $password = $_POST['password'];
+    $confirm_password = $_POST['confirm_password'];
+    $course = $_POST['course'];
     $created_at = date('Y-m-d H:i:s');
-    $step_status = 'not started'; // Assuming a default status
-    $code = $conn->real_escape_string(md5(rand())); // This might be redundant with verification_code
+    $step_status = 'not started';
+    $code = md5(rand());
 
-    if (mysqli_num_rows(mysqli_query($conn, "SELECT * FROM users WHERE email='{$email}'")) > 0) {
-        $msg = "<div class='alert alert-danger'>{$email} - This email already exists.</div>";
-    } else {    
-        $sql = "INSERT INTO users (name, year_level, status, semester, email, password, course, created_at, step_status, code) 
-                VALUES ('$name', '$year_level', '$status', '$semester', '$email', '$password', '$course', '$created_at', '$step_status', '$code')";
-        $result = mysqli_query($conn, $sql);
+    // Validate email format
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $msg = "<div class='alert alert-danger'>Invalid email format.</div>";
+    } elseif (!preg_match("/^[a-zA-Z\s]+$/", $name)) {
+        // Validate name (only alphabets and spaces)
+        $msg = "<div class='alert alert-danger'>Name can only contain letters and spaces.</div>";
+    } elseif (preg_match("/\s/", $password)) {
+        // Validate that the password does not contain spaces
+        $msg = "<div class='alert alert-danger'>Password should not contain spaces.</div>";
+    } elseif ($password !== $confirm_password) {
+        // Check if passwords match
+        $msg = "<div class='alert alert-danger'>Passwords do not match.</div>";
+    } else {
+        // Ensure the email is unique
+        $email_check_query = "SELECT * FROM users WHERE email = ?";
+        $stmt = $conn->prepare($email_check_query);
+        $stmt->bind_param('s', $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-        if ($result) {
-            echo "<div style='display: none;'>";
-            $mail = new PHPMailer(true);
-
-            try {
-                $mail->SMTPDebug = SMTP::DEBUG_SERVER;
-                $mail->isSMTP();
-                $mail->Host       = 'smtp.gmail.com';
-                $mail->SMTPAuth   = true;
-                $mail->Username   = 'jbbilbao80@gmail.com'; // Replace with your email
-                $mail->Password   = 'axgdjelbsziuzvxa'; // Replace with your app password
-                $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-                $mail->Port       = 465;
-
-                $mail->setFrom('jbbilbao80@gmail.com', 'Madridejos Community College'); // Replace with your email and name
-                $mail->addAddress($email);
-
-                $mail->isHTML(true);
-                $mail->Subject = 'Email Verification';
-                $mail->Body    = 'Here is the verification link <b><a href="http://localhost/mccsystemcapstone2/mccsystem/login.php/?verification='.$code.'">http://localhost/mccsystemcapstone2/mccsystem/login.php/?verification='.$code.'</a></b>';
-
-                $mail->send();
-                echo 'Message has been sent';
-            } catch (Exception $e) {
-                echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-            }
-            echo "</div>";
-            $msg = "<div class='alert alert-info'>We've sent a verification link to your email address.</div>";
+        if ($result->num_rows > 0) {
+            $msg = "<div class='alert alert-danger'>{$email} - This email already exists.</div>";
         } else {
-            $msg = "<div class='alert alert-danger'>Something went wrong!.</div>";
+            // Prepare statement for inserting user data
+            $password_hash = password_hash($password, PASSWORD_DEFAULT);
+            $insert_query = "INSERT INTO users (name, year_level, status, semester, email, password, course, created_at, step_status, code) 
+                             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $stmt = $conn->prepare($insert_query);
+            $stmt->bind_param('ssssssssss', $name, $year_level, $status, $semester, $email, $password_hash, $course, $created_at, $step_status, $code);
+
+            if ($stmt->execute()) {
+                echo "<div style='display: none;'>";
+                $mail = new PHPMailer(true);
+                
+                try {
+                    $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+                    $mail->isSMTP();
+                    $mail->Host       = 'smtp.gmail.com';
+                    $mail->SMTPAuth   = true;
+                    $mail->Username   = 'jbbilbao80@gmail.com'; // Replace with your email
+                    $mail->Password   = 'axgdjelbsziuzvxa'; // Replace with your app password
+                    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+                    $mail->Port       = 465;
+
+                    $mail->setFrom('jbbilbao80@gmail.com', 'Madridejos Community College'); // Replace with your email and name
+                    $mail->addAddress($email);
+
+                    $mail->isHTML(true);
+                    $mail->Subject = 'Email Verification';
+                    $mail->Body    = 'Here is the verification link <b><a href="http://localhost/mccsystemcapstone2/mccsystem/login.php/?verification='.$code.'">http://localhost/mccsystemcapstone2/mccsystem/login.php/?verification='.$code.'</a></b>';
+
+                    $mail->send();
+                    echo 'Message has been sent';
+                } catch (Exception $e) {
+                    echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+                }
+                echo "</div>";
+                $msg = "<div class='alert alert-info'>We've sent a verification link to your email address.</div>";
+            } else {
+                $msg = "<div class='alert alert-danger'>Something went wrong, please try again.</div>";
+            }
         }
     }
 }
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>SIGNUP | STUDENTS</title>
-    <!---Custom CSS File--->
-    <!-- <link rel="stylesheet" href="style.css"> -->
     <link href="assets/image/images.png" rel="icon">
     <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-o4XBMDyA6I3jFq70N4o+ZSHSHY8fP+tZnCZ4EXWvHo6MnW+spt9u9N5+M3gybgY6" crossorigin="anonymous">
-
     <style>
         body {
             margin: 0;
@@ -236,20 +258,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     </style>
 </head>
-
 <body>
     <div class="container">
         <div class="registration">
             <header>Signup</header>
             <?php echo $msg; ?>
-            <form  method="post" class="form">
+            <form method="post" class="form">
                 <div class="form-group">
                     <label for="name">Full Name</label>
-                    <input type="text" name="name" id="name" placeholder="Enter your fullname">
+                    <input type="text" name="name" id="name" placeholder="Enter your fullname" required>
                 </div>
                 <div class="form-group">
                     <label for="year_level">Year Level</label>
-                    <select name="year_level" id="year_level">
+                    <select name="year_level" id="year_level" required>
                         <option value="1st_year">1st Year</option>
                         <option value="2nd_year">2nd Year</option>
                         <option value="3rd_year">3rd Year</option>
@@ -258,65 +279,65 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
                 <div class="form-group">
                     <label for="student_type">Student Type</label>
-                    <select name="status" id="student_type">
+                    <select name="status" id="student_type" required>
                         <option value="new_student">New Student</option>
                         <option value="transferee">Transferee</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="semester">Semester</label>
-                    <select name="semester" id="semester">
+                    <select name="semester" id="semester" required>
                         <option value="1st_semester">1st Semester</option>
                         <option value="2nd_semester">2nd Semester</option>
                     </select>
                 </div>
                 <div class="form-group full-width">
                     <label for="email">Email</label>
-                    <input type="text" name="email" id="email" placeholder="Enter your email">
+                    <input type="email" name="email" id="email" placeholder="Enter your email" required>
                 </div>
                 <div class="form-group password-container">
                     <label for="password">Password</label>
-                    <input type="password" name="password" id="password" placeholder="Create a password">
+                    <input type="password" name="password" id="password" placeholder="Create a password" required>
                     <i class="toggle-password bi bi-eye-slash" id="togglePassword"></i>
                 </div>
                 <div class="form-group password-container">
                     <label for="confirm_password">Confirm Password</label>
-                    <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm your password">
+                    <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm your password" required>
                     <i class="toggle-password bi bi-eye-slash" id="toggleConfirmPassword"></i>
                 </div>
                 <div class="form-group full-width">
                     <label for="course">Course</label>
-                    <select name="course" id="course">
+                    <select name="course" id="course" required>
                         <option value="bsit">Bachelor of Science in Information Technology (BSIT)</option>
                         <option value="bshm">Bachelor of Science in Hospitality Management (BSHM)</option>
                         <option value="bsba">Bachelor of Science in Business Administration (BSBA)</option>
                         <option value="bsed">Bachelor of Secondary Education (BSED)</option>
                         <option value="beed">Bachelor of Elementary Education (BEED)</option>
                     </select>
+                  </div>
+                <div class="form-group">
+                    <label for="terms_conditions">
+                        <input type="checkbox" name="terms_conditions" id="terms_conditions" required>
+                        I agree to the <a href="terms_and_conditions.php" target="_blank">Terms and Conditions</a>.
+                    </label>
                 </div>
-                <div class="form-group full-width">
-                    <input type="submit" class="button" value="Signup">
+                <div class="form-group">
+                    <button type="submit">Register</button>
                 </div>
             </form>
             <div class="signup">
-                <span class="signup">Already have an account?
-                    <br><br> <a href="login.php">Login</a>
-                </span>
+                <span class="signup">Already have an account? <br><br> <a href="login.php">Login</a></span>
             </div>
         </div>
     </div>
 
-    <!-- Bootstrap Icons CSS -->
+    <!-- Bootstrap Icons and JavaScript -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-uDyQso9LD2TCkAsPtASgZmEd6hfA5f/C6sEb+rRZKD+ljbV8qKoFVpqzUjK7m18a" crossorigin="anonymous"></script>
-
-
-    <!-- JavaScript to handle password toggle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         const togglePassword = document.querySelector('#togglePassword');
         const password = document.querySelector('#password');
-
-        togglePassword.addEventListener('click', function (e) {
+        togglePassword.addEventListener('click', function () {
             const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
             password.setAttribute('type', type);
             this.classList.toggle('bi-eye');
@@ -325,8 +346,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         const toggleConfirmPassword = document.querySelector('#toggleConfirmPassword');
         const confirmPassword = document.querySelector('#confirm_password');
-
-        toggleConfirmPassword.addEventListener('click', function (e) {
+        toggleConfirmPassword.addEventListener('click', function () {
             const type = confirmPassword.getAttribute('type') === 'password' ? 'text' : 'password';
             confirmPassword.setAttribute('type', type);
             this.classList.toggle('bi-eye');
@@ -334,5 +354,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         });
     </script>
 </body>
-
 </html>

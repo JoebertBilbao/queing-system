@@ -55,7 +55,7 @@
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
 
-      <a class="btn-getstarted" href="login.php">Login</a>
+      <a class="btn-getstarted" href="login.php">Regster & Enrolled</a>
 
     </div>
   </header>
@@ -71,7 +71,7 @@
             <h1>MCC QUEUEING SYSTEM</h1>
             <p>Please Select Portal to proceed.</p>
             <div class="d-flex">
-              <a href="portal.php" class="btn-get-started">Portal</a>
+              <a href="portal.php" class="btn-get-started">Admin Portal</a>
               <a href="https://www.youtube.com/watch?v=LXb3EKWsInQ" class="glightbox btn-watch-video d-flex align-items-center"></a>
             </div>
           </div>
