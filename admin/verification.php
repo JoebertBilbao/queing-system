@@ -132,6 +132,69 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["email"])) {
             border-radius: 4px;
             text-align: center;
         }
+        body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        background: url('../assets/image/loginbackground.jpg') no-repeat center center/cover;
+        display: justify;
+        justify-content: center;
+        align-items: center;
+    }
+    /* Style for the form container */
+    #emailVerificationForm {
+        max-width: 400px; /* Adjust the container width */
+        margin: 0 auto; /* Center the container horizontally */
+        padding: 20px;
+        background: #f9f9f9; /* Optional: Add a light background color */
+        border: 1px solid #ddd; /* Optional: Add a border */
+        border-radius: 8px; /* Rounded corners */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
+    }
+
+    /* Style for inputs */
+    #emailVerificationForm input[type="email"],
+    #emailVerificationForm input[type="submit"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+
+    #emailVerificationForm input[type="submit"] {
+        background-color: #007bff; /* Button background color */
+        color: white; /* Button text color */
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    #emailVerificationForm input[type="submit"]:hover {
+        background-color: #0056b3; /* Darker blue on hover */
+    }
+
+    /* Centering the Home button */
+    .text-center {
+        text-align: center;
+    }
+
+    .text-center .btn {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 8px 20px;
+        font-size: 14px;
+        border-radius: 5px;
+        background-color: #6c757d; /* Gray button background */
+        color: white;
+        text-decoration: none;
+    }
+
+    .text-center .btn:hover {
+        background-color: #5a6268; /* Darker gray on hover */
+    }
 
     </style>
 </head>
@@ -139,9 +202,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["email"])) {
     <div>
         <h1>Email Verification</h1>
         <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" id="emailVerificationForm">
-            <input type="email" name="email" placeholder="Enter your email" required>
-            <input type="submit" value="Send Verification Email">
-        </form>
+        <input type="email" name="email" placeholder="Enter your email" required>
+        <input type="submit" value="Send Verification Email">
+        <div class="text-center">
+        <a href="../portal.php" class="btn btn-secondary btn-sm">Home</a>
+        </div>
+    </form>
         <div class="text-center mt-3">
                     <a href="../portal.php" class="btn btn-secondary btn-sm">Home</a>
                 </div>

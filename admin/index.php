@@ -2,7 +2,7 @@
 session_start();
 
 // If user is already logged in, redirect to dashboard or home page
-if (isset($_SESSION['email'])) {
+if (!isset($_SESSION['email'])) {
     header('Location: admin.php');
     exit();
 }
