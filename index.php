@@ -74,6 +74,46 @@
     width: 500px; /* Adjust the width to make the icon bigger */
     height: 500px; /* Adjust the height */
 }
+ /* Header with transparent white background */
+ .header {
+    background-color: rgba(255, 255, 255, 0.8); /* Transparent white */
+    box-shadow: none; /* Optional: Remove shadow for a cleaner look */
+    padding: 15px 0;
+    transition: background-color 0.3s ease-in-out; /* Smooth transition effect */
+  }
+
+  /* Header background on scroll */
+  .header.sticky-top.scrolled {
+    background-color: rgba(255, 255, 255, 1); /* Fully white on scroll */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add light shadow on scroll */
+  }
+
+  /* Adjusting text color for contrast */
+  .navmenu ul li a {
+    color: #333; /* Darker text color for contrast with white */
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .navmenu ul li a:hover {
+    color: #007bff; /* Change color on hover */
+  }
+
+  /* Get started button */
+  .btn-getstarted {
+    background-color: #007bff;
+    color: white;
+    padding: 8px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+
+  .btn-getstarted:hover {
+    background-color: #0056b3; /* Slightly darker blue on hover */
+  }
 </style>
 
   <!-- =======================================================
@@ -247,6 +287,16 @@
 
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script>
+  window.addEventListener("scroll", function () {
+    const header = document.querySelector(".header");
+    if (window.scrollY > 50) {
+      header.classList.add("scrolled");
+    } else {
+      header.classList.remove("scrolled");
+    }
+  });
+</script>
 
 </body>
 
