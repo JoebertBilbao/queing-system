@@ -114,6 +114,16 @@
   .btn-getstarted:hover {
     background-color: #0056b3; /* Slightly darker blue on hover */
   }
+  .btn-get-started {
+        background-color: blue;
+        color: #fff; /* Adjust text color for better contrast */
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        font-weight: bold;
+        text-decoration: none;
+        transition: background-color 0.3s, transform 0.3s;
+    }
 </style>
 
   <!-- =======================================================
