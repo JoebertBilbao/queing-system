@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 02, 2024 at 02:07 PM
+-- Generation Time: Sep 17, 2024 at 05:13 PM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -33,16 +33,15 @@ CREATE TABLE `admin` (
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `OTP` varchar(50) NOT NULL,
-  `code` varchar(250) NOT NULL
+  `OTP` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`id`, `name`, `email`, `password`, `created_at`, `OTP`, `code`) VALUES
-(1, 'Jobert', 'jbbilbao80@gmail.com', '$2y$10$pW0sskaQoHP6hDiAgNn/zuyFWjfuj98hkBGjDyDF1SOchTxEXXHI.', '2024-08-03 06:22:05', '0', '101270');
+INSERT INTO `admin` (`id`, `name`, `email`, `password`, `created_at`, `OTP`) VALUES
+(1, '', 'admin@gmail.com', '$2y$10$pW0sskaQoHP6hDiAgNn/zuyFWjfuj98hkBGjDyDF1SOchTxEXXHI.', '2024-08-03 06:22:05', '0');
 
 -- --------------------------------------------------------
 
@@ -262,7 +261,7 @@ CREATE TABLE `guidance` (
 --
 
 INSERT INTO `guidance` (`id`, `name`, `email`, `password`, `OTP`) VALUES
-(1, 'Admin', 'jbbilbao80@gmail.com', '$2y$10$AbuxWEPB26juHwWeKT2HHuuSpCv87qXiI/ilsv2vLfU14AIlBVi9q', '0');
+(1, 'dante', 'guidance@gmail.com', '$2y$10$AbuxWEPB26juHwWeKT2HHuuSpCv87qXiI/ilsv2vLfU14AIlBVi9q', '0');
 
 -- --------------------------------------------------------
 
@@ -422,17 +421,15 @@ CREATE TABLE `users` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `step_status` varchar(255) DEFAULT 'not started',
   `verification_code` varchar(100) NOT NULL,
-  `code` varchar(250) NOT NULL,
-  `verified` tinyint(1) DEFAULT 0,
-  `terms_accepted` tinyint(4) NOT NULL
+  `code` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `year_level`, `status`, `semester`, `email`, `password`, `course`, `created_at`, `step_status`, `verification_code`, `code`, `verified`, `terms_accepted`) VALUES
-(437792, 'John Anthon Dela Cruz', '1st_year', 'new_student', '1st_semester', 'delacruzjohnanthon@gmail.com', '$2y$10$HkFGzpucGSQvkRgAmPUXeeTTLAg0ca2Ba211UokBHy/FqJ16tXTbi', 'bsit', '2024-12-02 06:01:21', 'in process', '', '', 1, 1);
+INSERT INTO `users` (`id`, `name`, `year_level`, `status`, `semester`, `email`, `password`, `course`, `created_at`, `step_status`, `verification_code`, `code`) VALUES
+(96, 'heyasdasd', '1st_year', 'new_student', '1st_semester', 'jbbilbao04@gmail.com', '$2y$10$SyVhHkEtUM0IXJfJ8z6RJ.WwiLcb1ZMOafr.7NKSI7voPebLGvY1K', 'bsit', '2024-09-10 08:10:15', 'pending', '', 'fc5ea62bc59e573145193202e4292791');
 
 -- --------------------------------------------------------
 
@@ -475,14 +472,7 @@ INSERT INTO `user_sessions` (`id`, `session_id`, `user_id`, `expires`) VALUES
 (21, 'b225921858526f706a03013165180903', 44, '2024-08-29 23:10:58'),
 (22, '523efb6484e9c5d679ebd6e783b12fea', 46, '2024-08-29 23:40:50'),
 (23, 'da6659c3749cdec4b8dd5eecce68a8d5', 50, '2024-08-30 00:05:30'),
-(24, '9b35fb1230a9a9238f60cc0d4328a982', 56, '2024-10-08 17:39:37'),
-(25, '6d551770268c9647684f6ab0e26a278c', 98, '2025-01-01 09:31:10'),
-(26, '78d0c061e90675f3d789f06c930ec41d', 100, '2025-01-01 09:44:16'),
-(27, 'b7ee228e55dcdf33675adb1e2d464017', 107, '2025-01-01 10:38:06'),
-(28, '8117bb142b4cd5c56ee740d49000d1fe', 108, '2025-01-01 10:43:09'),
-(29, 'dea96572c3fb88fbacdaaa608a0686fb', 110, '2025-01-01 10:49:55'),
-(30, '05ad1dfec34fa94d891b4f2d5720cec7', 948441, '2025-01-01 13:32:12'),
-(31, 'adc4dea46b99b8e1f7e582e11dfe8d9f', 437792, '2025-01-01 14:05:15');
+(24, '9b35fb1230a9a9238f60cc0d4328a982', 56, '2024-10-08 17:39:37');
 
 --
 -- Indexes for dumped tables
@@ -706,13 +696,13 @@ ALTER TABLE `ssc`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=981303;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
 
 --
 -- AUTO_INCREMENT for table `user_sessions`
 --
 ALTER TABLE `user_sessions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

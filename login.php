@@ -1,14 +1,34 @@
 <?php
 session_start();
+include 'database/db.php';
 
-// If user is already logged in, redirect to dashboard or home page
 if (isset($_SESSION['user_id'])) {
     header('Location: student/index.php');
     exit();
 }
 
-// Process login form submission if any
-// Your existing login form and logic here
+$msg = "";
+
+if (isset($_GET['verification'])) {
+    $verification_code = $_GET['verification'];
+    $stmt = $conn->prepare("SELECT * FROM users WHERE verification_code = ?");
+    $stmt->bind_param('s', $verification_code);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $update_stmt = $conn->prepare("UPDATE users SET verification_code='', verified=1 WHERE verification_code = ?");
+        $update_stmt->bind_param('s', $verification_code);
+        if ($update_stmt->execute()) {
+            $msg = "<div class='bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative'>Account verification successfully completed.</div>";
+        } else {
+            $msg = "<div class='alert alert-danger'>Verification failed. Please try again.</div>";
+        }
+    } else {
+        header("Location: login.php");
+        exit();
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -196,6 +216,7 @@ if (isset($_SESSION['user_id'])) {
         background: #8f94fb;
     }
 </style>
+
 </head>
 
 <body>
@@ -203,6 +224,9 @@ if (isset($_SESSION['user_id'])) {
         <div class="login form">
             <header>Login</header>
             <form action="action/process_login.php" method="post">
+                <?php 
+                echo $msg;
+                ?>
                 <input type="text" name="email" placeholder="Enter your email">
                 <div class="password-container">
                     <input type="password" id="password" name="password" placeholder="Enter your password">

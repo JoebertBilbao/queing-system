@@ -2,8 +2,8 @@
 session_start();
 
 // If user is already logged in, redirect to dashboard or home page
-if (isset($_SESSION['email'])) {
-    header('Location: admin.php');
+if (!isset($_SESSION['email'])) {
+    header('Location: verification.php');
     exit();
 }
 
@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $recaptcha_response = $_POST['g-recaptcha-response'];
 
     // Your reCAPTCHA secret key
-    $secret_key = '6Lct6o8qAAAAAGOiLUHX1AN43nNL1n9J5Om1CIfu';
+    $secret_key = '6LfFVY8qAAAAAIl2JZR3CuvRws0mNwzvtZjkkVuky';
 
     // Verify reCAPTCHA with Google
     $recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
@@ -147,6 +147,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         background: #8f94fb;
     }
 </style>
+
 </head>
 
 <body>
@@ -160,7 +161,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <i class="toggle-password bi bi-eye-slash" id="togglePassword"></i>
                 </div>
                 <!-- reCAPTCHA widget -->
-                <div class="g-recaptcha" data-sitekey="6Lct6o8qAAAAAJuJhRAOSp3V2tR2RlFx8fOOeFKm"></div>
+                <div class="g-recaptcha" data-sitekey="6LfFVY8qAAAAADfMHTIBOlt_SZu8u8C6FxawmWHA"></div>
 
                 <input type="submit" class="button" value="Login">
                 <a href="forgot-password.php" style=" float:right;">Forgot Password?</a>

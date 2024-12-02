@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["email"])) {
         $error = "Invalid email format.";
     } else {
         // Check if the email exists in the database
-        $stmt = $conn->prepare("SELECT id FROM admin WHERE email = ?");
+        $stmt = $conn->prepare("SELECT id FROM guidance WHERE email = ?");
         $stmt->bind_param("s", $email);
         $stmt->execute();
         $stmt->store_result();
@@ -35,12 +35,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["email"])) {
 
             // Email content
             $mail->isHTML(true);
-            $mail->setFrom('jbbilbao80@gmail.com', 'Verification System');
+            $mail->setFrom('jbbilbao80@yourdomain.com', 'Verification System');
             $mail->addAddress($email);
             $mail->Subject = "Login to Your Account";
 
             // Direct login link
-            $loginUrl = "https://mccqueueingsystem.com/admin/index.php";
+            $loginUrl = "https://mccqueueingsystem.com/guidance/index.php";
 
             $mail->Body = "
             <html>
@@ -163,7 +163,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["email"])) {
         align-items: center;
     }
     </style>
-    
 </head>
 <body>
     <div class="container">

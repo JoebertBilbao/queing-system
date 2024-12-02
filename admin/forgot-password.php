@@ -71,7 +71,7 @@
     <script>
         <?php if ($emailSent): ?>
             Swal.fire({
-                icon: 'success',
+                icon: 'success!',
                 title: 'Email Sent',
                 text: 'Please check your email for the password reset link.',
                 confirmButtonColor: '#fd2323'

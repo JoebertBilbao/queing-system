@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 17, 2024 at 05:13 PM
+-- Generation Time: Sep 18, 2024 at 05:24 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -261,7 +261,7 @@ CREATE TABLE `guidance` (
 --
 
 INSERT INTO `guidance` (`id`, `name`, `email`, `password`, `OTP`) VALUES
-(1, 'dante', 'guidance@gmail.com', '$2y$10$AbuxWEPB26juHwWeKT2HHuuSpCv87qXiI/ilsv2vLfU14AIlBVi9q', '0');
+(1, 'Admin', 'guidance@gmail.com', '$2y$10$AbuxWEPB26juHwWeKT2HHuuSpCv87qXiI/ilsv2vLfU14AIlBVi9q', '0');
 
 -- --------------------------------------------------------
 

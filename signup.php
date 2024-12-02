@@ -1,3 +1,4 @@
+
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -8,10 +9,22 @@ use PHPMailer\PHPMailer\Exception;
 
 require 'vendor/autoload.php';
 include 'database/db.php';
+
 $msg = "";
 
+// Generate a unique random 6-digit ID for `id` column
+function generateRandomId($conn) {
+    do {
+        $randomId = rand(100000, 999999); // 6-digit random number
+        $stmt = $conn->prepare("SELECT 1 FROM users WHERE id = ?");
+        $stmt->bind_param('i', $randomId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    } while ($result->num_rows > 0); // Ensure uniqueness
+    return $randomId;
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Input validation and sanitization
     $name = trim($_POST['name']);
     $year_level = $_POST['year_level'];
     $status = $_POST['status'];
@@ -22,66 +35,67 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $course = $_POST['course'];
     $created_at = date('Y-m-d H:i:s');
     $step_status = 'not started';
-    $code = md5(rand());
+    $verification_code = md5(rand());
+    $id = generateRandomId($conn); // Generate random ID for `id`
 
-    // Validate email format
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    $terms_accepted = isset($_POST['terms_conditions']) ? 1 : 0;
+
+    if ($terms_accepted !== 1) {
+        $msg = "<div class='alert alert-danger'>You must accept the terms and conditions.</div>";
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $msg = "<div class='alert alert-danger'>Invalid email format.</div>";
     } elseif (!preg_match("/^[a-zA-Z\s]+$/", $name)) {
-        // Validate name (only alphabets and spaces)
         $msg = "<div class='alert alert-danger'>Name can only contain letters and spaces.</div>";
     } elseif (preg_match("/\s/", $password)) {
-        // Validate that the password does not contain spaces
         $msg = "<div class='alert alert-danger'>Password should not contain spaces.</div>";
     } elseif ($password !== $confirm_password) {
-        // Check if passwords match
         $msg = "<div class='alert alert-danger'>Passwords do not match.</div>";
     } else {
-        // Ensure the email is unique
-        $email_check_query = "SELECT * FROM users WHERE email = ?";
-        $stmt = $conn->prepare($email_check_query);
+        $stmt = $conn->prepare("SELECT * FROM users WHERE email = ?");
         $stmt->bind_param('s', $email);
         $stmt->execute();
         $result = $stmt->get_result();
 
         if ($result->num_rows > 0) {
-            $msg = "<div class='alert alert-danger'>{$email} - This email already exists.</div>";
+            $msg = "<div class='alert alert-danger'>The email already exists.</div>";
         } else {
-            // Prepare statement for inserting user data
             $password_hash = password_hash($password, PASSWORD_DEFAULT);
-            $insert_query = "INSERT INTO users (name, year_level, status, semester, email, password, course, created_at, step_status, code) 
-                             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $insert_query = "INSERT INTO users (id, name, year_level, status, semester, email, password, course, created_at, step_status, verification_code, terms_accepted) 
+                             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             $stmt = $conn->prepare($insert_query);
-            $stmt->bind_param('ssssssssss', $name, $year_level, $status, $semester, $email, $password_hash, $course, $created_at, $step_status, $code);
+            $stmt->bind_param('issssssssssi', $id, $name, $year_level, $status, $semester, $email, $password_hash, $course, $created_at, $step_status, $verification_code, $terms_accepted);
 
             if ($stmt->execute()) {
-                echo "<div style='display: none;'>";
                 $mail = new PHPMailer(true);
-                
                 try {
-                    $mail->SMTPDebug = SMTP::DEBUG_SERVER;
                     $mail->isSMTP();
-                    $mail->Host       = 'smtp.gmail.com';
-                    $mail->SMTPAuth   = true;
-                    $mail->Username   = 'jbbilbao80@gmail.com'; // Replace with your email
-                    $mail->Password   = 'axgdjelbsziuzvxa'; // Replace with your app password
+                    $mail->Host = 'smtp.gmail.com';
+                    $mail->SMTPAuth = true;
+                    $mail->Username = 'jbbilbao80@gmail.com';  // Your email
+                    $mail->Password = 'axgdjelbsziuzvxa';  // Your app password
                     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-                    $mail->Port       = 465;
+                    $mail->Port = 465;
 
-                    $mail->setFrom('jbbilbao80@gmail.com', 'Madridejos Community College'); // Replace with your email and name
+                    $mail->setFrom('jbbilbao80@example.com', 'Madridejos Community College');
                     $mail->addAddress($email);
 
                     $mail->isHTML(true);
                     $mail->Subject = 'Email Verification';
-                    $mail->Body    = 'Here is the verification link <b><a href="https://mccqueueingsystem.com/login.php/?verification='.$code.'">https://mccqueueingsystem.com/login.php/?verification='.$code.'</a></b>';
+                    $mail->Body = "
+                        <div>
+                            <h2>Welcome to Madridejos Community College</h2>
+                            <p>Your ID: <strong>{$id}</strong></p>
+                            <p>Click the button below to verify your email:</p>
+                            <a href='https://mccqueueingsystem.com/login.php?verification=$verification_code'
+                               style='background: #28a745; color: white; text-decoration: none; padding: 10px; border-radius: 5px;'>Verify Your Email</a>
+                        </div>
+                    ";
 
                     $mail->send();
-                    echo 'Message has been sent';
+                    $msg = "<div class='alert alert-info'>Verification email sent. Please check your inbox.</div>";
                 } catch (Exception $e) {
-                    echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+                    $msg = "<div class='alert alert-danger'>Mailer Error: {$mail->ErrorInfo}</div>";
                 }
-                echo "</div>";
-                $msg = "<div class='alert alert-info'>We've sent a verification link to your email address.</div>";
             } else {
                 $msg = "<div class='alert alert-danger'>Something went wrong, please try again.</div>";
             }
@@ -89,6 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -98,7 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>SIGNUP | STUDENTS</title>
     <link href="assets/image/images.png" rel="icon">
     <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-o4XBMDyA6I3jFq70N4o+ZSHSHY8fP+tZnCZ4EXWvHo6MnW+spt9u9N5+M3gybgY6" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
             margin: 0;
@@ -109,21 +124,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             align-items: center;
             min-height: 100vh;
         }
-        body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        height: 100vh;
-        background: url('assets/image/loginbackground.jpg') no-repeat center center/cover;
-        display: justify;
-        justify-content: center;
-        align-items: center;
-    }
 
         .container {
             width: 100%;
             max-width: 800px;
-            height: 80vh;
+            height: 90;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -230,6 +235,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             z-index: 1;
         }
 
+
         @media (max-width: 768px) {
             .form-group {
                 width: 100%;
@@ -266,6 +272,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         }
         }
+
+        #terms_conditions {
+    accent-color: gray; /* Default color */
+    cursor: pointer;
+}
+
+#terms_conditions:checked {
+    accent-color: dodgerblue; /* Blue when checked */
+}
+body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        background: url('assets/image/loginbackground.jpg') no-repeat center center/cover;
+        display: justify;
+        justify-content: center;
+        align-items: center;
+    }
     </style>
 </head>
 <body>
@@ -316,7 +341,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <i class="toggle-password bi bi-eye-slash" id="toggleConfirmPassword"></i>
                 </div>
                 <div class="form-group full-width">
-                    <label for="course">Courses</label>
+                    <label for="course">Course</label>
                     <select name="course" id="course" required>
                         <option value="bsit">Bachelor of Science in Information Technology (BSIT)</option>
                         <option value="bshm">Bachelor of Science in Hospitality Management (BSHM)</option>
@@ -325,14 +350,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <option value="beed">Bachelor of Elementary Education (BEED)</option>
                     </select>
                   </div>
-                <div class="form-group">
+                  <div class="form-group">
                     <label for="terms_conditions">
-                        <input type="checkbox" name="terms_conditions" id="terms_conditions" required>
-                        I agree to the <a href="terms_and_conditions.php" target="_blank">Terms and Conditions</a>.
+                        <input type="checkbox" name="terms_conditions" id="terms_conditions" disabled required>
+                        I agree to the <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">Terms and Conditions</a>.
                     </label>
                 </div>
                 <div class="form-group">
-                    <button type="submit">Register</button>
+                    <button type="submit" class="btn btn-success">Register</button>
                 </div>
             </form>
             <div class="signup">
@@ -340,10 +365,49 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
         </div>
     </div>
-
-    <!-- Bootstrap Icons and JavaScript -->
+ <!-- Terms and Conditions Modal -->
+ <div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="termsModalLabel">Terms and Conditions</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <!-- Include the terms content here -->
+            <p>Here are your terms...</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Decline</button>
+            <button type="button" id="acceptTerms" class="btn btn-success" data-bs-dismiss="modal">Accept</button>
+          </div>
+        </div>
+      </div>
+    </div>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+document.getElementById('acceptTerms').addEventListener('click', function () {
+    const termsCheckbox = document.getElementById('terms_conditions');
+    termsCheckbox.disabled = false; // Enable the checkbox
+    termsCheckbox.checked = true; // Check the checkbox
+});
+
+// Add CSS to style the checkbox
+document.addEventListener('DOMContentLoaded', function() {
+    const termsCheckbox = document.getElementById('terms_conditions');
+    
+    // Add event listener to change accent color when checked
+    termsCheckbox.addEventListener('change', function() {
+        if (this.checked) {
+            this.style.accentColor = 'dodgerblue';
+        } else {
+            this.style.accentColor = 'gray';
+        }
+    });
+});
+</script>
+
     <script>
         const togglePassword = document.querySelector('#togglePassword');
         const password = document.querySelector('#password');

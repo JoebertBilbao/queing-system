@@ -31,6 +31,16 @@ if($email == false){
         .start-end {
             text-align: right;
         }
+        body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        background: url('../assets/image/loginbackground.jpg') no-repeat center center/cover;
+        display: justify;
+        justify-content: center;
+        align-items: center;
+    }
     </style>
 </head>
 <body class="d-flex align-items-center justify-content-center">

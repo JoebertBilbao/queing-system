@@ -24,11 +24,11 @@ $con = mysqli_connect('127.0.0.1', 'u510162695_mccsystem', '1Mccsystem', 'u51016
     //if user click continue button in forgot password form
     if(isset($_POST['check-email'])){
         $email = mysqli_real_escape_string($con, $_POST['email']);
-        $check_email = "SELECT * FROM cor WHERE email='$email'";
+        $check_email = "SELECT * FROM guidance WHERE email='$email'";
         $run_sql = mysqli_query($con, $check_email);
         if(mysqli_num_rows($run_sql) > 0){
             $code = rand(100000, 999999);
-            $insert_code = "UPDATE cor SET OTP = $code WHERE email = '$email'";
+            $insert_code = "UPDATE guidance SET OTP = $code WHERE email = '$email'";
             $run_query =  mysqli_query($con, $insert_code);
             if($run_query){
                 $subject = "Reset Password Notification";
@@ -109,7 +109,7 @@ $con = mysqli_connect('127.0.0.1', 'u510162695_mccsystem', '1Mccsystem', 'u51016
     if(isset($_POST['check-reset-otp'])){
         $_SESSION['info'] = "";
         $otp_code = mysqli_real_escape_string($con, $_POST['otp']);
-        $check_code = "SELECT * FROM cor WHERE OTP = $otp_code";
+        $check_code = "SELECT * FROM guidance WHERE OTP = $otp_code";
         $code_res = mysqli_query($con, $check_code);
         if(mysqli_num_rows($code_res) > 0){
             $fetch_data = mysqli_fetch_assoc($code_res);
@@ -135,7 +135,7 @@ $con = mysqli_connect('127.0.0.1', 'u510162695_mccsystem', '1Mccsystem', 'u51016
             $code = 0;
             $email = $_SESSION['email']; //getting this email using session
             $encpass = password_hash($password, PASSWORD_DEFAULT);
-            $update_pass = "UPDATE cor SET OTP = $code, password = '$encpass' WHERE email = '$email'";
+            $update_pass = "UPDATE guidance SET OTP = $code, password = '$encpass' WHERE email = '$email'";
             $run_query = mysqli_query($con, $update_pass);
             if($run_query){
                 $info = "Your password has been reset. You can now login with your new password.";
