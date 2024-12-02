@@ -27,6 +27,54 @@
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
 
+  <style>
+  /* Add background to the Hero Section */
+  #hero {
+    background-image: url('assets/image/mccback.jpg'); /* Replace with the path to your background image */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 90px 0; /* Adjust padding as needed for your design */
+    position: relative;
+  }
+
+  /* Optional: Add a dark overlay to make text more readable */
+  #hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5); /* Dark overlay (adjust opacity as needed) */
+    z-index: -1; /* Ensure overlay is behind the content */
+  }
+
+  /* Ensure text and other content are visible above the background */
+  .hero .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Optional: Adjust hero section text size for better readability */
+  #hero h1 {
+    color: white; /* Change text color for contrast */
+  }
+  #hero p {
+    color: white; /* Change text color for contrast */
+  }
+  /* Styling for the Hero Section */
+#hero {
+    background-color: #f4f4f4; /* Adjust background color to your choice */
+}
+
+/* Make the icon bigger */
+.icon-image {
+    width: 500px; /* Adjust the width to make the icon bigger */
+    height: 500px; /* Adjust the height */
+}
+</style>
+
   <!-- =======================================================
   * Template Name: Vesperr
   * Template URL: https://bootstrapmade.com/vesperr-free-bootstrap-template/
@@ -63,25 +111,28 @@
   <main class="main">
 
     <!-- Hero Section -->
-    <section id="hero" class="hero section">
+    <section id="hero" class="hero section" style="background-color: #f4f4f4;"> <!-- You can adjust the background color here -->
 
-      <div class="container">
-        <div class="row gy-4">
-          <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center">
-            <h1>MCC QUEUEING SYSTEM</h1>
-            <p>Please Select Portal to proceed.</p>
-            <div class="d-flex">
-              <a href="portal.php" class="btn-get-started">Admin Portal</a>
-              <a href="https://www.youtube.com/watch?v=LXb3EKWsInQ" class="glightbox btn-watch-video d-flex align-items-center"></a>
-            </div>
-          </div>
-          <div class="col-lg-6 order-1 order-lg-2 hero-img">
-            <img src="assets/image/fontsize.jpg" class="img-fluid animated" alt="">
-          </div>
+  <div class="container">
+    <div class="row gy-4">
+      <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center">
+        <h1>MCC QUEUEING SYSTEM</h1>
+        <p>Please Select Portal to proceed.</p>
+        <div class="d-flex">
+          <a href="portal.php" class="btn-get-started">Admin Portal</a>
+          <a href="https://www.youtube.com/watch?v=LXb3EKWsInQ" class="glightbox btn-watch-video d-flex align-items-center"></a>
         </div>
       </div>
+      <div class="col-lg-6 order-1 order-lg-2 hero-img">
+        <!-- Icon Image with background and resizing -->
+        <div class="icon-container">
+          <img src="assets/image/FONT.png" class="img-fluid animated icon-image" alt="Icon">
+        </div>
+      </div>
+    </div>
+  </div>
 
-    </section><!-- /Hero Section -->
+</section><!-- /Hero Section -->
 
     <!-- Clients Section -->
     
