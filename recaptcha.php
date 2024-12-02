@@ -23,7 +23,7 @@
     
     <!-- Add the reCAPTCHA widget -->
     <div class="form-group">
-        <div class="g-recaptcha" data-sitekey="https://mccqueueingsystem.com"></div> <!-- Replace YOUR_SITE_KEY with your actual site key -->
+        <div class="g-recaptcha" data-sitekey="6LfFVY8qAAAAADfMHTIBOlt_SZu8u8C6FxawmWHA"></div> <!-- Replace YOUR_SITE_KEY with your actual site key -->
     </div>
 
     <div class="form-group">
