@@ -23,6 +23,7 @@
   <link href="assets/vendor/aos/aos.css" rel="stylesheet">
   <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
@@ -204,18 +205,18 @@
 
 <!-- Contact Information -->
 <div class="contact-info">
-<div class="contact-group">
-  <strong>Web Developer:</strong> <a href="#">Joebert Bilbao</a> |
-  <strong>MCC Page:</strong> <a href="https://www.facebook.com/madridejoscollege" target="_blank">MCC Facebook Page</a>
-</div>
-<div class="contact-group">
-  <strong>Email:</strong> <a href="#">Jbbilbao80@gmail.com</a> |
-  <strong>Contact:</strong> <a href="#">09551349995</a>
-</div>
-<div class="contact-group">
-  <strong>Address:</strong> <a href="#">6053, Purok Mahugany, Sitio Gahung, Brgy Kodia</a> 
-</div>
-</div>
+        <div class="contact-group">
+            <i class="fas fa-user"></i> <a href="#">Joebert Bilbao</a> |
+            <i class="fab fa-facebook"></i> <a href="https://www.facebook.com/madridejoscollege" target="_blank">MCC Facebook Page</a>
+        </div>
+        <div class="contact-group">
+            <i class="fas fa-envelope"></i> <a href="mailto:Jbbilbao80@gmail.com">Jbbilbao80@gmail.com</a> |
+            <i class="fas fa-phone"></i> <a href="tel:09551349995">09551349995</a>
+        </div>
+        <div class="contact-group">
+            <i class="fas fa-map-marker-alt"></i> <a href="#">6053, Purok Mahugany, Sitio Gahung, Brgy Kodia</a>
+        </div>
+    </div>
 </div>
   <div class="credits">
     <!-- All the links in the footer should remain intact. -->
