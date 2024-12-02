@@ -208,9 +208,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["email"])) {
         <a href="../portal.php" class="btn btn-secondary btn-sm">Home</a>
         </div>
     </form>
-        <div class="text-center mt-3">
-                    <a href="../portal.php" class="btn btn-secondary btn-sm">Home</a>
-                </div>
         <?php if (!empty($error)) { ?>
             <p class="error"><?php echo $error; ?></p>
         <?php } ?>
