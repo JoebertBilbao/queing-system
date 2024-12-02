@@ -186,7 +186,7 @@ function isStepReached($step) {
     </div>
      <a href="./index.php" class="nav-link"><i class="bi bi-house-door"></i> Home</a>
     
-    <a href="admin/index.php" class="nav-link"><i class="bi bi-person-lock"></i>Admin Dashboard</a>
+    <a href="admin/verification" class="nav-link"><i class="bi bi-person-lock"></i>Admin Dashboard</a>
     <a href="guidance/index.php" class="nav-link"><i class="bi bi-calendar-check"></i> Guidance Office</a>
     
     <?php if (isStepReached('step 2')): ?>
