@@ -39,6 +39,83 @@ if (isset($_SESSION['department'])) {
             z-index: 1;
         }
     </style>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        background: url('../assets/image/loginbackground.jpg') no-repeat center center/cover;
+        display: justify;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .container {
+        width: 100%;
+        max-width: 400px;
+        background: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+
+    .login.form {
+        padding: 20px 30px;
+    }
+
+    header {
+        font-size: 24px;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    input[type="email"],
+    input[type="password"],
+    .button {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    .button {
+        background: #4e54c8;
+        color: #fff;
+        font-weight: bold;
+        border: none;
+        cursor: pointer;
+    }
+
+    .button:hover {
+        background: #8f94fb;
+    }
+
+    .signup {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .signup .btn {
+        background: #4e54c8;
+        color: #fff;
+        font-size: 14px;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 4px;
+        text-decoration: none;
+    }
+
+    .signup .btn:hover {
+        background: #8f94fb;
+    }
+</style>
+
 </head>
 
 <body>

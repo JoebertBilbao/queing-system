@@ -109,6 +109,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             align-items: center;
             min-height: 100vh;
         }
+        body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        background: url('assets/image/loginbackground.jpg') no-repeat center center/cover;
+        display: justify;
+        justify-content: center;
+        align-items: center;
+    }
 
         .container {
             width: 100%;
