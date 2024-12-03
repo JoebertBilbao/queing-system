@@ -177,7 +177,7 @@
       <div class="col-lg-6 order-1 order-lg-2 hero-img">
         <!-- Icon Image with background and resizing -->
         <div class="icon-container">
-          <img src="assets/image/FONT.png" class="img-fluid animated icon-image" alt="Icon">
+          <img src="assets/image/logo.png" class="img-fluid animated icon-image" alt="Icon">
         </div>
       </div>
     </div>
