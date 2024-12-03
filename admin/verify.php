@@ -1,4 +1,11 @@
 <?php
+// Security Headers
+header("Strict-Transport-Security: max-age=31536000; includeSubDomains; preload"); // Enforces HTTPS
+header("X-Frame-Options: SAMEORIGIN"); // Protects against clickjacking
+header("X-Content-Type-Options: nosniff"); // Prevents MIME type sniffing
+header("Referrer-Policy: no-referrer-when-downgrade"); // Controls referrer information sent with requests
+header("Permissions-Policy: accelerometer=(), autoplay=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()"); // Restricts feature permissions
+
 session_start();
 require '../database/db.php'; // Include database connection
 
