@@ -1,10 +1,11 @@
 <?php
-// Security Headers
-header("Strict-Transport-Security: max-age=31536000; includeSubDomains; preload"); // Enforces HTTPS
-header("X-Frame-Options: SAMEORIGIN"); // Protects against clickjacking
-header("X-Content-Type-Options: nosniff"); // Prevents MIME type sniffing
-header("Referrer-Policy: no-referrer-when-downgrade"); // Controls referrer information sent with requests
-header("Permissions-Policy: accelerometer=(), autoplay=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()"); // Restricts feature permissions
+// Add HTTP security headers
+header("Strict-Transport-Security: max-age=31536000; includeSubDomains; preload"); // Enforce HTTPS
+header("X-Frame-Options: SAMEORIGIN"); // Prevent clickjacking
+header("X-Content-Type-Options: nosniff"); // Prevent MIME-type sniffing
+header("Referrer-Policy: no-referrer-when-downgrade"); // Control the referrer information
+header("Permissions-Policy: geolocation=(), microphone=(), camera=()"); // Control browser features
+// Redirect to admin/index.php
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;

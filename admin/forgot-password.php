@@ -1,4 +1,12 @@
-<?php require_once "server.php"; ?>
+<?php require_once "server.php";
+// Add HTTP security headers
+header("Strict-Transport-Security: max-age=31536000; includeSubDomains; preload"); // Enforce HTTPS
+header("X-Frame-Options: SAMEORIGIN"); // Prevent clickjacking
+header("X-Content-Type-Options: nosniff"); // Prevent MIME-type sniffing
+header("Referrer-Policy: no-referrer-when-downgrade"); // Control the referrer information
+header("Permissions-Policy: geolocation=(), microphone=(), camera=()"); // Control browser features
+// Redirect to admin/index.php
+ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
