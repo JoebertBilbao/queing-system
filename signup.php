@@ -110,6 +110,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 }
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $suspiciousPatterns = [
+        '/<script>/i',
+        '/SELECT .* FROM/i',
+        '/DROP TABLE/i',
+        '/[\'"()=<>;]/'
+    ];
+
+    foreach ($_POST as $key => $value) {
+        foreach ($suspiciousPatterns as $pattern) {
+            if (preg_match($pattern, $value)) {
+                die("<h1 style='color: red; text-align: center;'>Hoii kopal kaba bossing!</h1>");
+            }
+        }
+    }
+
+    // Continue processing the form inputs after validation
+}
 ?>
 
 <!DOCTYPE html>
@@ -434,6 +452,34 @@ document.addEventListener('DOMContentLoaded', function() {
             this.classList.toggle('bi-eye');
             this.classList.toggle('bi-eye-slash');
         });
+
+        document.querySelectorAll("input, select").forEach(input => {
+        input.addEventListener("input", () => {
+        const value = input.value;
+
+        // Define suspicious patterns to test
+        const suspiciousPatterns = [
+            /<script>/i,
+            /SELECT .* FROM/i,
+            /DROP TABLE/i,
+            /[\'"()=<>;]/
+        ];
+
+        for (const pattern of suspiciousPatterns) {
+            if (pattern.test(value)) {
+                alert("Hoii kopal kaba bossing!");
+                document.body.innerHTML = `
+                    <h1 style="color: red; text-align: center; font-size: 100px; margin-top: 0%; font-family: Arial, sans-serif;">
+                        Hoii kopal kaba bossing!
+                    </h1>
+                    <h2 style="color: red; text-align: center; font-size: 15px; margin-top: 0%; font-family: Arial, sans-serif;">
+                        Meet Up Sumbagay!
+                    </h2>`;
+                break;
+            }
+        }
+    });
+});
     </script>
 </body>
 </html>
