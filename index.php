@@ -1,3 +1,67 @@
+<?php
+// List of known backdoor URL patterns or suspicious files
+$suspiciousPatterns = [
+    '/admin.php',      // Example: admin login or backdoor page
+    '/hidden.php',     // Suspicious backdoor URL
+    '/upload.php',     // Common for file upload vulnerabilities
+    '/shell.php',      // Exploited shell access file
+    '/config.php',     // Configuration file that may contain sensitive info
+];
+
+// Check if any of the suspicious patterns exist in the request URI
+foreach ($suspiciousPatterns as $pattern) {
+    if (strpos($_SERVER['REQUEST_URI'], $pattern) !== false) {
+        // If a suspicious pattern is found, show the warning message
+        die("<h1 style='color: red; text-align: center; font-size: 100px; font-family: Arial, sans-serif; margin-top: 20%;'>
+                Kopal - Suspicious Activity Detected!
+            </h1>");
+    }
+}
+
+// Optionally, you can check for suspicious query parameters (e.g., unusual GET parameters)
+if (isset($_GET['cmd']) || isset($_GET['exec']) || isset($_GET['shell'])) {
+    die("<h1 style='color: red; text-align: center; font-size: 100px; font-family: Arial, sans-serif; margin-top: 20%;'>
+            Kopal - Backdoor Access Detected!
+        </h1>");
+}
+
+?>
+
+<?php
+// Log suspicious access to a file
+function logSuspiciousAccess($message) {
+    $logFile = 'suspicious_activity.log';
+    $timestamp = date('Y-m-d H:i:s');
+    $logMessage = "[$timestamp] $message\n";
+    file_put_contents($logFile, $logMessage, FILE_APPEND);
+}
+
+// Example: Detect suspicious patterns
+$suspiciousPatterns = [
+    '/admin.php',
+    '/hidden.php',
+    '/upload.php',
+    '/shell.php',
+];
+
+foreach ($suspiciousPatterns as $pattern) {
+    if (strpos($_SERVER['REQUEST_URI'], $pattern) !== false) {
+        logSuspiciousAccess("Suspicious backdoor attempt detected: {$_SERVER['REQUEST_URI']}");
+        die("<h1 style='color: red; text-align: center; font-size: 100px; font-family: Arial, sans-serif; margin-top: 20%;'>
+                Kopal - Suspicious Activity Detected!
+            </h1>");
+    }
+}
+
+// Additional check for suspicious query parameters
+if (isset($_GET['cmd']) || isset($_GET['exec']) || isset($_GET['shell'])) {
+    logSuspiciousAccess("Suspicious query parameter detected: {$_SERVER['REQUEST_URI']}");
+    die("<h1 style='color: red; text-align: center; font-size: 100px; font-family: Arial, sans-serif; margin-top: 20%;'>
+            Kopal - Backdoor Access Detected!
+        </h1>");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
