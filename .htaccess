@@ -2,18 +2,6 @@ RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^([^\.]+)$ $1.php [NC,L]
 
-# Enable mod_rewrite
-RewriteEngine On
-
-# Check if the requested filename is not a real file
-RewriteCond %{REQUEST_FILENAME} !-f
-
-# Rewrite request without file extension to add .php
-RewriteRule ^([^\.]+)$ $1.php [NC,L]
-
-# Block access if the request is coming from any domain other than mccqueueingsystem.com
-RewriteCond %{HTTP_REFERER} !^https?://(www\.)?mccqueueingsystem\.com/ [NC]
-RewriteRule ^ - [F,L]
 
 # Enable mod_rewrite
 RewriteEngine On
