@@ -30,7 +30,7 @@ RewriteRule ^ - [F,L]
 
 # If an attacker is detected, we can redirect to a custom error page or show an alert
 # This will block the access and display a custom error message with "KOPAL meet up!"
-ErrorDocument 403 "KOPAL meet up! - Unauthorized access detected!"
+ErrorDocument 403 /kopal.php
 
 # Optionally, log the attempted attacks (this requires server access to configure logs)
 # This section logs attempts to a custom file (make sure your server allows custom log locations)
