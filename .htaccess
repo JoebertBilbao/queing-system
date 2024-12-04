@@ -2,36 +2,6 @@ RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^([^\.]+)$ $1.php [NC,L]
 
-
-# Enable mod_rewrite
-RewriteEngine On
-
-# Block requests with a valid filename (to apply only to URL rewriting)
-RewriteCond %{REQUEST_FILENAME} !-f
-
-# Rewrite requests without file extension to add .php
-RewriteRule ^([^\.]+)$ $1.php [NC,L]
-
-# Block access if the request is coming from any domain other than mccqueueingsystem.com
-RewriteCond %{HTTP_REFERER} !^https?://(www\.)?mccqueueingsystem\.com/ [NC]
-RewriteRule ^ - [F,L]
-
-# If an attacker is detected, we can redirect to a custom error page or show an alert
-# This will block the access and display a custom error message with "KOPAL meet up!"
-ErrorDocument 403 "KOPAL meet up! - Unauthorized access detected!"
-
-# Optionally, log the attempted attacks (this requires server access to configure logs)
-# This section logs attempts to a custom file (make sure your server allows custom log locations)
-# You may need to enable the 'Log' directive in your server config
-
-# Log suspicious request (add or modify if needed)
-LogLevel warn rewrite:trace3
-
-# Optionally, you can also set up a specific action for attack patterns like an IP block:
-# Example: If a specific IP address is trying to attack, block it
-# Deny from IP address (example IP: 192.168.1.100)
-# Deny from 192.168.1.100
-
     <VirtualHost *:443>
     # Enable HSTS for one year and apply it to all subdomains
     Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
