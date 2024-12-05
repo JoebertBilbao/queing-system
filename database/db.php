@@ -1,6 +1,6 @@
 <?php
 
-$servername = "localhost";
+$servername = "127.0.0.1";
 $username = "u510162695_mccsystem";
 $password = "1Mccsystem";
 $dbname = "u510162695_mccsystem";
