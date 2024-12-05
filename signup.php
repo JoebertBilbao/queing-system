@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
                     $mail->Port = 465;
 
-                    $mail->setFrom('jbbilbao80@example.com', 'Madridejos Community College');
+                    $mail->setFrom('jbbilbao80@gmail.com', 'Madridejos Community College');
                     $mail->addAddress($email);
 
                     $mail->isHTML(true);
