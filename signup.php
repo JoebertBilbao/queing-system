@@ -1,7 +1,6 @@
 
 <?php
 // Add HTTP security headers
-
 require 'vendor/autoload.php';
 include 'database/db.php';
 error_reporting(E_ALL);
@@ -11,6 +10,9 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
+require 'vendor/PHPMailer/src/Exception.php';
+require 'vendor/PHPMailer/src/PHPMailer.php';
+require 'vendor/PHPMailer/src/SMTP.php';
 
 $msg = "";
 
