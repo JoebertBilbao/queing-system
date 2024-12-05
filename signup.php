@@ -1,12 +1,6 @@
 
 <?php
 // Add HTTP security headers
-header("Strict-Transport-Security: max-age=31536000; includeSubDomains; preload"); // Enforce HTTPS
-header("X-Frame-Options: SAMEORIGIN"); // Prevent clickjacking
-header("X-Content-Type-Options: nosniff"); // Prevent MIME-type sniffing
-header("Referrer-Policy: no-referrer-when-downgrade"); // Control the referrer information
-header("Permissions-Policy: geolocation=(), microphone=(), camera=()"); // Control browser features
-// Redirect to admin/index.php
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -80,11 +74,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $mail->Host = 'smtp.gmail.com';
                     $mail->SMTPAuth = true;
                     $mail->Username = 'jbbilbao80@gmail.com';  // Your email
-                    $mail->Password = 'axgdjelbsziuzvxa';  // Your app password
+                    $mail->Password = 'vgisipyttnbyrafg';  // Your app password
                     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
                     $mail->Port = 465;
 
-                    $mail->setFrom('jbbilbao80@example.com', 'Madridejos Community College');
+                    $mail->setFrom('jbbilbao80@gmail.com', 'Madridejos Community College');
                     $mail->addAddress($email);
 
                     $mail->isHTML(true);

@@ -1,10 +1,4 @@
 <?php
-// Security Headers
-header("Strict-Transport-Security: max-age=31536000; includeSubDomains; preload"); // Enforces HTTPS
-header("X-Frame-Options: SAMEORIGIN"); // Protects against clickjacking
-header("X-Content-Type-Options: nosniff"); // Prevents MIME type sniffing
-header("Referrer-Policy: no-referrer-when-downgrade"); // Controls referrer information sent with requests
-header("Permissions-Policy: accelerometer=(), autoplay=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()"); // Restricts feature permissions
 
 session_start();
 require_once 'database/db.php';
@@ -189,8 +183,7 @@ function isStepReached($step) {
     <a href="./index.php" class="nav-link"><i class="bi bi-house-door"></i>Home</a>
 
     <a href="admin/verification.php" class="nav-link"><i class="bi bi-person-lock"></i>Admin Dashboard</a>
-
-    <a href="guidance/index.php" class="nav-link"><i class="bi bi-calendar-check"></i> Guidance Office</a>
+    <a href="guidance/verification.php" class="nav-link"><i class="bi bi-calendar-check"></i> Guidance Office</a>
     
     <?php if (isStepReached('step 2')): ?>
     <a href="head/index.php" class="nav-link"><i class="bi bi-person-circle"></i> Department Head</a>

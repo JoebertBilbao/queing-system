@@ -1,22 +1,46 @@
 <?php
-session_start(); // Start session at the beginning of the script
+session_start();
 require '../database/db.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
+    // Verify reCAPTCHA v3
+    $recaptcha_secret = "6LdFIJMqAAAAAIUJqbtrsFofxx7D-Z96oRo1xwFN";
+    $recaptcha_response = $_POST['recaptcha_response'];
+    
+    $verify_url = "https://www.google.com/recaptcha/api/siteverify";
+    $data = [
+        'secret' => $recaptcha_secret,
+        'response' => $recaptcha_response
+    ];
 
-    // Check if user exists
-    $sql = "SELECT * FROM admin WHERE email='$email'";
-    $result = $conn->query($sql);
+    $options = [
+        'http' => [
+            'header' => "Content-type: application/x-www-form-urlencoded\r\n",
+            'method' => 'POST',
+            'content' => http_build_query($data)
+        ]
+    ];
 
-    if ($result->num_rows > 0) {
-        // Verify the password
-        $row = $result->fetch_assoc();
-        if (password_verify($password, $row['password'])) {
-            // Password is correct, set session variables
-            $_SESSION['email'] = $email;
-            $_SESSION['name'] = $row['name'];
+    $context = stream_context_create($options);
+    $verify_response = file_get_contents($verify_url, false, $context);
+    $response_data = json_decode($verify_response);
+
+    // Check if the score is above your threshold (e.g., 0.5)
+    if ($response_data->success && $response_data->score >= 0.5) {
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+
+        // Prepare the SQL statement to prevent SQL injection
+        $stmt = $conn->prepare("SELECT * FROM admin WHERE email=?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            if (password_verify($password, $row['password'])) {
+                $_SESSION['email'] = $email;
+                $_SESSION['name'] = $row['name'];
 
             // Redirect to dashboard or wherever needed
             echo "<!DOCTYPE html>
@@ -43,15 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </html>";
       exit;
   } else {
-      echo "<!DOCTYPE html>
-      <html lang='en'>
-      <head>
-          <meta charset='UTF-8'>
-          <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-          <title>Redirecting...</title>
-          <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
-      </head>
-             <body>
+      echo "
                 <script>
                     Swal.fire({
                         title: 'Error!',
@@ -62,8 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         window.location.href = '../admin/index.php';
                     });
                 </script>
-            </body>
-        </html>";
+           ";
   }
 } else {
   echo "<!DOCTYPE html>
@@ -87,8 +102,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </script>
         </body>
         </html>";
-}
-
-    $conn->close();
 }
 ?>
