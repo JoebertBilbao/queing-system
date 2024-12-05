@@ -42,7 +42,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </html>";
       exit;
   } else {
-      echo "
+      echo " <!DOCTYPE html>
+            <html lang='en'>
+            <head>
+            <meta charset='UTF-8'>
+            <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+            <title>Redirecting...</title>
+            <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+            </head>
+            <body>
                 <script>
                     Swal.fire({
                         title: 'Error!',
@@ -53,7 +61,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         window.location.href = '../head/index.php';
                     });
                 </script>
-           ";
+                </body>
+                </html>";
   }
 } else {
   echo "<!DOCTYPE html>
