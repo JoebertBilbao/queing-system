@@ -1,6 +1,5 @@
 <?php
 // Security Headers
-
 session_start();
 
 // If user is already logged in, redirect to dashboard or home page
@@ -17,20 +16,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'];
 
     // Get the reCAPTCHA response
-    $recaptcha_response = $_POST['g-recaptcha-response'];
+    // $recaptcha_response = $_POST['g-recaptcha-response'];
 
-    // Your reCAPTCHA secret key
-    $secret_key = '6LedFpMqAAAAAP3lE4T-osBEkFWTlQAM_xYJpaXL';
+    // // Your reCAPTCHA secret key
+    // $secret_key = '6LedFpMqAAAAAP3lE4T-osBEkFWTlQAM_xYJpaXL';
 
-    // Verify reCAPTCHA with Google
-    $recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
-    $response = file_get_contents($recaptcha_url . "?secret=$secret_key&response=$recaptcha_response");
-    $response_keys = json_decode($response, true);
+    // // Verify reCAPTCHA with Google
+    // $recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
+    // $response = file_get_contents($recaptcha_url . "?secret=$secret_key&response=$recaptcha_response");
+    // $response_keys = json_decode($response, true);
 
-    // If reCAPTCHA is not successful, show an error
-    if (!$response_keys['success']) {
-        echo "<script>alert('Please complete the reCAPTCHA verification!');</script>";
-    } else {
+    // // If reCAPTCHA is not successful, show an error
+    // if (!$response_keys['success']) {
+    //     echo "<script>alert('Please complete the reCAPTCHA verification!');</script>";
+    // } else {
+{
         // Proceed with checking the email and password (example)
         // Assuming you're using a database to validate user credentials:
         // Example: check_user_credentials($email, $password);
@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="style.css">
     <link href="assets/image/image1.png" rel="icon">
     <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-    <script src="https://www.google.com/recaptcha/api.js?render=6LedFpMqAAAAAPS4EF6Me-DEEOUNS_HIw-lV4T6D"></script>
+    <!-- <script src="https://www.google.com/recaptcha/api.js?render=6LedFpMqAAAAAPS4EF6Me-DEEOUNS_HIw-lV4T6D"></script> -->
 
     <style>
         .password-container {
@@ -182,7 +182,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script>
+    <!-- <script>
     // Replace YOUR_SITE_KEY with your actual site key
     grecaptcha.ready(function() {
         document.getElementById('loginForm').addEventListener('submit', function(event) {
@@ -198,7 +198,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }.bind(this));
         });
     });
-</script>
+</script> -->
     <script>
        const togglePassword = document.querySelector('#togglePassword');
         const password = document.querySelector('#password');
@@ -213,7 +213,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         });
 
     </script>
-  
+
 
     <script type="text/javascript">
         function preventBack(){
