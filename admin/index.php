@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $recaptcha_response = $_POST['g-recaptcha-response'];
 
     // Your reCAPTCHA secret key
-    $secret_key = '6LfFVY8qAAAAAIl2JZR3CuvRws0mNwzvtZjkkVuky';
+    $secret_key = '6LedFpMqAAAAAP3lE4T-osBEkFWTlQAM_xYJpaXL';
 
     // Verify reCAPTCHA with Google
     $recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
@@ -59,7 +59,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="style.css">
     <link href="assets/image/image1.png" rel="icon">
     <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=6LedFpMqAAAAAPS4EF6Me-DEEOUNS_HIw-lV4T6D"></script>
+
     <style>
         .password-container {
             position: relative;
