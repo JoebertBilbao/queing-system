@@ -2,7 +2,7 @@
 session_start();
 require '../database/db.php';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST") 
     // Verify reCAPTCHA v3
     $recaptcha_secret = "6LdFIJMqAAAAAIUJqbtrsFofxx7D-Z96oRo1xwFN";
     $recaptcha_response = $_POST['recaptcha_response'];
@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $response_data = json_decode($verify_response);
 
     // Check if the score is above your threshold (e.g., 0.5)
-    if ($response_data->success && $response_data->score >= 0.5) {
+    if ($response_data->success && $response_data->score >= 0.5) 
         $email = $_POST['email'];
         $password = $_POST['password'];
 
