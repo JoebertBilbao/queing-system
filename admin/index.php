@@ -1,12 +1,11 @@
 <?php
-// Security Headers
 session_start();
 
 // If user is already logged in, redirect to dashboard or home page
-// if (!isset($_SESSION['email'])) {
-//     header('Location: verification.php');
-//     exit();
-// }
+if (!isset($_SESSION['email'])) {
+    header('Location: verification.php');
+    exit();
+}
 
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -16,21 +15,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'];
 
     // Get the reCAPTCHA response
-    // $recaptcha_response = $_POST['g-recaptcha-response'];
+    $recaptcha_response = $_POST['g-recaptcha-response'];
 
-    // // Your reCAPTCHA secret key
-    // $secret_key = '6LedFpMqAAAAAP3lE4T-osBEkFWTlQAM_xYJpaXL';
+    // Your reCAPTCHA secret key
+    $secret_key = '6LfFVY8qAAAAAIl2JZR3CuvRws0mNwzvtZjkkVuky';
 
-    // // Verify reCAPTCHA with Google
-    // $recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
-    // $response = file_get_contents($recaptcha_url . "?secret=$secret_key&response=$recaptcha_response");
-    // $response_keys = json_decode($response, true);
+    // Verify reCAPTCHA with Google
+    $recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
+    $response = file_get_contents($recaptcha_url . "?secret=$secret_key&response=$recaptcha_response");
+    $response_keys = json_decode($response, true);
 
-    // // If reCAPTCHA is not successful, show an error
-    // if (!$response_keys['success']) {
-    //     echo "<script>alert('Please complete the reCAPTCHA verification!');</script>";
-    // } else {
-{
+    // If reCAPTCHA is not successful, show an error
+    if (!$response_keys['success']) {
+        echo "<script>alert('Please complete the reCAPTCHA verification!');</script>";
+    } else {
         // Proceed with checking the email and password (example)
         // Assuming you're using a database to validate user credentials:
         // Example: check_user_credentials($email, $password);
@@ -54,8 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="style.css">
     <link href="assets/image/image1.png" rel="icon">
     <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-    <!-- <script src="https://www.google.com/recaptcha/api.js?render=6LedFpMqAAAAAPS4EF6Me-DEEOUNS_HIw-lV4T6D"></script> -->
-
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <style>
         .password-container {
             position: relative;
@@ -74,83 +71,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             z-index: 1;
         }
     </style>
-
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        height: 100vh;
-        background: url('../assets/image/loginbackground.jpg') no-repeat center center/cover;
-        display: justify;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .container {
-        width: 100%;
-        max-width: 400px;
-        background: #ffffff;
-        border-radius: 8px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        overflow: hidden;
-    }
-
-    .login.form {
-        padding: 20px 30px;
-    }
-
-    header {
-        font-size: 24px;
-        font-weight: bold;
-        text-align: center;
-        margin-bottom: 20px;
-        color: #333;
-    }
-
-    input[type="email"],
-    input[type="password"],
-    .button {
-        width: 100%;
-        padding: 10px;
-        margin: 10px 0;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-sizing: border-box;
-    }
-
-    .button {
-        background: #4e54c8;
-        color: #fff;
-        font-weight: bold;
-        border: none;
-        cursor: pointer;
-    }
-
-    .button:hover {
-        background: #8f94fb;
-    }
-
-    .signup {
-        text-align: center;
-        margin-top: 20px;
-    }
-
-    .signup .btn {
-        background: #4e54c8;
-        color: #fff;
-        font-size: 14px;
-        border: none;
-        padding: 5px 10px;
-        border-radius: 4px;
-        text-decoration: none;
-    }
-
-    .signup .btn:hover {
-        background: #8f94fb;
-    }
-</style>
-
 </head>
 
 <body>
@@ -182,23 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <!-- <script>
-    // Replace YOUR_SITE_KEY with your actual site key
-    grecaptcha.ready(function() {
-        document.getElementById('loginForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent form submission until token is generated
-            grecaptcha.execute('6LedFpMqAAAAAPS4EF6Me-DEEOUNS_HIw-lV4T6D', { action: 'login' }).then(function(token) {
-                // Add the token to a hidden input field
-                const recaptchaResponse = document.createElement('input');
-                recaptchaResponse.type = 'hidden';
-                recaptchaResponse.name = 'recaptcha_response';
-                recaptchaResponse.value = token;
-                this.appendChild(recaptchaResponse);
-                this.submit(); // Submit the form with the token
-            }.bind(this));
-        });
-    });
-</script> -->
+
     <script>
        const togglePassword = document.querySelector('#togglePassword');
         const password = document.querySelector('#password');
@@ -212,8 +116,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             this.classList.toggle('bi-eye-slash');
         });
 
-    </script>
+        function validateForm() {
+            const recaptchaResponse = grecaptcha.getResponse();
 
+            // If reCAPTCHA is not checked
+            if (recaptchaResponse.length === 0) {
+                alert('Please complete the reCAPTCHA verification!');
+                return false;  // Prevent form submission
+            }
+            return true;  // Allow form submission
+        }
+    </script>
 
     <script type="text/javascript">
         function preventBack(){
