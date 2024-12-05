@@ -9,10 +9,10 @@ header("Permissions-Policy: accelerometer=(), autoplay=(), camera=(), geolocatio
 session_start();
 
 // If user is already logged in, redirect to dashboard or home page
-if (!isset($_SESSION['email'])) {
-    header('Location: verification.php');
-    exit();
-}
+// if (!isset($_SESSION['email'])) {
+//     header('Location: verification.php');
+//     exit();
+// }
 
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -200,17 +200,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             this.classList.toggle('bi-eye-slash');
         });
 
-        function validateForm() {
-            const recaptchaResponse = grecaptcha.getResponse();
-
-            // If reCAPTCHA is not checked
-            if (recaptchaResponse.length === 0) {
-                alert('Please complete the reCAPTCHA verification!');
-                return false;  // Prevent form submission
-            }
-            return true;  // Allow form submission
-        }
     </script>
+    <script>
+    // Replace YOUR_SITE_KEY with your actual site key
+    grecaptcha.ready(function() {
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent form submission until token is generated
+            grecaptcha.execute('6LedFpMqAAAAAPS4EF6Me-DEEOUNS_HIw-lV4T6D', { action: 'login' }).then(function(token) {
+                // Add the token to a hidden input field
+                const recaptchaResponse = document.createElement('input');
+                recaptchaResponse.type = 'hidden';
+                recaptchaResponse.name = 'recaptcha_response';
+                recaptchaResponse.value = token;
+                this.appendChild(recaptchaResponse);
+                this.submit(); // Submit the form with the token
+            }.bind(this));
+        });
+    });
+</script>
 
     <script type="text/javascript">
         function preventBack(){
