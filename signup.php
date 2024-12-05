@@ -1,6 +1,6 @@
 
 <?php
-
+// Add HTTP security headers
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $mail->Host = 'smtp.gmail.com';
                     $mail->SMTPAuth = true;
                     $mail->Username = 'jbbilbao80@gmail.com';  // Your email
-                    $mail->Password = 'axgdjelbsziuzvxa';  // Your app password
+                    $mail->Password = 'vgisipyttnbyrafg';  // Your app password
                     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
                     $mail->Port = 465;
 
