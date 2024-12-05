@@ -6,15 +6,12 @@ require_once 'database/db.php';
 function isStepReached($step) {
     global $conn;
     
-    // Create a list of all steps for validation
     $valid_steps = ['step 2', 'step 3', 'step 4', 'step 5', 'step 6', 'step 7', 'Completed'];
     
-    // Ensure the step being checked exists in the flow
     if (!in_array($step, $valid_steps)) {
         return false;
     }
     
-    // SQL Query to check if the user is at or beyond the current step
     $sql = "SELECT COUNT(*) as count FROM users WHERE step_status = ? OR step_status IN (
         SELECT step_status FROM (
             SELECT 'step 3' as step_status
