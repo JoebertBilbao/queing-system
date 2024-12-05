@@ -200,34 +200,34 @@ function isStepReached($step) {
         <img src="assets/image/download.png" alt="Madridejos Community College Logo" width="100" height="80">
         <p>MADRIDEJOS COMMUNITY COLLEGE</p>
     </div>
-    
-    <a href="admin/verification.php" class="nav-link"><i class="bi bi-person-lock"></i>Admin Dashboard</a>
-    <a href="guidance/index.php" class="nav-link"><i class="bi bi-calendar-check"></i> Guidance Office</a>
-    
-    <a href="head/index.php" class="nav-link"><i class="bi bi-person-circle"></i> Department Head</a>
-    
-    <?php if (isStepReached('step 3')): ?>
-    <a href="registrar/index.php" class="nav-link"><i class="bi bi-file-earmark-text"></i> Registrar Office</a>
-    <?php endif; ?>
-    
-    <?php if (isStepReached('step 4')): ?>
-    <a href="ssc/index.php" class="nav-link"><i class="bi bi-clipboard-data"></i> SSC Office</a>
-    <?php endif; ?>
-    
-    <?php if (isStepReached('step 5')): ?>
-    <a href="clinic/index.php" class="nav-link"><i class="bi bi-heart"></i> Clinic Office</a>
-    <?php endif; ?>
-    
-    <?php if (isStepReached('step 6')): ?>
-    <a href="mccea/index.php" class="nav-link"><i class="bi bi-gear"></i> MCCEA Office</a>
-    <?php endif; ?>
-    
-    <?php if (isStepReached('step 7')): ?>
-    <a href="cor/index.php" class="nav-link"><i class="bi bi-file-earmark-code"></i> COR</a>
-    <?php endif; ?>
-</div>
-    <a href="index.php" class="nav-link"><i class="bi bi-house-door"></i>Home</a>
-   
+
+    <div class="nav-links">
+        <a href="admin/verification.php" class="nav-link"><i class="bi bi-person-lock"></i>Admin Dashboard</a>
+        <a href="guidance/index.php" class="nav-link"><i class="bi bi-calendar-check"></i> Guidance Office</a>
+        <a href="head/index.php" class="nav-link"><i class="bi bi-person-circle"></i> Department Head</a>
+
+        <?php if (isStepReached('step 3')): ?>
+        <a href="registrar/index.php" class="nav-link"><i class="bi bi-file-earmark-text"></i> Registrar Office</a>
+        <?php endif; ?>
+
+        <?php if (isStepReached('step 4')): ?>
+        <a href="ssc/index.php" class="nav-link"><i class="bi bi-clipboard-data"></i> SSC Office</a>
+        <?php endif; ?>
+
+        <?php if (isStepReached('step 5')): ?>
+        <a href="clinic/index.php" class="nav-link"><i class="bi bi-heart"></i> Clinic Office</a>
+        <?php endif; ?>
+
+        <?php if (isStepReached('step 6')): ?>
+        <a href="mccea/index.php" class="nav-link"><i class="bi bi-gear"></i> MCCEA Office</a>
+        <?php endif; ?>
+
+        <?php if (isStepReached('step 7')): ?>
+        <a href="cor/index.php" class="nav-link"><i class="bi bi-file-earmark-code"></i> COR</a>
+        <?php endif; ?>
+    </div>
+
+    <a href="index.php" class="nav-link home-link"><i class="bi bi-house-door"></i>Home</a>
 </div>
     <div class="main-content">
         <div class="login-box">
