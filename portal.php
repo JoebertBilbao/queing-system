@@ -65,15 +65,24 @@ function isStepReached($step) {
 }
 
 .sidebar {
+    display: flex;
+    flex-direction: column;
     width: 250px;
-    background-color: rgba(255, 255, 255, 0.8); /* Solid background color or slight transparency */
+    background-color: rgba(255, 255, 255, 0.8);
     height: 100vh;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     position: fixed;
     top: 0;
     left: 0;
-    overflow-y: auto; /* Ensure content in the sidebar is scrollable if necessary */
-    z-index: 1000; /* Ensure sidebar stays above other content */
+    overflow-y: auto;
+    z-index: 1000;
+}
+
+.sidebar .nav-links {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .sidebar .nav-link {
@@ -97,6 +106,10 @@ function isStepReached($step) {
 .sidebar .dashboard-link {
     margin-bottom: 20px;
     font-weight: bold;
+}
+
+.sidebar .home-link {
+    margin-top: auto;
 }
 
 .main-content {
