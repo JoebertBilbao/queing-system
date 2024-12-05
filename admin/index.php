@@ -2,10 +2,10 @@
 session_start();
 
 // If user is already logged in, redirect to dashboard or home page
-if (!isset($_SESSION['email'])) {
-    header('Location: verification.php');
-    exit();
-}
+// if (!isset($_SESSION['email'])) {
+//     header('Location: verification.php');
+//     exit();
+// }
 
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
