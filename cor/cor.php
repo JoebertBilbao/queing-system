@@ -37,7 +37,7 @@ $result = $conn->query($sql);
                                 <table class="table app-table-hover mb-0 text-left">
                                     <thead>
                                         <tr>
-                                            <th class="cell">ID</th>
+                                            <th class="cell">Queue Numbers</th>
                                             <th class="cell">Student Name</th>
                                             <th class="cell">Email</th>
                                             <th class="cell">Course</th>
