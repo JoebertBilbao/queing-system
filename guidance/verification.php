@@ -82,6 +82,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["email"])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Access</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="assets/image/image1.png" rel="icon">
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+
     <style>
         body {
             font-family: Arial, sans-serif;
