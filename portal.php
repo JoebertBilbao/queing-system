@@ -213,7 +213,7 @@ function isStepReached($step) {
     <a href="cor/index.php" class="nav-link"><i class="bi bi-file-earmark-code"></i> COR</a>
     <?php endif; ?>
     
-    <a href="./index.php" class="nav-link"><i class="bi bi-house-door"></i>Home</a>
+    <a href="index.php" class="nav-link"><i class="bi bi-house-door"></i>Home</a>
 </div>
     <div class="main-content">
         <div class="login-box">
