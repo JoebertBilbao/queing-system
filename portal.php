@@ -225,7 +225,7 @@ function isStepReached($step) {
     <?php if (isStepReached('step 7')): ?>
     <a href="cor/index.php" class="nav-link"><i class="bi bi-file-earmark-code"></i> COR</a>
     <?php endif; ?>
-
+</div>
     <a href="index.php" class="nav-link"><i class="bi bi-house-door"></i>Home</a>
    
 </div>
