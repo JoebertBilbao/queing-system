@@ -195,7 +195,9 @@ function isStepReached($step) {
     <a href="admin/verification.php" class="nav-link"><i class="bi bi-person-lock"></i>Admin Dashboard</a>
     <a href="guidance/index.php" class="nav-link"><i class="bi bi-calendar-check"></i> Guidance Office</a>
     
+    <?php if (isStepReached('step 2')): ?>
     <a href="head/index.php" class="nav-link"><i class="bi bi-person-circle"></i> Department Head</a>
+    <?php endif; ?>
     
     <?php if (isStepReached('step 3')): ?>
     <a href="registrar/index.php" class="nav-link"><i class="bi bi-file-earmark-text"></i> Registrar Office</a>
@@ -216,9 +218,6 @@ function isStepReached($step) {
     <?php if (isStepReached('step 7')): ?>
     <a href="cor/index.php" class="nav-link"><i class="bi bi-file-earmark-code"></i> COR</a>
     <?php endif; ?>
-
-   
- 
 </div>
     <div class="main-content">
         <div class="login-box">
