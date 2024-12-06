@@ -22,7 +22,7 @@ session_start();
     <link rel="stylesheet" href="style.css">
     <link href="assets/image/image1.png" rel="icon">
     <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-    <script src="https://www.google.com/recaptcha/api.js?render=6Lc5vpMqAAAAAAHfQRLLKecEzxABTqVScyZE3m6W"></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=6Lf7v5MqAAAAAHAS17zYdJ4RDc7UFkQfRVxWT0JL"></script>
     <style>
         .password-container {
             position: relative;
@@ -217,7 +217,7 @@ session_start();
                 // Proceed with reCAPTCHA
                 e.preventDefault();
                 grecaptcha.ready(function() {
-                    grecaptcha.execute('6Lc5vpMqAAAAAAHfQRLLKecEzxABTqVScyZE3m6W', {action: 'login'}).then(function(token) {
+                    grecaptcha.execute('6Lf7v5MqAAAAAHAS17zYdJ4RDc7UFkQfRVxWT0JL', {action: 'login'}).then(function(token) {
                         document.getElementById('recaptchaResponse').value = token;
                         loginForm.submit();
                     });
