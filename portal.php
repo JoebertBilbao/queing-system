@@ -1,22 +1,21 @@
 <?php
 
-
 session_start();
 require_once 'database/db.php';
 
 function isStepReached($step) {
     global $conn;
     
-    // Define valid steps in order of progression
+    // Define valid steps in order of progression with numeric and string representations
     $valid_steps = [
-        'not started' => 0,
         'step 2' => 2,
         'step 3' => 3,
         'step 4' => 4,
         'step 5' => 5,
         'step 6' => 6,
         'step 7' => 7,
-        'Completed' => 8
+        'Completed' => 8,
+        'in process' => 1  // Add this line to handle "in process" status
     ];
     
     // Check if the step is valid
@@ -24,11 +23,11 @@ function isStepReached($step) {
         return false;
     }
     
-    // Retrieve the current user's step based on session
+    // Retrieve the current user's step based on queue or session
     if (isset($_SESSION['user_id'])) {
         $user_id = $_SESSION['user_id'];
         
-        $sql = "SELECT step_status FROM users WHERE id = ? AND verified = 1";
+        $sql = "SELECT step_status FROM users WHERE id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("i", $user_id);
         $stmt->execute();
@@ -38,13 +37,21 @@ function isStepReached($step) {
             $row = $result->fetch_assoc();
             $user_current_step = $row['step_status'];
             
+            error_log("Checking step: $step, User current step: $user_current_step");
+            
+            // Ensure the user's current step is in our valid steps
+            if (!isset($valid_steps[$user_current_step])) {
+                error_log("Unknown step status: $user_current_step");
+                return false;
+            }
+            
             // Check if the requested step is less than or equal to the user's current step
-            // Also ensure the user is verified
             return $valid_steps[$step] <= $valid_steps[$user_current_step];
         }
     }
     
     return false;
+
 }
 
 ?>
@@ -78,24 +85,15 @@ function isStepReached($step) {
 }
 
 .sidebar {
-    display: flex;
-    flex-direction: column;
     width: 250px;
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 0.8); /* Solid background color or slight transparency */
     height: 100vh;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     position: fixed;
     top: 0;
     left: 0;
-    overflow-y: auto;
-    z-index: 1000;
-}
-
-.sidebar .nav-links {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    overflow-y: auto; /* Ensure content in the sidebar is scrollable if necessary */
+    z-index: 1000; /* Ensure sidebar stays above other content */
 }
 
 .sidebar .nav-link {
@@ -119,10 +117,6 @@ function isStepReached($step) {
 .sidebar .dashboard-link {
     margin-bottom: 20px;
     font-weight: bold;
-}
-
-.sidebar .home-link {
-    margin-top: auto;
 }
 
 .main-content {
@@ -218,9 +212,9 @@ function isStepReached($step) {
     <a href="guidance/index.php" class="nav-link"><i class="bi bi-calendar-check"></i> Guidance Office</a>
     
     <?php if (isStepReached('step 2')): ?>
-    <a href="head/index.php" class="nav-link"><i class="bi bi-person-circle"></i> Department Head</a>
-    <?php endif; ?>
-    
+<a href="head/index.php" class="nav-link"><i class="bi bi-person-circle"></i> Department Head</a>
+<?php endif; ?>
+
     <?php if (isStepReached('step 3')): ?>
     <a href="registrar/index.php" class="nav-link"><i class="bi bi-file-earmark-text"></i> Registrar Office</a>
     <?php endif; ?>
@@ -240,6 +234,9 @@ function isStepReached($step) {
     <?php if (isStepReached('step 7')): ?>
     <a href="cor/index.php" class="nav-link"><i class="bi bi-file-earmark-code"></i> COR</a>
     <?php endif; ?>
+
+ 
+ 
 </div>
     <div class="main-content">
         <div class="login-box">
