@@ -2,11 +2,28 @@
 session_start();
 require '../database/db.php';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") 
+// Set login attempt limit and lockout duration
+$max_attempts = 3;
+$lockout_duration = 300; // 5 minutes in seconds
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Initialize session variables if not set
+    if (!isset($_SESSION['login_attempts'])) {
+        $_SESSION['login_attempts'] = 0;
+        $_SESSION['last_attempt_time'] = time();
+    }
+
+    // Check if user is locked out
+    $time_since_last_attempt = time() - $_SESSION['last_attempt_time'];
+    if ($_SESSION['login_attempts'] >= $max_attempts && $time_since_last_attempt < $lockout_duration) {
+        showError("Too many failed attempts. Please try again after " . (int)(($lockout_duration - $time_since_last_attempt) / 60) . " minute(s).");
+        exit();
+    }
+
     // Verify reCAPTCHA v3
-    $recaptcha_secret = "6LdFIJMqAAAAAIUJqbtrsFofxx7D-Z96oRo1xwFN";
+    $recaptcha_secret = "6LfwuJMqAAAAAAlMLXk2WIG1RFbSHbVfY6muKY_y";
     $recaptcha_response = $_POST['recaptcha_response'];
-    
+
     $verify_url = "https://www.google.com/recaptcha/api/siteverify";
     $data = [
         'secret' => $recaptcha_secret,
@@ -25,8 +42,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     $verify_response = file_get_contents($verify_url, false, $context);
     $response_data = json_decode($verify_response);
 
-    // Check if the score is above your threshold (e.g., 0.5)
-    if ($response_data->success && $response_data->score >= 0.5) 
+    // Check reCAPTCHA score
+    if ($response_data->success && $response_data->score >= 0.5) {
         $email = $_POST['email'];
         $password = $_POST['password'];
 
@@ -39,68 +56,79 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
             if (password_verify($password, $row['password'])) {
+                // Reset login attempts after successful login
+                $_SESSION['login_attempts'] = 0;
+
                 $_SESSION['email'] = $email;
                 $_SESSION['name'] = $row['name'];
 
-            // Redirect to dashboard or wherever needed
-            echo "<!DOCTYPE html>
-            <html lang='en'>
-            <head>
-                <meta charset='UTF-8'>
-                <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-                <title>Redirecting...</title>
-                <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
-            </head>
-            <body>
-                <script>
-                    Swal.fire({
-                        title: 'Success!',
-                        text: 'Login successful. Redirecting!...',
-                        icon: 'success',
-                        timer: 1500,
-                        showConfirmButton: false
-                    }).then(() => {
-                        window.location.href = '../admin/admin.php';
-                    });
-                </script>
-            </body>
-            </html>";
-      exit;
-  } else {
-      echo "
-                <script>
-                    Swal.fire({
-                        title: 'Error!',
-                        text: 'Invalid password.',
-                        icon: 'error',
-                        confirmButtonText: 'Try Again!'
-                    }).then(() => {
-                        window.location.href = '../admin/index.php';
-                    });
-                </script>
-           ";
-  }
-} else {
-  echo "<!DOCTYPE html>
-        <html lang='en'>
-        <head>
-            <meta charset='UTF-8'>
-            <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-            <title>Login Error</title>
-            <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
-        </head>
-        <body>
-            <script>
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'No user found with this email.',
-                    icon: 'error',
-                    confirmButtonText: 'Try Again!'
-                }).then(() => {
-                    window.location.href = '../admin/index.php';
-                });
-            </script>
-        </body>
-        </html>";
+                echo "<!DOCTYPE html>
+                <html lang='en'>
+                <head>
+                    <meta charset='UTF-8'>
+                    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+                    <title>Redirecting...</title>
+                    <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+                </head>
+                <body>
+                    <script>
+                        Swal.fire({
+                            title: 'Success!',
+                            text: 'Login successful. Redirecting!...',
+                            icon: 'success',
+                            timer: 1500,
+                            showConfirmButton: false
+                        }).then(() => {
+                            window.location.href = '../admin/admin.php';
+                        });
+                    </script>
+                </body>
+                </html>";
+                exit();
+            } else {
+                // Invalid password
+                logFailedAttempt();
+                showError('Invalid password.');
+            }
+        } else {
+            // No user found
+            logFailedAttempt();
+            showError('No user found with this email.');
+        }
+        $stmt->close();
+    } else {
+        logFailedAttempt();
+        showError('reCAPTCHA verification failed. Please try again.');
+    }
+    $conn->close();
+}
+
+function logFailedAttempt() {
+    $_SESSION['login_attempts']++;
+    $_SESSION['last_attempt_time'] = time();
+}
+
+function showError($message) {
+    echo "<!DOCTYPE html>
+    <html lang='en'>
+    <head>
+        <meta charset='UTF-8'>
+        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+        <title>Login Error</title>
+        <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+    </head>
+    <body>
+        <script>
+            Swal.fire({
+                title: 'Error!',
+                text: '$message',
+                icon: 'error',
+                confirmButtonText: 'Try Again!'
+            }).then(() => {
+                window.location.href = '../admin/index.php';
+            });
+        </script>
+    </body>
+    </html>";
 }
 ?>

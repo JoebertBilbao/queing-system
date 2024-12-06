@@ -1,11 +1,4 @@
 <?php
-// Security Headers
-header("Strict-Transport-Security: max-age=31536000; includeSubDomains; preload"); // Enforces HTTPS
-header("X-Frame-Options: SAMEORIGIN"); // Protects against clickjacking
-header("X-Content-Type-Options: nosniff"); // Prevents MIME type sniffing
-header("Referrer-Policy: no-referrer-when-downgrade"); // Controls referrer information sent with requests
-header("Permissions-Policy: accelerometer=(), autoplay=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()"); // Restricts feature permissions
-
 session_start();
 
 // If user is already logged in, redirect to dashboard or home page
@@ -28,7 +21,7 @@ session_start();
     <link rel="stylesheet" href="style.css">
     <link href="assets/image/image1.png" rel="icon">
     <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-    <script src="https://www.google.com/recaptcha/api.js?render=6LdFIJMqAAAAAH0vjDOmg_Rglga--nbBzT7OA3jy"></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=6LfwuJMqAAAAAF_qbiZdDD3ZAxP-u-XxRLtYCm1x"></script>
     <style>
         .password-container {
             position: relative;
@@ -169,12 +162,64 @@ session_start();
             this.classList.toggle('bi-eye-slash');
         });
 
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            grecaptcha.ready(function() {
-                grecaptcha.execute('6LdFIJMqAAAAAH0vjDOmg_Rglga--nbBzT7OA3jy', {action: 'login'}).then(function(token) {
-                    document.getElementById('recaptchaResponse').value = token;
-                    document.getElementById('loginForm').submit();
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.getElementById('loginForm');
+            const MAX_ATTEMPTS = 3;
+            const LOCKOUT_DURATION = 5 * 60 * 1000; // 5 minutes in milliseconds
+
+            function checkLoginAttempts() {
+                const attempts = JSON.parse(localStorage.getItem('loginAttempts') || '{}');
+                const currentTime = new Date().getTime();
+
+                // Check if current browser attempt exists and is within lockout period
+                if (attempts.count >= MAX_ATTEMPTS && 
+                    currentTime - attempts.timestamp < LOCKOUT_DURATION) {
+                    const remainingTime = Math.ceil((LOCKOUT_DURATION - (currentTime - attempts.timestamp)) / 1000 / 60);
+                    
+                    Swal.fire({
+                        title: 'Too Many Attempts',
+                        text: `You have been locked out. Please try again after ${remainingTime} minute(s).`,
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                    return false;
+                }
+                return true;
+            }
+
+            function incrementLoginAttempts() {
+                const attempts = JSON.parse(localStorage.getItem('loginAttempts') || '{}');
+                const currentTime = new Date().getTime();
+
+                // Reset attempts if lockout period has passed
+                if (!attempts.count || currentTime - attempts.timestamp >= LOCKOUT_DURATION) {
+                    attempts.count = 1;
+                    attempts.timestamp = currentTime;
+                } else {
+                    attempts.count = (attempts.count || 0) + 1;
+                    attempts.timestamp = currentTime;
+                }
+
+                localStorage.setItem('loginAttempts', JSON.stringify(attempts));
+            }
+
+            loginForm.addEventListener('submit', function(e) {
+                // First check existing attempts
+                if (!checkLoginAttempts()) {
+                    e.preventDefault();
+                    return false;
+                }
+
+                // Increment attempts before form submission
+                incrementLoginAttempts();
+
+                // Proceed with reCAPTCHA
+                e.preventDefault();
+                grecaptcha.ready(function() {
+                    grecaptcha.execute('6LfwuJMqAAAAAF_qbiZdDD3ZAxP-u-XxRLtYCm1x', {action: 'login'}).then(function(token) {
+                        document.getElementById('recaptchaResponse').value = token;
+                        loginForm.submit();
+                    });
                 });
             });
         });
