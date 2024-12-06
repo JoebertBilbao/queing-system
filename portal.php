@@ -7,22 +7,42 @@ require_once 'database/db.php';
 function isStepReached($step) {
    global $conn;
    
-   $valid_steps = ['step 2', 'step 3', 'step 4', 'step 5', 'step 6', 'step 7', 'Completed'];
+   // Define valid steps in order of progression
+   $valid_steps = [
+       'step 2' => 2,
+       'step 3' => 3,
+       'step 4' => 4,
+       'step 5' => 5,
+       'step 6' => 6,
+       'step 7' => 7,
+       'Completed' => 8
+   ];
    
-   if (!in_array($step, $valid_steps)) {
+   // Check if the step is valid
+   if (!isset($valid_steps[$step])) {
        return false;
    }
    
-   $sql = "SELECT COUNT(*) as count FROM users WHERE 
-           FIND_IN_SET(step_status, 'step 2,step 3,step 4,step 5,step 6,step 7,Completed') 
-           >= FIND_IN_SET(?, 'step 2,step 3,step 4,step 5,step 6,step 7,Completed')";
+   // Retrieve the current user's step based on queue or session
+   if (isset($_SESSION['user_id'])) {
+       $user_id = $_SESSION['user_id'];
+       
+       $sql = "SELECT step_status FROM users WHERE id = ?";
+       $stmt = $conn->prepare($sql);
+       $stmt->bind_param("i", $user_id);
+       $stmt->execute();
+       $result = $stmt->get_result();
+       
+       if ($result->num_rows > 0) {
+           $row = $result->fetch_assoc();
+           $user_current_step = $row['step_status'];
+           
+           // Check if the requested step is less than or equal to the user's current step
+           return $valid_steps[$step] <= $valid_steps[$user_current_step];
+       }
+   }
    
-   $stmt = $conn->prepare($sql);
-   $stmt->bind_param("s", $step);
-   $stmt->execute();
-   $result = $stmt->get_result();
-   $row = $result->fetch_assoc();
-   return $row['count'] > 0;
+   return false;
 }
 
 ?>
