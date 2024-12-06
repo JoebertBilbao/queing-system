@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Verify reCAPTCHA v3
-    $recaptcha_secret = "6Lc5vpMqAAAAANE-_jqvUCQyETTNiF9M7hZyQfDL";
+    $recaptcha_secret = "6Lf7v5MqAAAAAA9swkU7XUS5GoojYAwKUvJpJEMl";
     $recaptcha_response = $_POST['recaptcha_response'];
 
     $verify_url = "https://www.google.com/recaptcha/api/siteverify";
