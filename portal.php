@@ -5,44 +5,46 @@ session_start();
 require_once 'database/db.php';
 
 function isStepReached($step) {
-   global $conn;
-   
-   // Define valid steps in order of progression
-   $valid_steps = [
-       'step 2' => 2,
-       'step 3' => 3,
-       'step 4' => 4,
-       'step 5' => 5,
-       'step 6' => 6,
-       'step 7' => 7,
-       'Completed' => 8
-   ];
-   
-   // Check if the step is valid
-   if (!isset($valid_steps[$step])) {
-       return false;
-   }
-   
-   // Retrieve the current user's step based on queue or session
-   if (isset($_SESSION['user_id'])) {
-       $user_id = $_SESSION['user_id'];
-       
-       $sql = "SELECT step_status FROM users WHERE id = ?";
-       $stmt = $conn->prepare($sql);
-       $stmt->bind_param("i", $user_id);
-       $stmt->execute();
-       $result = $stmt->get_result();
-       
-       if ($result->num_rows > 0) {
-           $row = $result->fetch_assoc();
-           $user_current_step = $row['step_status'];
-           
-           // Check if the requested step is less than or equal to the user's current step
-           return $valid_steps[$step] <= $valid_steps[$user_current_step];
-       }
-   }
-   
-   return false;
+    global $conn;
+    
+    // Define valid steps in order of progression
+    $valid_steps = [
+        'not started' => 0,
+        'step 2' => 2,
+        'step 3' => 3,
+        'step 4' => 4,
+        'step 5' => 5,
+        'step 6' => 6,
+        'step 7' => 7,
+        'Completed' => 8
+    ];
+    
+    // Check if the step is valid
+    if (!isset($valid_steps[$step])) {
+        return false;
+    }
+    
+    // Retrieve the current user's step based on session
+    if (isset($_SESSION['user_id'])) {
+        $user_id = $_SESSION['user_id'];
+        
+        $sql = "SELECT step_status FROM users WHERE id = ? AND verified = 1";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $user_current_step = $row['step_status'];
+            
+            // Check if the requested step is less than or equal to the user's current step
+            // Also ensure the user is verified
+            return $valid_steps[$step] <= $valid_steps[$user_current_step];
+        }
+    }
+    
+    return false;
 }
 
 ?>
