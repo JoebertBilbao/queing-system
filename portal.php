@@ -1,30 +1,48 @@
 <?php
 
+
 session_start();
 require_once 'database/db.php';
 
 function isStepReached($step) {
-    global $conn;
-    $sql = "SELECT COUNT(*) as count FROM users WHERE step_status = ? OR step_status IN (
-        SELECT step_status FROM (
-            SELECT 'step 2' as step_status
-            UNION SELECT 'step 3'
-            UNION SELECT 'step 4'
-            UNION SELECT 'step 5'
-            UNION SELECT 'step 6'
-            UNION SELECT 'step 7'
-            UNION SELECT 'Completed'
-        ) AS steps 
-        WHERE FIND_IN_SET(step_status, 'step 2,step 3,step 4,step 5,step 6,step 7,Completed') > 
-              FIND_IN_SET(?, 'step 2,step 3,step 4,step 5,step 6,step 7,Completed')
-    )";
-    
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ss", $step, $step);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $row = $result->fetch_assoc();
-    return $row['count'] > 0;
+   global $conn;
+   
+   // Define valid steps in order of progression
+   $valid_steps = [
+       'step 2' => 2,
+       'step 3' => 3,
+       'step 4' => 4,
+       'step 5' => 5,
+       'step 6' => 6,
+       'step 7' => 7,
+       'Completed' => 8
+   ];
+   
+   // Check if the step is valid
+   if (!isset($valid_steps[$step])) {
+       return false;
+   }
+   
+   // Retrieve the current user's step based on queue or session
+   if (isset($_SESSION['user_id'])) {
+       $user_id = $_SESSION['user_id'];
+       
+       $sql = "SELECT step_status FROM users WHERE id = ?";
+       $stmt = $conn->prepare($sql);
+       $stmt->bind_param("i", $user_id);
+       $stmt->execute();
+       $result = $stmt->get_result();
+       
+       if ($result->num_rows > 0) {
+           $row = $result->fetch_assoc();
+           $user_current_step = $row['step_status'];
+           
+           // Check if the requested step is less than or equal to the user's current step
+           return $valid_steps[$step] <= $valid_steps[$user_current_step];
+       }
+   }
+   
+   return false;
 }
 
 ?>
@@ -58,15 +76,24 @@ function isStepReached($step) {
 }
 
 .sidebar {
+    display: flex;
+    flex-direction: column;
     width: 250px;
-    background-color: rgba(255, 255, 255, 0.8); /* Solid background color or slight transparency */
+    background-color: rgba(255, 255, 255, 0.8);
     height: 100vh;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     position: fixed;
     top: 0;
     left: 0;
-    overflow-y: auto; /* Ensure content in the sidebar is scrollable if necessary */
-    z-index: 1000; /* Ensure sidebar stays above other content */
+    overflow-y: auto;
+    z-index: 1000;
+}
+
+.sidebar .nav-links {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .sidebar .nav-link {
@@ -90,6 +117,10 @@ function isStepReached($step) {
 .sidebar .dashboard-link {
     margin-bottom: 20px;
     font-weight: bold;
+}
+
+.sidebar .home-link {
+    margin-top: auto;
 }
 
 .main-content {
@@ -178,10 +209,11 @@ function isStepReached($step) {
 <div class="sidebar">
     <div class="header">
         <img src="assets/image/download.png" alt="Madridejos Community College Logo" width="100" height="80">
-        <p>MADRIDEJOS COMMUNITY COLLEGE</p>   
+        <p>MADRIDEJOS COMMUNITY COLLEGE</p>
     </div>
+    <a href="index.php" class="nav-link"><i class="bi bi-house-door"></i>Home</a>
     <a href="admin/verification.php" class="nav-link"><i class="bi bi-person-lock"></i>Admin Dashboard</a>
-    <a href="guidance/verification.php" class="nav-link"><i class="bi bi-calendar-check"></i> Guidance Office</a>
+    <a href="guidance/index.php" class="nav-link"><i class="bi bi-calendar-check"></i> Guidance Office</a>
     
     <?php if (isStepReached('step 2')): ?>
     <a href="head/index.php" class="nav-link"><i class="bi bi-person-circle"></i> Department Head</a>
@@ -206,8 +238,6 @@ function isStepReached($step) {
     <?php if (isStepReached('step 7')): ?>
     <a href="cor/index.php" class="nav-link"><i class="bi bi-file-earmark-code"></i> COR</a>
     <?php endif; ?>
-    <a href="./index.php" class="nav-link"><i class="bi bi-house-door"></i>Home</a>
-    
 </div>
     <div class="main-content">
         <div class="login-box">
