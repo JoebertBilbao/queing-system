@@ -6,33 +6,47 @@ require_once 'database/db.php';
 function isStepReached($step) {
     global $conn;
 
-    // Define valid steps in order of progression
-    $valid_steps = [
-        'step 2',
-        'step 3',
-        'step 4',
-        'step 5',
-        'step 6',
-        'step 7',
-        'Completed',
-        'in process',
+    // Define the step progression sequence with numeric rankings
+    $stepOrder = [
+        'in process' => 1,
+        'step 2' => 2,
+        'step 3' => 3,
+        'step 4' => 4,
+        'step 5' => 5,
+        'step 6' => 6,
+        'step 7' => 7,
+        'Completed' => 8,
     ];
 
     // Check if the step is valid
-    if (!in_array($step, $valid_steps)) {
-        return false;
+    if (!isset($stepOrder[$step])) {
+        return false; // Invalid step
     }
 
-    // Query to check if any student is in the given step
-    $sql = "SELECT COUNT(*) AS step_count FROM users WHERE step_status = ?";
+    // Get the numeric ranking of the required step
+    $requiredRank = $stepOrder[$step];
+
+    // Query to check if any student has reached or surpassed the given step
+    $sql = "SELECT COUNT(*) AS step_count 
+            FROM users 
+            WHERE step_status IN (
+                SELECT step_status 
+                FROM users 
+                WHERE FIND_IN_SET(step_status, ?) > 0
+            )";
+    
+    $stepsToCheck = implode(',', array_keys(array_filter($stepOrder, function ($rank) use ($requiredRank) {
+        return $rank >= $requiredRank; // Include all steps up to and beyond the current one
+    })));
+
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $step);
+    $stmt->bind_param("s", $stepsToCheck);
     $stmt->execute();
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
-        return $row['step_count'] > 0; // Return true if at least one student is in the step
+        return $row['step_count'] > 0; // Return true if at least one student qualifies
     }
 
     return false;
