@@ -1,5 +1,3 @@
-
-<<<<<<< HEAD
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -55,5 +53,3 @@ $result = $conn->query($sql);
     ?>
 </body>
 </html>
-=======
->>>>>>> 6df438d3714dcd4c42461b7cca9dca1879d8bf02
