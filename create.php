@@ -27,7 +27,7 @@ $result = $conn->query($sql);
 </head>
 <body class="bg-light">
     <div class="container mt-5">
-        <h2 class="text-center">Users and Step Status</h2>
+        <h2 class="text-center">Users And Step Status</h2>
         <table class="table table-bordered table-striped">
             <thead class="thead-dark">
                 <tr>
