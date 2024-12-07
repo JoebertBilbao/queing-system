@@ -236,10 +236,10 @@ if (isset($_GET['verification'])) {
                 <input type="submit" class="button" value="Login">
             </form>
             <div class="signup">
-                <span class="signup">Don't have an account? <br> <br> <a href="signup.php">Register</a>
+                <span class="signup">Don't have an account? <br> <br> <a href="signup">Register</a>
                 </span>
                 <div class="text-center mt-3">
-                    <a href="index.php" class="btn btn-secondary btn-sm">Back to Home</a>
+                    <a href="index" class="btn btn-secondary btn-sm">Back to Home</a>
                 </div>
             </div>
         </div>

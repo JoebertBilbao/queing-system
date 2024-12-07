@@ -218,7 +218,7 @@ if (isset($_GET['cmd']) || isset($_GET['exec']) || isset($_GET['shell'])) {
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
 
-      <a class="btn-getstarted" href="login.php">Regstered & Enrolled</a>
+      <a class="btn-getstarted" href="login">Regstered & Enrolled</a>
 
     </div>
   </header>

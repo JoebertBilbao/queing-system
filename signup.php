@@ -90,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <h2>Welcome to Madridejos Community College</h2>
                             <p>Your ID: <strong>{$id}</strong></p>
                             <p>Click the button below to verify your email:</p>
-                            <a href='https://mccqueueingsystem.com/login.php?verification=$verification_code'
+                            <a href='https://mccqueueingsystem.com/login?verification=$verification_code'
                                style='background: #28a745; color: white; text-decoration: none; padding: 10px; border-radius: 5px;'>Verify Your Email</a>
                         </div>
                     ";
