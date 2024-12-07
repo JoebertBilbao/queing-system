@@ -133,12 +133,12 @@ session_start();
                 <input type="hidden" name="recaptcha_response" id="recaptchaResponse">
 
                 <input type="submit" class="button" value="Login">
-                <a href="forgot-password.php" style=" float:right;">Forgot Password?</a>
+                <a href="forgot-password" style=" float:right;">Forgot Password?</a>
             </form>
 
             <div class="signup">
                 <div class="text-center mt-3">
-                    <a href="../portal.php" class="btn btn-secondary btn-sm">Back to Home</a>
+                    <a href="../portal" class="btn btn-secondary btn-sm">Back to Home</a>
                 </div>
             </div>
         </div>

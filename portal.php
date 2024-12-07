@@ -206,32 +206,32 @@ function isStepReached($step) {
         <img src="assets/image/download.png" alt="Madridejos Community College Logo" width="100" height="80">
         <p>MADRIDEJOS COMMUNITY COLLEGE</p>
     </div>
-    <a href="index.php" class="nav-link"><i class="bi bi-house-door"></i>Home</a>
-    <a href="admin/verification.php" class="nav-link"><i class="bi bi-person-lock"></i>Admin Dashboard</a>
-    <a href="guidance/index.php" class="nav-link"><i class="bi bi-calendar-check"></i> Guidance Office</a>
+    <a href="index" class="nav-link"><i class="bi bi-house-door"></i>Home</a>
+    <a href="admin/verification" class="nav-link"><i class="bi bi-person-lock"></i>Admin Dashboard</a>
+    <a href="guidance/index" class="nav-link"><i class="bi bi-calendar-check"></i> Guidance Office</a>
     
    <?php if (isStepReached('step 2')): ?>
-    <a href="head/index.php" class="nav-link"><i class="bi bi-person-circle"></i> Department Head</a>
+    <a href="head/index" class="nav-link"><i class="bi bi-person-circle"></i> Department Head</a>
 <?php endif; ?>
 
 <?php if (isStepReached('step 3')): ?>
-    <a href="registrar/index.php" class="nav-link"><i class="bi bi-file-earmark-text"></i> Registrar Office</a>
+    <a href="registrar/index" class="nav-link"><i class="bi bi-file-earmark-text"></i> Registrar Office</a>
 <?php endif; ?>
 
 <?php if (isStepReached('step 4')): ?>
-    <a href="ssc/index.php" class="nav-link"><i class="bi bi-clipboard-data"></i> SSC Office</a>
+    <a href="ssc/index" class="nav-link"><i class="bi bi-clipboard-data"></i> SSC Office</a>
 <?php endif; ?>
 
 <?php if (isStepReached('step 5')): ?>
-    <a href="clinic/index.php" class="nav-link"><i class="bi bi-heart"></i> Clinic Office</a>
+    <a href="clinic/index" class="nav-link"><i class="bi bi-heart"></i> Clinic Office</a>
 <?php endif; ?>
 
 <?php if (isStepReached('step 6')): ?>
-    <a href="mccea/index.php" class="nav-link"><i class="bi bi-gear"></i> MCCEA Office</a>
+    <a href="mccea/index" class="nav-link"><i class="bi bi-gear"></i> MCCEA Office</a>
 <?php endif; ?>
 
 <?php if (isStepReached('step 7')): ?>
-    <a href="cor/index.php" class="nav-link"><i class="bi bi-file-earmark-code"></i> COR</a>
+    <a href="cor/index" class="nav-link"><i class="bi bi-file-earmark-code"></i> COR</a>
 <?php endif; ?>
 </div>
     <div class="main-content">

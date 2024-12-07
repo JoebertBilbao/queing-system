@@ -2,7 +2,7 @@
     <?php
                 session_start();
                 if (!isset($_SESSION['email'])) {
-                    header('Location: index.php');
+                    header('Location: index');
                     exit();
                 }
                 $name = $_SESSION['name'];
@@ -41,7 +41,7 @@
                         timer: 1500,
                         showConfirmButton: false
                     }).then(() => {
-                        window.location.href = 'logout.php';
+                        window.location.href = 'logout';
                     });
                 }
             });

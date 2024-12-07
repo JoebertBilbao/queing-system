@@ -1,12 +1,4 @@
-<?php require_once "server.php";
-// Add HTTP security headers
-header("Strict-Transport-Security: max-age=31536000; includeSubDomains; preload"); // Enforce HTTPS
-header("X-Frame-Options: SAMEORIGIN"); // Prevent clickjacking
-header("X-Content-Type-Options: nosniff"); // Prevent MIME-type sniffing
-header("Referrer-Policy: no-referrer-when-downgrade"); // Control the referrer information
-header("Permissions-Policy: geolocation=(), microphone=(), camera=()"); // Control browser features
-// Redirect to admin/index.php
- ?>
+<?php require_once "server.php";?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -71,7 +63,7 @@ header("Permissions-Policy: geolocation=(), microphone=(), camera=()"); // Contr
                 <input type="email" name="email" class="form-control"  value="<?php echo $email ?>" placeholder="Enter your email" required>
             </div>
             <button type="submit" name="check-email" value="Continue" class="btn btn-danger w-100 mb-3">Send Reset Link</button>
-            <p class="text-center mb-0">Remember your password? <a href="index.php" class="text-danger">Sign In</a></p>
+            <p class="text-center mb-0">Remember your password? <a href="index" class="text-danger">Sign In</a></p>
         </form>
     </div>
     

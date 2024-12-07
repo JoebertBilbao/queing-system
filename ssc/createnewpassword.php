@@ -2,7 +2,7 @@
 <?php 
 $email = $_SESSION['email'];
 if($email == false){
-  header('Location: index.php');
+  header('Location: index');
 }
 ?>
 <!DOCTYPE html>

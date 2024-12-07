@@ -11,7 +11,7 @@ session_start();
 
 // If user is already logged in, redirect to dashboard or home page
 if (isset($_SESSION['email'])) {
-    header('Location: guidance.php');
+    header('Location: guidance');
     exit();
 }
 
@@ -143,7 +143,7 @@ if (isset($_SESSION['email'])) {
             </form>
             <div class="signup">
                 <div class="text-center mt-3">
-                    <a href="../portal.php" class="btn btn-secondary btn-sm">Back to Home</a>
+                    <a href="../portal" class="btn btn-secondary btn-sm">Back to Home</a>
                 </div>
             </div>
         </div>

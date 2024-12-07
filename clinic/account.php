@@ -3,7 +3,7 @@
     <?php
                 session_start();
                 if (!isset($_SESSION['email'])) {
-                    header('Location: index.php');
+                    header('Location: index');
                     exit();
                 }
                 $name = $_SESSION['name'];

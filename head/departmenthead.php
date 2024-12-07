@@ -4,7 +4,7 @@ include('header.php');
 include('../database/db.php');
 
 if (!isset($_SESSION['department'])) {
-    header("Location: index.php");
+    header("Location: index");
     exit;
 }
 

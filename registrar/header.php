@@ -60,7 +60,7 @@
             <div class="sidepanel-inner d-flex flex-column">
                 <a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">&times;</a>
                 <div class="app-branding">
-                    <a class="app-logo" href="index.php"><img class="logo-icon me-2" src="assets/images/mccs.png"
+                    <a class="app-logo" href="index"><img class="logo-icon me-2" src="assets/images/mccs.png"
                             alt="logo"><span class="logo-text">REGISTRAR OFFICE</span></a>
 
                 </div>
@@ -70,7 +70,7 @@
                     <ul class="app-menu list-unstyled accordion" id="menu-accordion">
                         <li class="nav-item">
                             <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                            <a class="nav-link" href="registrar.php">
+                            <a class="nav-link" href="registrar">
                                 <span class="nav-icon">
                                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-folder"
                                         fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -83,7 +83,7 @@
                                 <span class="nav-link-text">Student List</span>
                             </a>
 
-                            <a class="nav-link" href="manage-user.php">
+                            <a class="nav-link" href="manage-user">
                                 <span class="nav-icon">
                                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-folder"
                                         fill="currentColor" xmlns="http://www.w3.org/2000/svg">

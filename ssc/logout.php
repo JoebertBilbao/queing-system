@@ -8,6 +8,6 @@ $_SESSION = array();
 session_destroy();
 
 // Redirect to login page or any other page after logout
-header("Location: ../ssc/index.php");
+header("Location: ../ssc/index");
 exit;
 ?>

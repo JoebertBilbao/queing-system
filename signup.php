@@ -383,7 +383,7 @@ body {
                 </div>
             </form>
             <div class="signup">
-                <span class="signup">Already have an account? <br><br> <a href="login.php">Login</a></span>
+                <span class="signup">Already have an account? <br><br> <a href="login">Login</a></span>
             </div>
         </div>
     </div>

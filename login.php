@@ -1,16 +1,9 @@
 <?php
-// Add HTTP security headers
-header("Strict-Transport-Security: max-age=31536000; includeSubDomains; preload"); // Enforce HTTPS
-header("X-Frame-Options: SAMEORIGIN"); // Prevent clickjacking
-header("X-Content-Type-Options: nosniff"); // Prevent MIME-type sniffing
-header("Referrer-Policy: no-referrer-when-downgrade"); // Control the referrer information
-header("Permissions-Policy: geolocation=(), microphone=(), camera=()"); // Control browser features
-// Redirect to admin/index.php
 session_start();
 include 'database/db.php';
 
 if (isset($_SESSION['user_id'])) {
-    header('Location: student/index.php');
+    header('Location: student/index');
     exit();
 }
 
@@ -32,7 +25,7 @@ if (isset($_GET['verification'])) {
             $msg = "<div class='alert alert-danger'>Verification failed. Please try again.</div>";
         }
     } else {
-        header("Location: login.php");
+        header("Location: login");
         exit();
     }
 }

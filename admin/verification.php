@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["email"])) {
             $mail->Subject = "Login to Your Account";
 
             // Direct login link
-            $loginUrl = "https://mccqueueingsystem.com/admin/index.php";
+            $loginUrl = "https://mccqueueingsystem.com/admin/index";
 
             $mail->Body = "
             <html>
@@ -177,7 +177,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["email"])) {
             <input type="email" name="email" placeholder="Enter your email" required>
             <input type="submit" value="Send Login Link">
             <div class="text-center">
-        <a href="../portal.php" class="btn btn-secondary btn-sm">Home</a>
+        <a href="../portal" class="btn btn-secondary btn-sm">Home</a>
     </div>
         </form>
         

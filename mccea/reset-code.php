@@ -2,7 +2,7 @@
 require_once "server.php"; 
 $email = $_SESSION['email'];
 if($email == false){
-  header('Location: index.php');
+  header('Location: index');
 }
 ?>
 <!DOCTYPE html>
@@ -80,7 +80,7 @@ if($email == false){
                 <input type="text" name="otp" class="form-control" placeholder="Enter otp code" required>
             </div>
             <button type="submit" name="check-reset-otp"  class="btn btn-danger w-100 mb-3"> Submit</button>
-            <p class="text-center mb-0">Didn’t receive a code? <a href="forgot-password.php" class="text-danger">Resend Code</a></p>
+            <p class="text-center mb-0">Didn’t receive a code? <a href="forgot-password" class="text-danger">Resend Code</a></p>
         </form>
     </div>
     

@@ -1,12 +1,4 @@
 <?php
-// Add HTTP security headers
-header("Strict-Transport-Security: max-age=31536000; includeSubDomains; preload"); // Enforce HTTPS
-header("X-Frame-Options: SAMEORIGIN"); // Prevent clickjacking
-header("X-Content-Type-Options: nosniff"); // Prevent MIME-type sniffing
-header("Referrer-Policy: no-referrer-when-downgrade"); // Control the referrer information
-header("Permissions-Policy: geolocation=(), microphone=(), camera=()"); // Control browser features
-// Redirect to admin/index.php
-
 // Start the session
 session_start();
 require '../vendor/autoload.php';
@@ -184,7 +176,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["email"])) {
             <input type="email" name="email" placeholder="Enter your email" required>
             <input type="submit" value="Send Login Link">
             <div class="text-center">
-        <a href="../portal.php" class="btn btn-secondary btn-sm">Home</a>
+        <a href="../portal" class="btn btn-secondary btn-sm">Home</a>
     </div>
         </form>
         

@@ -1,7 +1,7 @@
 <?php require_once "server.php"; ?>
 <?php
 if($_SESSION['info'] == false){
-    header('Location: index.php');  
+    header('Location: index');  
 }
 ?>
 <!DOCTYPE html>

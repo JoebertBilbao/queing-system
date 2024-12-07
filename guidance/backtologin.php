@@ -1,7 +1,7 @@
 <?php require_once "server.php"; ?>
 <?php
 if($_SESSION['info'] == false){
-    header('Location: index.php');  
+    header('Location: index');  
 }
 ?>
 <!DOCTYPE html>
@@ -42,7 +42,7 @@ if($_SESSION['info'] == false){
                 <?php
             }
             ?>
-        <a href="index.php" class="btn btn-danger w-100">Login Now</a>
+        <a href="index" class="btn btn-danger w-100">Login Now</a>
     </div>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
