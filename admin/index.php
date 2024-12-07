@@ -123,7 +123,7 @@ session_start();
     <div class="container">
         <div class="login form">
             <header>ADMIN</header>
-            <form id="loginForm" action="../action/admin.php" method="post" onsubmit="return validateForm()">
+            <form id="loginForm" action="../action/admin" method="post" onsubmit="return validateForm()">
                 <input type="email" name="email" id="email" placeholder="Email" required>
                 <div class="password-container">
                     <input type="password" name="password" id="password" placeholder="Password" required>
