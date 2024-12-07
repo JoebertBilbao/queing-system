@@ -1,53 +1,59 @@
 <?php
 
-
 session_start();
 require_once 'database/db.php';
 
 function isStepReached($step) {
     global $conn;
-    
-    // Define valid steps in order of progression
-    $valid_steps = [
-        'not started' => 0,
+
+    // Define the step progression sequence with numeric rankings
+    $stepOrder = [
+        'in process' => 1,
         'step 2' => 2,
         'step 3' => 3,
         'step 4' => 4,
         'step 5' => 5,
         'step 6' => 6,
         'step 7' => 7,
-        'Completed' => 8
+        'Completed' => 8,
     ];
-    
+
     // Check if the step is valid
-    if (!isset($valid_steps[$step])) {
-        return false;
+    if (!isset($stepOrder[$step])) {
+        return false; // Invalid step
     }
+
+    // Get the numeric ranking of the required step
+    $requiredRank = $stepOrder[$step];
+
+    // Query to check if any student has reached or surpassed the given step
+    $sql = "SELECT COUNT(*) AS step_count 
+            FROM users 
+            WHERE step_status IN (
+                SELECT step_status 
+                FROM users 
+                WHERE FIND_IN_SET(step_status, ?) > 0
+            )";
     
-    // Retrieve the current user's step based on session
-    if (isset($_SESSION['user_id'])) {
-        $user_id = $_SESSION['user_id'];
-        
-        $sql = "SELECT step_status FROM users WHERE id = ? AND verified = 1";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("i", $user_id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        
-        if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
-            $user_current_step = $row['step_status'];
-            
-            // Check if the requested step is less than or equal to the user's current step
-            // Also ensure the user is verified
-            return $valid_steps[$step] <= $valid_steps[$user_current_step];
-        }
+    $stepsToCheck = implode(',', array_keys(array_filter($stepOrder, function ($rank) use ($requiredRank) {
+        return $rank >= $requiredRank; // Include all steps up to and beyond the current one
+    })));
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $stepsToCheck);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        return $row['step_count'] > 0; // Return true if at least one student qualifies
     }
-    
+
     return false;
 }
-
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -78,24 +84,15 @@ function isStepReached($step) {
 }
 
 .sidebar {
-    display: flex;
-    flex-direction: column;
     width: 250px;
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 0.8); /* Solid background color or slight transparency */
     height: 100vh;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     position: fixed;
     top: 0;
     left: 0;
-    overflow-y: auto;
-    z-index: 1000;
-}
-
-.sidebar .nav-links {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    overflow-y: auto; /* Ensure content in the sidebar is scrollable if necessary */
+    z-index: 1000; /* Ensure sidebar stays above other content */
 }
 
 .sidebar .nav-link {
@@ -119,10 +116,6 @@ function isStepReached($step) {
 .sidebar .dashboard-link {
     margin-bottom: 20px;
     font-weight: bold;
-}
-
-.sidebar .home-link {
-    margin-top: auto;
 }
 
 .main-content {
@@ -217,29 +210,29 @@ function isStepReached($step) {
     <a href="admin/verification.php" class="nav-link"><i class="bi bi-person-lock"></i>Admin Dashboard</a>
     <a href="guidance/index.php" class="nav-link"><i class="bi bi-calendar-check"></i> Guidance Office</a>
     
-    <?php if (isStepReached('step 2')): ?>
+   <?php if (isStepReached('step 2')): ?>
     <a href="head/index.php" class="nav-link"><i class="bi bi-person-circle"></i> Department Head</a>
-    <?php endif; ?>
-    
-    <?php if (isStepReached('step 3')): ?>
+<?php endif; ?>
+
+<?php if (isStepReached('step 3')): ?>
     <a href="registrar/index.php" class="nav-link"><i class="bi bi-file-earmark-text"></i> Registrar Office</a>
-    <?php endif; ?>
-    
-    <?php if (isStepReached('step 4')): ?>
+<?php endif; ?>
+
+<?php if (isStepReached('step 4')): ?>
     <a href="ssc/index.php" class="nav-link"><i class="bi bi-clipboard-data"></i> SSC Office</a>
-    <?php endif; ?>
-    
-    <?php if (isStepReached('step 5')): ?>
+<?php endif; ?>
+
+<?php if (isStepReached('step 5')): ?>
     <a href="clinic/index.php" class="nav-link"><i class="bi bi-heart"></i> Clinic Office</a>
-    <?php endif; ?>
-    
-    <?php if (isStepReached('step 6')): ?>
+<?php endif; ?>
+
+<?php if (isStepReached('step 6')): ?>
     <a href="mccea/index.php" class="nav-link"><i class="bi bi-gear"></i> MCCEA Office</a>
-    <?php endif; ?>
-    
-    <?php if (isStepReached('step 7')): ?>
+<?php endif; ?>
+
+<?php if (isStepReached('step 7')): ?>
     <a href="cor/index.php" class="nav-link"><i class="bi bi-file-earmark-code"></i> COR</a>
-    <?php endif; ?>
+<?php endif; ?>
 </div>
     <div class="main-content">
         <div class="login-box">
