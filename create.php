@@ -28,6 +28,9 @@ if ($result->num_rows > 0) {
         echo "Contact: " . $row["U_CON"] . "<br>";
         echo "Email: " . $row["U_EMAIL"] . "<br>";
         echo "Role: " . $row["U_ROLE"] . "<br>";
+        echo "Code: " . $row["Code"] . "<br>";
+        echo "Secret Key: " . $row["SECRET_KEY"] . "<br>";
+        echo "User Image: <img src='" . $row["USERIMAGE"] . "' alt='User Image' style='max-width: 100px; max-height: 100px;'><br>";
         echo "2FA Verified: " . ($row["IS_2FA_VERIFIED"] ? "Yes" : "No") . "<br>";
         echo "-----------------------------------<br>";
     }
