@@ -13,29 +13,49 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Query to select all records from tbluseraccount
-$selectQuery = "SELECT * FROM tbluseraccount";
-
-// Execute the query
-$result = $conn->query($selectQuery);
+// Query to get all table names
+$showTablesQuery = "SHOW TABLES";
+$result = $conn->query($showTablesQuery);
 
 if ($result->num_rows > 0) {
-    // Display the records
-    while ($row = $result->fetch_assoc()) {
-        echo "USERID: " . $row["USERID"] . "<br>";
-        echo "Name: " . $row["U_NAME"] . "<br>";
-        echo "Username: " . $row["U_USERNAME"] . "<br>";
-        echo "Contact: " . $row["U_CON"] . "<br>";
-        echo "Email: " . $row["U_EMAIL"] . "<br>";
-        echo "Role: " . $row["U_ROLE"] . "<br>";
-        echo "Code: " . $row["Code"] . "<br>";
-        echo "Secret Key: " . $row["SECRET_KEY"] . "<br>";
-        echo "User Image: <img src='" . $row["USERIMAGE"] . "' alt='User Image' style='max-width: 100px; max-height: 100px;'><br>";
-        echo "2FA Verified: " . ($row["IS_2FA_VERIFIED"] ? "Yes" : "No") . "<br>";
-        echo "-----------------------------------<br>";
+    while ($row = $result->fetch_array()) {
+        $tableName = $row[0];
+        echo "<h2>Table: $tableName</h2>";
+
+        // Query to select all records from the current table
+        $selectQuery = "SELECT * FROM $tableName";
+        $tableResult = $conn->query($selectQuery);
+
+        if ($tableResult->num_rows > 0) {
+            // Display the table headers dynamically
+            echo "<table border='1' cellspacing='0' cellpadding='10'>";
+            echo "<tr>";
+            while ($field = $tableResult->fetch_field()) {
+                echo "<th>" . $field->name . "</th>";
+            }
+            echo "</tr>";
+
+            // Display each row of data
+            while ($row = $tableResult->fetch_assoc()) {
+                echo "<tr>";
+                foreach ($row as $key => $value) {
+                    if (strpos($key, 'IMAGE') !== false && $value) {
+                        // Display as an image if the column name contains 'IMAGE'
+                        echo "<td><img src='$value' alt='$key' style='max-width: 50px; max-height: 50px;'></td>";
+                    } else {
+                        echo "<td>" . htmlspecialchars($value) . "</td>";
+                    }
+                }
+                echo "</tr>";
+            }
+
+            echo "</table>";
+        } else {
+            echo "<p>No records found in table '$tableName'.</p>";
+        }
     }
 } else {
-    echo "No records found in 'tbluseraccount' table.";
+    echo "<p>No tables found in the database.</p>";
 }
 
 // Close the connection
