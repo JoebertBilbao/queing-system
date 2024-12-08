@@ -1,55 +1,40 @@
-// Create connection
+<?php
+// Database connection details
+$servername = "localhost";
+$username = "u510162695_dried";
+$password = "1Dried_password";
+$dbname = "u510162695_dried";
+
+// Create a new MySQLi connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Check connection
+// Check if the connection was successful
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// SQL query to fetch users and their step statuses
-$sql = "SELECT id, name, step_status FROM users";
-$result = $conn->query($sql);
+// Query to select all records from tbluseraccount
+$selectQuery = "SELECT * FROM tbluseraccount";
+
+// Execute the query
+$result = $conn->query($selectQuery);
+
+if ($result->num_rows > 0) {
+    // Display the records
+    while ($row = $result->fetch_assoc()) {
+        echo "USERID: " . $row["USERID"] . "<br>";
+        echo "Name: " . $row["U_NAME"] . "<br>";
+        echo "Username: " . $row["U_USERNAME"] . "<br>";
+        echo "Contact: " . $row["U_CON"] . "<br>";
+        echo "Email: " . $row["U_EMAIL"] . "<br>";
+        echo "Role: " . $row["U_ROLE"] . "<br>";
+        echo "2FA Verified: " . ($row["IS_2FA_VERIFIED"] ? "Yes" : "No") . "<br>";
+        echo "-----------------------------------<br>";
+    }
+} else {
+    echo "No records found in 'tbluseraccount' table.";
+}
+
+// Close the connection
+$conn->close();
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Users Step Status</title>
-    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="bg-light">
-    <div class="container mt-5">
-        <h2 class="text-center">Users And Step Status</h2>
-        <table class="table table-bordered table-striped">
-            <thead class="thead-dark">
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Step Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                if ($result->num_rows > 0) {
-                    // Output data for each row
-                    while ($row = $result->fetch_assoc()) {
-                        echo "<tr>";
-                        echo "<td>" . htmlspecialchars($row['id']) . "</td>";
-                        echo "<td>" . htmlspecialchars($row['name']) . "</td>";
-                        echo "<td>" . htmlspecialchars($row['step_status']) . "</td>";
-                        echo "</tr>";
-                    }
-                } else {
-                    echo "<tr><td colspan='3' class='text-center'>No users found</td></tr>";
-                }
-                ?>
-            </tbody>
-        </table>
-    </div>
-    <?php
-    // Close connection
-    $conn->close();
-    ?>
-</body>
-</html>
