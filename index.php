@@ -329,7 +329,7 @@
           </div>
           <div class="contact-group">
               <i class="fas fa-map-marker-alt"></i>
-              <strong>Address:</strong> <a href="#">6053, Purok Mahugany, Sitio Gahung, Brgy Kodia</a>
+              <strong>Address:</strong> <a href="#">Brgy Kodia, Purok Mahugany, Sitio Gahung, 6053</a>
           </div>
       </div>
   </div>
