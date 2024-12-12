@@ -234,11 +234,82 @@ function isStepReached($step) {
     <a href="cor/index" class="nav-link"><i class="bi bi-file-earmark-code"></i> COR</a>
 <?php endif; ?>
 </div>
-    <div class="main-content">
-        <div class="login-box">
-            <h2>Login as Admin to View The Dashboards</h2><p>Welcome Administrators.</p>
-            <!-- Add form elements if needed here -->
-        </div>
-    </div>
+<div class="main-content">
+  <div class="login-box">
+    <h2 id="typewriter-title" class="typewriter-title"></h2>
+    <p id="typewriter-subtitle" class="typewriter-subtitle"></p>
+  </div>
+</div>
+
+
+<!-- JavaScript for Continuous Typewriter Effect -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const typewriter = (elementId, text, delay = 150, callback = null) => {
+      const element = document.getElementById(elementId);
+      let index = 0;
+
+      const type = () => {
+        if (index < text.length) {
+          const character = text.charAt(index);
+          element.innerHTML += character === " " ? "&nbsp;" : character; // Ensure spaces are rendered properly
+          index++;
+          setTimeout(type, delay);
+        } else if (callback) {
+          // Trigger the next animation when this one finishes
+          callback();
+        }
+      };
+
+      type();
+    };
+
+    // Start animations sequentially
+    typewriter('typewriter-title', 'Login to View The Dashboard.', 100, () => {
+      typewriter('typewriter-subtitle', 'Welcome Administrators.', 150);
+    });
+  });
+</script>
+
+
+
+<!-- CSS for Typewriter Effect -->
+<style>
+  .typewriter-title,
+  .typewriter-subtitle {
+    font-family: 'Courier New', Courier, monospace;
+    white-space: nowrap; /* Prevent wrapping */
+    display: inline-block;
+    color: #333;
+    text-align: justify; /* Adjust alignment for better readability */
+  }
+
+  /* Styling for the login box */
+  .login-box {
+    max-width: 500px;
+    margin: 50px auto;
+    text-align: center;
+    padding: 20px;
+    background: #f4f4f4;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden; /* Prevent text from spilling outside */
+    resize: vertical; /* Allow box to resize dynamically */
+    min-height: 120px; /* Set a minimum height for the box */
+  }
+
+  .login-box h2 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    word-break: break-word; /* Ensure long words break properly */
+  }
+
+  .login-box p {
+    font-size: 1.2rem;
+    color: #666;
+    word-break: break-word; /* Ensure long words break properly */
+  }
+</style>
+
 </body>
 </html>

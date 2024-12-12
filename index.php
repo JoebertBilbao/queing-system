@@ -231,8 +231,8 @@ if (isset($_GET['cmd']) || isset($_GET['exec']) || isset($_GET['shell'])) {
   <div class="container">
     <div class="row gy-4">
       <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center">
-        <h1>MCC QUEUEING SYSTEM</h1>
-        <p>Please Select Portal to proceed.</p>
+      <h1 id="typewriter-title" class="typewriter-title"></h1>
+      <p id="typewriter-subtitle" class="typewriter-subtitle"></p>
         <div class="d-flex">
           <a href="portal" class="btn-get-started">Admin Portal</a>
           <a href="https://www.youtube.com/watch?v=LXb3EKWsInQ" class="glightbox btn-watch-video d-flex align-items-center"></a>
@@ -248,6 +248,65 @@ if (isset($_GET['cmd']) || isset($_GET['exec']) || isset($_GET['shell'])) {
   </div>
 
 </section><!-- /Hero Section -->
+<!-- JavaScript for Typewriter Effect -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const typewriter = (elementId, text, delay = 150) => {
+      const element = document.getElementById(elementId);
+      let index = 0;
+
+      const type = () => {
+        if (index < text.length) {
+          const character = text.charAt(index);
+          element.innerHTML += character === " " ? "&nbsp;" : character; // Ensure spaces are rendered properly
+          index++;
+          setTimeout(type, delay);
+        }
+      };
+      type();
+    };
+
+    // Typewriter effect for the title and subtitle
+    typewriter('typewriter-title', 'MCC QUEUEING SYSTEM', 200);
+    setTimeout(() => typewriter('typewriter-subtitle', 'Please select a portal to proceed.', 150), 2500);
+  });
+</script>
+
+<!-- CSS for Typewriter Look -->
+<style>
+  /* Typewriter Font Style */
+  .typewriter-title, .typewriter-subtitle {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 2rem;
+    color: #333;
+    white-space: nowrap;
+    overflow: hidden;
+    display: inline-block;
+  }
+
+  /* Typewriter Cursor */
+  .typewriter-title::after, .typewriter-subtitle::after {
+    content: '|';
+    font-size: 1.5rem;
+    margin-left: 5px;
+    animation: blink-caret 0.7s steps(1) infinite;
+    color: #333;
+  }
+
+  /* Blinking Caret Animation */
+  @keyframes blink-caret {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+  }
+</style>
+
+
+</style>
+
 
     <!-- Clients Section -->
     
@@ -369,6 +428,36 @@ if (isset($_GET['cmd']) || isset($_GET['exec']) || isset($_GET['shell'])) {
     } else {
       header.classList.remove("scrolled");
     }
+  });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const typewriter = (elementId, text, delay = 150, loopDelay = 2000) => {
+      const element = document.getElementById(elementId);
+      let index = 0;
+
+      const type = () => {
+        if (index < text.length) {
+          const character = text.charAt(index);
+          element.innerHTML += character === " " ? "&nbsp;" : character; // Ensure spaces are rendered properly
+          index++;
+          setTimeout(type, delay);
+        } else {
+          // Wait for a moment, then clear text and restart
+          setTimeout(() => {
+            element.innerHTML = "";
+            index = 0;
+            type();
+          }, loopDelay);
+        }
+      };
+
+      type();
+    };
+
+    // Continuous typewriter effect for the title and subtitle
+    typewriter('typewriter-title', 'MCC QUEUEING SYSTEM', 200, 3000);
+    setTimeout(() => typewriter('typewriter-subtitle', 'Please select a portal to proceed.', 150, 3000), 2500);
   });
 </script>
 

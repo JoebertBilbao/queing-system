@@ -15,7 +15,7 @@ $result = $conn->query($sql);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Users Step Status</title>
+    <title>User | Step Status</title>
     <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="bg-light">
