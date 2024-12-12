@@ -315,9 +315,10 @@
               <strong>Web Developer:</strong> <a href="#">Joebert Bilbao</a>
           </div>
           <div class="contact-group">
-              <i class="fab fa-facebook"></i>
-              <strong>MCC Page:</strong> <a href="https://www.facebook.com/madridejoscollege" target="_blank">MCC Facebook Page</a>
-          </div>
+          <i class="fab fa-facebook"></i>
+          <strong>MCC Page: Click Here  <i class="fas fa-hand-point-right" style="margin-left: 5px;"></i></strong>
+          <a href="https://www.facebook.com/madridejoscollege" target="_blank">MCC Facebook Page</a>
+            </div>
           <div class="contact-group">
               <i class="fas fa-envelope"></i>
               <strong>Email:</strong> <a href="#">Jbbilbao80@gmail.com</a>
