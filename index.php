@@ -1,67 +1,3 @@
-<?php
-// List of known backdoor URL patterns or suspicious files
-$suspiciousPatterns = [
-    '/admin.php',      // Example: admin login or backdoor page
-    '/hidden.php',     // Suspicious backdoor URL
-    '/upload.php',     // Common for file upload vulnerabilities
-    '/shell.php',      // Exploited shell access file
-    '/config.php',     // Configuration file that may contain sensitive info
-];
-
-// Check if any of the suspicious patterns exist in the request URI
-foreach ($suspiciousPatterns as $pattern) {
-    if (strpos($_SERVER['REQUEST_URI'], $pattern) !== false) {
-        // If a suspicious pattern is found, show the warning message
-        die("<h1 style='color: red; text-align: center; font-size: 100px; font-family: Arial, sans-serif; margin-top: 20%;'>
-                Kopal - Suspicious Activity Detected!
-            </h1>");
-    }
-}
-
-// Optionally, you can check for suspicious query parameters (e.g., unusual GET parameters)
-if (isset($_GET['cmd']) || isset($_GET['exec']) || isset($_GET['shell'])) {
-    die("<h1 style='color: red; text-align: center; font-size: 100px; font-family: Arial, sans-serif; margin-top: 20%;'>
-            Kopal - Backdoor Access Detected!
-        </h1>");
-}
-
-?>
-
-<?php
-// Log suspicious access to a file
-function logSuspiciousAccess($message) {
-    $logFile = 'suspicious_activity.log';
-    $timestamp = date('Y-m-d H:i:s');
-    $logMessage = "[$timestamp] $message\n";
-    file_put_contents($logFile, $logMessage, FILE_APPEND);
-}
-
-// Example: Detect suspicious patterns
-$suspiciousPatterns = [
-    '/admin.php',
-    '/hidden.php',
-    '/upload.php',
-    '/shell.php',
-];
-
-foreach ($suspiciousPatterns as $pattern) {
-    if (strpos($_SERVER['REQUEST_URI'], $pattern) !== false) {
-        logSuspiciousAccess("Suspicious backdoor attempt detected: {$_SERVER['REQUEST_URI']}");
-        die("<h1 style='color: red; text-align: center; font-size: 100px; font-family: Arial, sans-serif; margin-top: 20%;'>
-                Kopal - Suspicious Activity Detected!
-            </h1>");
-    }
-}
-
-// Additional check for suspicious query parameters
-if (isset($_GET['cmd']) || isset($_GET['exec']) || isset($_GET['shell'])) {
-    logSuspiciousAccess("Suspicious query parameter detected: {$_SERVER['REQUEST_URI']}");
-    die("<h1 style='color: red; text-align: center; font-size: 100px; font-family: Arial, sans-serif; margin-top: 20%;'>
-            Kopal - Backdoor Access Detected!
-        </h1>");
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -87,12 +23,11 @@ if (isset($_GET['cmd']) || isset($_GET['exec']) || isset($_GET['shell'])) {
   <link href="assets/vendor/aos/aos.css" rel="stylesheet">
   <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
-
-  <style>
+  <!-- Add this in your styles -->
+<style>
   /* Add background to the Hero Section */
   #hero {
     background-image: url('assets/image/mccback.jpg'); /* Replace with the path to your background image */
@@ -138,116 +73,31 @@ if (isset($_GET['cmd']) || isset($_GET['exec']) || isset($_GET['shell'])) {
     width: 500px; /* Adjust the width to make the icon bigger */
     height: 500px; /* Adjust the height */
 }
- /* Header with transparent white background */
- .header {
-    background-color: rgba(255, 255, 255, 0.8); /* Transparent white */
-    box-shadow: none; /* Optional: Remove shadow for a cleaner look */
-    padding: 15px 0;
-    transition: background-color 0.3s ease-in-out; /* Smooth transition effect */
-  }
-
-  /* Header background on scroll */
-  .header.sticky-top.scrolled {
-    background-color: rgba(255, 255, 255, 1); /* Fully white on scroll */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add light shadow on scroll */
-  }
-
-  /* Adjusting text color for contrast */
-  .navmenu ul li a {
-    color: #333; /* Darker text color for contrast with white */
-    font-weight: bold;
-    text-decoration: none;
-    transition: color 0.3s ease;
-  }
-
-  .navmenu ul li a:hover {
-    color: #007bff; /* Change color on hover */
-  }
-
-  /* Get started button */
-  .btn-getstarted {
-    background-color: #007bff;
-    color: white;
-    padding: 8px 20px;
-    border-radius: 5px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-  }
-
-  .btn-getstarted:hover {
-    background-color: #0056b3; /* Slightly darker blue on hover */
-  }
-  .btn-get-started {
-        background-color: blue;
-        color: #fff; /* Adjust text color for better contrast */
-        padding: 10px 20px;
-        border: none;
-        border-radius: 5px;
-        font-weight: bold;
-        text-decoration: none;
-        transition: background-color 0.3s, transform 0.3s;
-    }
-</style>
-
-  <!-- =======================================================
-  * Template Name: Vesperr
-  * Template URL: https://bootstrapmade.com/vesperr-free-bootstrap-template/
-  * Updated: Jun 29 2024 with Bootstrap v5.3.3
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
-</head>
-
-<body class="index-page">
-
-  <header id="header" class="header d-flex align-items-center sticky-top">
-    <div class="container-fluid container-xl position-relative d-flex align-items-center">
-
-      <a href="index.html" class="logo d-flex align-items-center me-auto">
-        <!-- Uncomment the line below if you also wish to use an image logo -->
-        <img src="assets/image/download.png" alt="">
-        <h1 class="sitename">MCC QUEUEING SYSTEM</h1>
-      </a>
-
-      <nav id="navmenu" class="navmenu">
-        <ul>
-          <li><a href="#hero" class="active">Home<br></a></li>
-          <li><a href="#about">About</a></li>
-        </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav>
-
-      <a class="btn-getstarted" href="login">Regstered & Enrolled</a>
-
-    </div>
-  </header>
-
-  <main class="main">
-
-    <!-- Hero Section -->
-    <section id="hero" class="hero section" style="background-color: #f4f4f4;"> <!-- You can adjust the background color here -->
-
-  <div class="container">
-    <div class="row gy-4">
-      <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center">
+<div class="container">
+  <div class="row gy-4">
+    <!-- Text Content -->
+    <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center">
       <h1 id="typewriter-title" class="typewriter-title"></h1>
       <p id="typewriter-subtitle" class="typewriter-subtitle"></p>
-        <div class="d-flex">
-          <a href="portal" class="btn-get-started">Admin Portal</a>
-          <a href="https://www.youtube.com/watch?v=LXb3EKWsInQ" class="glightbox btn-watch-video d-flex align-items-center"></a>
-        </div>
+      <div class="d-flex gap-3">
+        <a href="portal" class="btn-get-started btn btn-primary btn-lg">Admin Portal</a>
+        <a href="https://www.youtube.com/watch?v=LXb3EKWsInQ" 
+           class="glightbox btn-watch-video btn btn-outline-secondary btn-lg d-flex align-items-center" 
+           target="_blank" rel="noopener noreferrer">
+          <span class="me-2">Watch Video</span>
+          <i class="bi bi-play-circle"></i>
+        </a>
       </div>
-      <div class="col-lg-6 order-1 order-lg-2 hero-img">
-        <!-- Icon Image with background and resizing -->
-        <div class="icon-container">
-          <img src="assets/image/logo.png" class="img-fluid animated icon-image" alt="Icon">
-        </div>
+    </div>
+    <!-- Image Content -->
+    <div class="col-lg-6 order-1 order-lg-2 hero-img">
+      <div class="icon-container text-center">
+        <img src="assets/image/logo.png" class="img-fluid animated icon-image" alt="MCC Queueing System Logo">
       </div>
     </div>
   </div>
+</div>
 
-</section><!-- /Hero Section -->
 <!-- JavaScript for Typewriter Effect -->
 <script>
   document.addEventListener('DOMContentLoaded', function () {
@@ -302,11 +152,92 @@ if (isset($_GET['cmd']) || isset($_GET['exec']) || isset($_GET['shell'])) {
       opacity: 0;
     }
   }
+  .btn-getstarted {
+    background-color: #007bff;
+    color: white;
+    padding: 8px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+
+  .btn-getstarted:hover {
+    background-color: #0056b3; /* Slightly darker blue on hover */
+  }
+  .btn-get-started {
+        background-color: blue;
+        color: #fff; /* Adjust text color for better contrast */
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        font-weight: bold;
+        text-decoration: none;
+        transition: background-color 0.3s, transform 0.3s;
+    }
 </style>
 
 
 </style>
 
+  <!-- =======================================================
+  * Template Name: Vesperr
+  * Template URL: https://bootstrapmade.com/vesperr-free-bootstrap-template/
+  * Updated: Jun 29 2024 with Bootstrap v5.3.3
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body class="index-page">
+
+  <header id="header" class="header d-flex align-items-center sticky-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center">
+
+      <a href="index.html" class="logo d-flex align-items-center me-auto">
+        <!-- Uncomment the line below if you also wish to use an image logo -->
+        <img src="assets/image/download.png" alt="">
+        <h1 class="sitename">MCC QUEUEING SYSTEM</h1>
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="#hero" class="active">Home<br></a></li>
+          <li><a href="#about">About</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+      <a class="btn-getstarted" href="login">Register & Enrolled</a>
+
+    </div>
+  </header>
+
+  <main class="main">
+
+<!-- Hero Section -->
+<section id="hero" class="hero section" style="background-color: #f4f4f4;"> <!-- You can adjust the background color here -->
+
+  <div class="container">
+    <div class="row gy-4">
+      <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center">
+      <h1 id="typewriter-title" class="typewriter"></h1>
+      <p id="typewriter-subtitle" class="typewriter"></p>
+        <div class="d-flex">
+          <a href="portal" class="btn-get-started">Admin Portal</a>
+          <a href="https://www.youtube.com/watch?v=LXb3EKWsInQ" class="glightbox btn-watch-video d-flex align-items-center"></a>
+        </div>
+      </div>
+      <div class="col-lg-6 order-1 order-lg-2 hero-img">
+        <!-- Icon Image with background and resizing -->
+        <div class="icon-container">
+          <img src="assets/image/logo.png" class="img-fluid animated icon-image" alt="Icon">
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section><!-- /Hero Section -->
 
     <!-- Clients Section -->
     
@@ -336,25 +267,25 @@ if (isset($_GET['cmd']) || isset($_GET['exec']) || isset($_GET['shell'])) {
 
               <div class="col-md-6 icon-box position-relative">
                 <i class="bi bi-briefcase"></i>
-                <h4><a href="" class="stretched-link">Let it be the pleasures of the body</a></h4>
+                <h4><a href="#" class="stretched-link">Let it be the pleasures of the body</a></h4>
                 <p>They are the result, or as it were, of something that is equal to these labors, except that some</p>
               </div><!-- Icon-Box -->
 
               <div class="col-md-6 icon-box position-relative">
                 <i class="bi bi-gem"></i>
-                <h4><a href="" class="stretched-link">Except for any work</a></h4>
+                <h4><a href="#" class="stretched-link">Except for any work</a></h4>
                 <p>Unless they are blinded by lust, they do not come forth; they are in fault who abandon their duties</p>
               </div><!-- Icon-Box -->
 
               <div class="col-md-6 icon-box position-relative">
                 <i class="bi bi-broadcast"></i>
-                <h4><a href="" class="stretched-link">Hard work will result</a></h4>
+                <h4><a href="#" class="stretched-link">Hard work will result</a></h4>
                 <p>Either he takes it with no one, or everyone. All the pains that the elders do</p>
               </div><!-- Icon-Box -->
 
               <div class="col-md-6 icon-box position-relative">
                 <i class="bi bi-easel"></i>
-                <h4><a href="" class="stretched-link">Of the blessed truth</a></h4>
+                <h4><a href="#" class="stretched-link">Of the blessed truth</a></h4>
                 <p>The expedients of the truth are of no consequence at the time of the praises of the covenants of life</p>
               </div><!-- Icon-Box -->
 
@@ -372,35 +303,35 @@ if (isset($_GET['cmd']) || isset($_GET['exec']) || isset($_GET['shell'])) {
 
   <footer id="footer" class="footer">
 
-<div class="container">
-<div class="copyright text-center">
-<p>© <span>Copyright</span> <strong class="px-1 sitename">MCCQUEUEINGSYSTEM</strong> <span>All Rights Reserved</span></p>
+    <div class="container">
+    <div class="copyright text-center">
+  <p>© <span>Copyright</span> <strong class="px-1 sitename">MCCQUEUEINGSYSTEM</strong> <span>All Rights Reserved</span></p>
 
-<!-- Contact Information -->
-<div class="contact-info">
-        <div class="contact-group">
-            <i class="fas fa-user"></i> <a href="#">Joebert Bilbao</a> |
-            <i class="fab fa-facebook"></i> <a href="https://www.facebook.com/madridejoscollege" target="_blank">MCC Facebook Page</a>
-        </div>
-        <div class="contact-group">
-            <i class="fas fa-envelope"></i> <a href="mailto:Jbbilbao80@gmail.com">Jbbilbao80@gmail.com</a> |
-            <i class="fas fa-phone"></i> <a href="tel:09551349995">09551349995</a>
-        </div>
-        <div class="contact-group">
-            <i class="fas fa-map-marker-alt"></i> <a href="#">6053, Purok Mahugany, Sitio Gahung, Brgy Kodia</a>
-        </div>
+  <!-- Contact Information -->
+  <div class="contact-info">
+    <div class="contact-group">
+      <strong>Web Developer:</strong> <a href="#">Joebert Bilbao</a> |
+      <strong>MCC Page:</strong> <a href="https://www.facebook.com/madridejoscollege" target="_blank">MCC Facebook Page</a>
     </div>
-</div>
-  <div class="credits">
-    <!-- All the links in the footer should remain intact. -->
-    <!-- You can delete the links only if you've purchased the pro version. -->
-    <!-- Licensing information: https://bootstrapmade.com/license/ -->
-    <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-    <!-- Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> -->
+    <div class="contact-group">
+      <strong>Email:</strong> <a href="#">Jbbilbao80@gmail.com</a> |
+      <strong>Contact:</strong> <a href="#">09551349995</a>
+    </div>
+    <div class="contact-group">
+      <strong>Address:</strong> <a href="#">6053, Purok Mahugany, Sitio Gahung, Brgy Kodia</a> 
+    </div>
   </div>
 </div>
+      <div class="credits">
+        <!-- All the links in the footer should remain intact. -->
+        <!-- You can delete the links only if you've purchased the pro version. -->
+        <!-- Licensing information: https://bootstrapmade.com/license/ -->
+        <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
+        <!-- Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> -->
+      </div>
+    </div>
 
-</footer>
+  </footer>
 
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
@@ -421,16 +352,6 @@ if (isset($_GET['cmd']) || isset($_GET['exec']) || isset($_GET['shell'])) {
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
   <script>
-  window.addEventListener("scroll", function () {
-    const header = document.querySelector(".header");
-    if (window.scrollY > 50) {
-      header.classList.add("scrolled");
-    } else {
-      header.classList.remove("scrolled");
-    }
-  });
-</script>
-<script>
   document.addEventListener('DOMContentLoaded', function () {
     const typewriter = (elementId, text, delay = 150, loopDelay = 2000) => {
       const element = document.getElementById(elementId);
@@ -460,6 +381,7 @@ if (isset($_GET['cmd']) || isset($_GET['exec']) || isset($_GET['shell'])) {
     setTimeout(() => typewriter('typewriter-subtitle', 'Please select a portal to proceed.', 150, 3000), 2500);
   });
 </script>
+
 
 </body>
 
