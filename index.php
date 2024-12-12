@@ -303,35 +303,49 @@
 
   <footer id="footer" class="footer">
 
-    <div class="container">
-    <div class="copyright text-center">
-  <p>© <span>Copyright</span> <strong class="px-1 sitename">MCCQUEUEINGSYSTEM</strong> <span>All Rights Reserved</span></p>
+<div class="container">
+<div class="container">
+  <div class="copyright text-center fade-in">
+      <p>© <span>Copyright</span> <strong class="px-1 sitename">MCCQUEUEINGSYSTEM</strong> <span>All Rights Reserved</span></p>
 
-  <!-- Contact Information -->
-  <div class="contact-info">
-    <div class="contact-group">
-      <strong>Web Developer:</strong> <a href="#">Joebert Bilbao</a> |
-      <strong>MCC Page:</strong> <a href="https://www.facebook.com/madridejoscollege" target="_blank">MCC Facebook Page</a>
-    </div>
-    <div class="contact-group">
-      <strong>Email:</strong> <a href="#">Jbbilbao80@gmail.com</a> |
-      <strong>Contact:</strong> <a href="#">09551349995</a>
-    </div>
-    <div class="contact-group">
-      <strong>Address:</strong> <a href="#">6053, Purok Mahugany, Sitio Gahung, Brgy Kodia</a> 
-    </div>
+      <!-- Contact Information -->
+      <div class="contact-info">
+          <div class="contact-group">
+              <i class="fas fa-user-circle"></i>
+              <strong>Web Developer:</strong> <a href="#">Joebert Bilbao</a>
+          </div>
+          <div class="contact-group">
+              <i class="fab fa-facebook"></i>
+              <strong>MCC Page:</strong> <a href="https://www.facebook.com/madridejoscollege" target="_blank">MCC Facebook Page</a>
+          </div>
+          <div class="contact-group">
+              <i class="fas fa-envelope"></i>
+              <strong>Email:</strong> <a href="#">Jbbilbao80@gmail.com</a>
+          </div>
+          <div class="contact-group">
+              <i class="fas fa-phone"></i>
+              <strong>Contact:</strong> <a href="#">09551349995</a>
+          </div>
+          <div class="contact-group">
+              <i class="fas fa-map-marker-alt"></i>
+              <strong>Address:</strong> <a href="#">6053, Purok Mahugany, Sitio Gahung, Brgy Kodia</a>
+          </div>
+      </div>
   </div>
 </div>
-      <div class="credits">
-        <!-- All the links in the footer should remain intact. -->
-        <!-- You can delete the links only if you've purchased the pro version. -->
-        <!-- Licensing information: https://bootstrapmade.com/license/ -->
-        <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-        <!-- Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> -->
-      </div>
-    </div>
 
-  </footer>
+
+    <div class="credits">
+      <!-- All the links in the footer should remain intact. -->
+      <!-- You can delete the links only if you've purchased the pro version. -->
+      <!-- Licensing information: https://bootstrapmade.com/license/ -->
+      <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
+      <!-- Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> -->
+    </div>
+  </div>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+</footer>
 
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
