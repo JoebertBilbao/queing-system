@@ -398,18 +398,18 @@ body {
           <div class="modal-body">
             <!-- Include the terms content here -->
             <p>Welcome to the Madridejos Community College (MCC) Queueing System. By using this system, you agree to the following terms and conditions:</p>
-<ul>
-    <li><strong>Eligibility:</strong> The system is only for use by students of Madridejos Community College. Access is restricted to registered students with valid credentials.</li>
-    <li><strong>Account Security:</strong> You are responsible for maintaining the confidentiality of your account details, including your email and password. Any unauthorized access to your account is your responsibility.</li>
-    <li><strong>Usage Policy:</strong> The system should be used only for legitimate academic or administrative purposes. Any misuse, including but not limited to, tampering with system functions or data, may result in the suspension or termination of your access.</li>
-    <li><strong>Data Privacy:</strong> Personal information collected through the system is used for registration and scheduling purposes only. We commit to protecting your data according to applicable data privacy laws and regulations.</li>
-    <li><strong>Prohibited Activities:</strong> You are prohibited from engaging in activities that could harm the system's integrity or security, including but not limited to, hacking attempts, unauthorized data collection, or distributing malicious software.</li>
-    <li><strong>System Availability:</strong> While we strive to ensure the system is always available, we do not guarantee 100% uptime. The system may be temporarily unavailable for maintenance or unforeseen technical issues.</li>
-    <li><strong>Changes to Terms:</strong> We reserve the right to modify these terms and conditions at any time. Any changes will be posted on this page, and it is your responsibility to review them regularly.</li>
-    <li><strong>Liability:</strong> Madridejos Community College is not liable for any direct, indirect, incidental, or consequential damages arising from your use of the system, including data loss or disruption of service.</li>
-    <li><strong>Acceptance:</strong> By using this system, you agree to comply with these terms. If you do not agree with any of these terms, you must not use the system.</li>
-</ul>
-<p>If you have any questions or concerns about these terms, please contact the MCC support team at <strong>MCC Queueing System</strong>.</p>
+        <ul>
+        <li><strong>Eligibility:</strong> The system is only for use by students of Madridejos Community College. Access is restricted to registered students with valid credentials.</li>
+        <li><strong>Account Security:</strong> You are responsible for maintaining the confidentiality of your account details, including your email and password. Any unauthorized access to your account is your responsibility.</li>
+        <li><strong>Usage Policy:</strong> The system should be used only for legitimate academic or administrative purposes. Any misuse, including but not limited to, tampering with system functions or data, may result in the suspension or termination of your access.</li>
+        <li><strong>Data Privacy:</strong> Personal information collected through the system is used for registration and scheduling purposes only. We commit to protecting your data according to applicable data privacy laws and regulations.</li>
+        <li><strong>Prohibited Activities:</strong> You are prohibited from engaging in activities that could harm the system's integrity or security, including but not limited to, hacking attempts, unauthorized data collection, or distributing malicious software.</li>
+        <li><strong>System Availability:</strong> While we strive to ensure the system is always available, we do not guarantee 100% uptime. The system may be temporarily unavailable for maintenance or unforeseen technical issues.</li>
+        <li><strong>Changes to Terms:</strong> We reserve the right to modify these terms and conditions at any time. Any changes will be posted on this page, and it is your responsibility to review them regularly.</li>
+        <li><strong>Liability:</strong> Madridejos Community College is not liable for any direct, indirect, incidental, or consequential damages arising from your use of the system, including data loss or disruption of service.</li>
+        <li><strong>Acceptance:</strong> By using this system, you agree to comply with these terms. If you do not agree with any of these terms, you must not use the system.</li>
+    </ul>
+        <p>If you have any questions or concerns about these terms, please contact the MCC support team at <strong>MCC Queueing System</strong>.</p>
 
           </div>
           <div class="modal-footer">

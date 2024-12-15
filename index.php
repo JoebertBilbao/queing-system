@@ -92,7 +92,7 @@
     <!-- Image Content -->
     <div class="col-lg-6 order-1 order-lg-2 hero-img">
       <div class="icon-container text-center">
-        <img src="assets/image/logo.png" class="img-fluid animated icon-image" alt="MCC Queueing System Logo">
+        <img src="assets/image/logo.png" class="img-fluid animated icon-image" alt="MCC Queuing System Logo">
       </div>
     </div>
   </div>
@@ -117,7 +117,7 @@
     };
 
     // Typewriter effect for the title and subtitle
-    typewriter('typewriter-title', 'MCC QUEUEING SYSTEM', 200);
+    typewriter('typewriter-title', 'MCC QUEUING SYSTEM', 200);
     setTimeout(() => typewriter('typewriter-subtitle', 'Please select a portal to proceed.', 150), 2500);
   });
 </script>
@@ -197,7 +197,7 @@
       <a href="index.html" class="logo d-flex align-items-center me-auto">
         <!-- Uncomment the line below if you also wish to use an image logo -->
         <img src="assets/image/download.png" alt="">
-        <h1 class="sitename">MCC QUEUEING SYSTEM</h1>
+        <h1 class="sitename">MCC QUEUING SYSTEM</h1>
       </a>
 
       <nav id="navmenu" class="navmenu">
@@ -306,7 +306,7 @@
 <div class="container">
 <div class="container">
   <div class="copyright text-center fade-in">
-      <p>© <span>Copyright</span> <strong class="px-1 sitename">MCCQUEUEINGSYSTEM</strong> <span>All Rights Reserved</span></p>
+      <p>© <span>Copyright</span> <strong class="px-1 sitename">MCCQUEUINGSYSTEM</strong> <span>All Rights Reserved</span></p>
 
       <!-- Contact Information -->
       <div class="contact-info">
@@ -392,7 +392,7 @@
     };
 
     // Continuous typewriter effect for the title and subtitle
-    typewriter('typewriter-title', 'MCC QUEUEING SYSTEM', 200, 3000);
+    typewriter('typewriter-title', 'MCC QUEUING SYSTEM', 200, 3000);
     setTimeout(() => typewriter('typewriter-subtitle', 'Please select a portal to proceed.', 150, 3000), 2500);
   });
 </script>
