@@ -122,6 +122,7 @@ if (isset($_SESSION['email'])) {
 <body>
     <div class="container">
         <div class="login form">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
             <header>CLINIC OFFICE</header>
             <form action="../action/clinic_login.php" method="post">
                 <input type="email" name="email" id="email" placeholder="Email" required>

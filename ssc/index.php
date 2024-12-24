@@ -17,6 +17,7 @@ if (isset($_SESSION['email'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Admin Login | SCC</title>
     <link rel="stylesheet" href="style.css">
     <link href="assets/image/image4.png" rel="icon">

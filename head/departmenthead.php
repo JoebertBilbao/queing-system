@@ -16,6 +16,7 @@ $stmt->bind_param("s", $department);
 $stmt->execute();
 $result = $stmt->get_result();
 ?>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <div class="app-wrapper">
     <div class="app-content pt-3 p-md-3 p-lg-4">

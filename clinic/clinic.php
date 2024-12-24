@@ -11,6 +11,7 @@ if (!isset($_SESSION['email'])) {
 $sql = "SELECT id, name, email, course, year_level, status, semester, step_status FROM users WHERE step_status = 'step 5'";
 $result = $conn->query($sql);
 ?>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <div class="app-wrapper">
     <div class="app-content pt-3 p-md-3 p-lg-4">
