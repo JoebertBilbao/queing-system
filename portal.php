@@ -62,6 +62,8 @@ function isStepReached($step) {
     <title>PORTALS</title>
     <link href="assets/image/images.png" rel="icon">
     <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
     
     <!-- Fonts and Vendor CSS Files -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
@@ -70,6 +72,38 @@ function isStepReached($step) {
     <link href="assets/css/main.css" rel="stylesheet">
     
     <style>
+        @media (max-width: 768px) {
+  .sidebar {
+    width: 100%; /* Full width for small screens */
+    height: auto;
+    position: relative; /* Allow flow with other content */
+  }
+
+  .main-content {
+    margin-left: 0; /* Remove the sidebar's margin */
+    padding: 10px;
+  }
+}
+@media (max-width: 768px) {
+  .login-box {
+    max-width: 90%; /* Allow more flexibility in width */
+    padding: 15px;
+  }
+
+  .typewriter-title, .typewriter-subtitle {
+    font-size: 1.2rem; /* Reduce font size for smaller screens */
+    text-align: center; /* Center text for better readability */
+  }
+}
+body {
+  overflow-x: hidden; /* Disable horizontal scrolling */
+}
+
+html, body {
+  max-width: 100%; /* Prevent overscrolling */
+}
+
+
  body {
     display: flex;
     flex-direction: row;
