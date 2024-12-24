@@ -43,13 +43,43 @@ if (isset($_GET['verification'])) {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
     <title>LOGIN | STUDENTS</title>
     <link href="assets/image/images.png" rel="icon">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
 </head>
+
 <style>
+    body {
+    overflow: hidden; /* Prevent dragging */
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+@media (max-width: 768px) {
+    .custom-shape-divider-bottom-1734644541 svg {
+        height: 50px; /* Adjust wave height for smaller screens */
+    }
+
+    .w-full.max-w-md {
+        margin: 0 auto;
+        padding: 1rem; /* Add padding for better spacing on small screens */
+    }
+
+    .text-2xl {
+        font-size: 1.5rem; /* Adjust heading size */
+    }
+
+    .text-sm {
+        font-size: 0.875rem; /* Adjust text size */
+    }
+}
 .custom-shape-divider-bottom-1734644541 {
     position: absolute;
     bottom: 0;
@@ -145,5 +175,21 @@ if (isset($_GET['verification'])) {
             }
         }, 5000);
     </script>
+    <script>
+    // Disable touchmove for unwanted scrolling
+    document.addEventListener('touchmove', function (event) {
+        if (event.scale !== 1) {
+            event.preventDefault(); // Prevent pinch zoom
+        }
+    }, { passive: false });
+
+    // Prevent horizontal drag
+    document.addEventListener('touchstart', function (event) {
+        if (event.touches.length > 1) {
+            event.preventDefault(); // Prevent multi-finger drag
+        }
+    }, { passive: false });
+</script>
+
 </body>
 </html>
