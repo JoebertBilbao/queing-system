@@ -177,8 +177,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
     <title>SIGNUP | STUDENTS</title>
     <link href="assets/image/images.png" rel="icon">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -335,6 +335,37 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
         </div>
     </div>
+    <style>
+        body, html {
+    overflow-x: hidden;
+    touch-action: none;
+}
+
+        @media (max-width: 768px) {
+    /* Adjust styles for smaller screens */
+    body {
+        padding: 0;
+    }
+
+    .bg-white {
+        width: 100%;
+        max-width: none;
+    }
+}
+
+        body, html {
+            overflow-x: hidden; /* Disable horizontal scrolling */
+            touch-action: none;  /* Disable touch swipe gestures */
+        }
+
+        @media (max-width: 768px) {
+            /* Adjustments for mobile layout */
+            .bg-white {
+                width: 100%;
+                max-width: none;
+            }
+        }
+    </style>
 
     <script>
 
