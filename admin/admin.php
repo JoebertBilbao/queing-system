@@ -1,14 +1,27 @@
 <?php
 include('header.php');
-include('../database/db.php'); // Include your database connection file
+include('../database/db.php');
 
 // Initialize arrays
 $courses = [];
 $counts = [];
 $totalStudents = 0;
-
 $stepsLabels = [];
 $stepsData = [];
+$totalCompletedStudents = 0;
+
+// Fetch total completed students
+$sqlCompleted = "SELECT COUNT(*) AS total_completed FROM users WHERE step_status = 'Completed'";
+$resultCompleted = $conn->query($sqlCompleted);
+
+if ($resultCompleted === FALSE) {
+    die("Error executing query for completed steps: " . $conn->error);
+}
+
+if ($resultCompleted->num_rows > 0) {
+    $row = $resultCompleted->fetch_assoc();
+    $totalCompletedStudents = $row['total_completed'];
+}
 
 // Fetch data for courses
 $sqlCourses = "SELECT course, COUNT(*) AS count FROM users GROUP BY course";
@@ -22,7 +35,7 @@ if ($resultCourses->num_rows > 0) {
     while ($row = $resultCourses->fetch_assoc()) {
         $courses[] = $row['course'];
         $counts[] = $row['count'];
-        $totalStudents += $row['count']; // Calculate total number of students
+        $totalStudents += $row['count'];
     }
 }
 
@@ -45,267 +58,157 @@ $conn->close();
 ?>
 
 <style>
-    body { display: flex; flex-direction: row; min-height: 100vh; margin: 0; font-family: 'Roboto', sans-serif; }
-    .sidebar { width: 250px; background-color: rgba(255, 255, 255, 0.8); padding: 15px; height: 100vh; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); position: fixed; top: 0; left: 0; overflow-y: auto; }
-    .sidebar .nav-link { display: flex; align-items: center; padding: 10px; text-decoration: none; color: #333; border-radius: 5px; transition: background-color 0.3s ease; }
-    .sidebar .nav-link:hover { background-color: #e9ecef; }
-    .sidebar .nav-link i { margin-right: 10px; }
-    .sidebar .dashboard-link { margin-bottom: 20px; font-weight: bold; }
-    .main-content { margin-left: 270px; padding: 20px; flex: 1; }
-    .header { text-align: center; margin-bottom: 40px; padding: 20px 0; background-color: transparent; }
-    .header img { max-width: 100%; margin-bottom: 10px; opacity: 0.8; }
-    .header p { margin: 0; }
-    .charts-container { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
-    .chart-container { width: 100%; height: 400px; }
-    .chart-right { grid-column: 2; }
-    </style>
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        margin: 0;
+        font-family: 'Poppins', sans-serif;
+        background-color: #f7f9fc;
+    }
 
+    .main-content {
+        padding: 20px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .header {
+        text-align: left;
+        color: white;
+        margin-bottom: 20px;
+    }
+
+    .header h1 {
+        margin: 0;
+        font-size: 24px;
+    }
+
+    .header p {
+        margin: 5px 0 0;
+        font-size: 18px;
+        color:black;
+    }
+
+    .cards-container {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+
+    .card {
+        background: white;
+        flex: 1;
+        min-width: 200px;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    .card h3 {
+        margin: 0;
+        font-size: 2em;
+        color: #4e54c8;
+    }
+
+    .charts-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+    }
+
+    .chart-container {
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+        height: 400px;
+    }
+</style>
+<div class="app-wrapper">
+    <div class="app-content pt-3 p-md-3 p-lg-4">
+        <div class="container-xl">
 <div class="main-content">
-        <div class="charts-container">
-            <div class="chart-container">
-                <canvas id="courseChart"></canvas>
-            </div>
-            <div class="chart-container chart-right">
-                <canvas id="completionChart"></canvas>
-            </div>
-            <div class="chart-container">
-                <canvas id="stepsChart"></canvas>
-            </div>
+    <div class="header">
+        <h1>Welcome to the Dashboard</h1>
+        <p>Overview of student progress and analytics</p>
+    </div>
+
+    <div class="cards-container">
+        <div class="card">
+            <h3><?php echo $totalCompletedStudents; ?></h3>
+            <p>Total Completed Students</p>
         </div>
-        <script>
-    // PHP Data to JavaScript for Bar Chart
+        <div class="card">
+            <h3><?php echo $totalStudents; ?></h3>
+            <p>Total Students</p>
+        </div>
+    </div>
+
+    <div class="charts-container">
+        <div class="chart-container">
+            <canvas id="courseChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="completionChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="stepsChart"></canvas>
+        </div>
+    </div>
+</div>
+</div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
     const labels = <?php echo json_encode($courses); ?>;
     const data = <?php echo json_encode($counts); ?>;
     const totalStudents = <?php echo $totalStudents; ?>;
+    const stepsLabels = <?php echo json_encode($stepsLabels); ?>;
+    const stepsData = <?php echo json_encode($stepsData); ?>;
 
-    const colors = [
-        'rgba(255, 99, 132, 1)',
-        'rgba(54, 162, 235, 1)',
-        'rgba(255, 206, 86, 1)',
-        'rgba(75, 192, 192, 1)',
-        'rgba(153, 102, 255, 1)',
-        'rgba(255, 159, 64, 1)',
-        'rgba(255, 99, 132, 1)',
-        'rgba(54, 162, 235, 1)',
-        'rgba(255, 206, 86, 1)',
-        'rgba(75, 192, 192, 1)'
-    ];
+    const colors = ['rgba(54, 162, 235, 0.7)', 'rgba(255, 99, 132, 0.7)', 'rgba(75, 192, 192, 0.7)'];
 
-    const borderColors = [
-        'rgba(255, 99, 132, 1)',
-        'rgba(54, 162, 235, 1)',
-        'rgba(255, 206, 86, 1)',
-        'rgba(75, 192, 192, 1)',
-        'rgba(153, 102, 255, 1)',
-        'rgba(255, 159, 64, 1)',
-        'rgba(255, 99, 132, 1)',
-        'rgba(54, 162, 235, 1)',
-        'rgba(255, 206, 86, 1)',
-        'rgba(75, 192, 192, 1)'
-    ];
-
-    // Bar Chart Setup
-    const ctx = document.getElementById('courseChart').getContext('2d');
-    const courseChart = new Chart(ctx, {
+    new Chart(document.getElementById('courseChart').getContext('2d'), {
         type: 'bar',
         data: {
             labels: labels,
             datasets: [{
-                label: 'Student List',
+                label: 'Students per Course',
                 data: data,
                 backgroundColor: colors,
-                borderColor: borderColors,
-                borderWidth: 1
             }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                tooltip: {
-                    callbacks: {
-                        label: function(tooltipItem) {
-                            const percentage = ((tooltipItem.raw / totalStudents) * 100).toFixed(2);
-                            return ` ${tooltipItem.label}: ${tooltipItem.raw} (${percentage}%)`;
-                        },
-                        title: function() {
-                            return '';
-                        }
-                    },
-                    bodyFont: {
-                        size: 14,
-                        weight: 'bold'
-                    },
-                    titleFont: {
-                        size: 16,
-                        weight: 'bold'
-                    }
-                },
-                legend: {
-                    labels: {
-                        font: {
-                            size: 14,
-                            weight: 'bold'
-                        }
-                    }
-                },
-                title: {
-                    display: true,
-                    font: {
-                        size: 16,
-                        weight: 'bold'
-                    }
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: {
-                        font: {
-                            size: 14,
-                            weight: 'bold'
-                        }
-                    }
-                },
-                x: {
-                    ticks: {
-                        font: {
-                            size: 14,
-                            weight: 'bold'
-                        }
-                    }
-                }
-            }
         }
     });
 
-    // Doughnut Chart Setup
-    const doughnutData = {
-        labels: labels,
-        datasets: [{
-            data: data,
-            backgroundColor: colors,
-            hoverBackgroundColor: colors.map(color => color.replace('1)', '0.8)'))
-        }]
-    };
-
-    const ctxDoughnut = document.getElementById('completionChart').getContext('2d');
-    const completionChart = new Chart(ctxDoughnut, {
+    new Chart(document.getElementById('completionChart').getContext('2d'), {
         type: 'doughnut',
-        data: doughnutData,
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'top',
-                    labels: {
-                        font: {
-                            size: 14,
-                            weight: 'bold'
-                        }
-                    }
-                },
-                tooltip: {
-                    callbacks: {
-                        label: function(tooltipItem) {
-                            const percentage = ((tooltipItem.raw / totalStudents) * 100).toFixed(2);
-                            return ` ${tooltipItem.label}: ${tooltipItem.raw} (${percentage}%)`;
-                        },
-                        title: function() {
-                            return '';
-                        }
-                    },
-                    bodyFont: {
-                        size: 14,
-                        weight: 'bold'
-                    },
-                    titleFont: {
-                        size: 16,
-                        weight: 'bold'
-                    }
-                }
-            }
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Completion Chart',
+                data: data,
+                backgroundColor: colors,
+            }]
         }
     });
 
-    // Steps Chart Setup
-    const stepsLabels = <?php echo json_encode($stepsLabels); ?>;
-    const stepsData = <?php echo json_encode($stepsData); ?>;
-
-    const ctxSteps = document.getElementById('stepsChart').getContext('2d');
-    const stepsChart = new Chart(ctxSteps, {
-        type: 'bar',
+    new Chart(document.getElementById('stepsChart').getContext('2d'), {
+        type: 'line',
         data: {
             labels: stepsLabels,
             datasets: [{
-                label: 'Students Step Process',
+                label: 'Steps Progress',
                 data: stepsData,
-                backgroundColor: colors,
-                borderColor: borderColors,
-                borderWidth: 1
+                backgroundColor: 'rgba(153, 102, 255, 0.7)',
             }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                tooltip: {
-                    callbacks: {
-                        label: function(tooltipItem) {
-                            const percentage = ((tooltipItem.raw / totalStudents) * 100).toFixed(2);
-                            return ` ${tooltipItem.label}: ${tooltipItem.raw} (${percentage}%)`;
-                        },
-                        title: function() {
-                            return '';
-                        }
-                    },
-                    bodyFont: {
-                        size: 14,
-                        weight: 'bold'
-                    },
-                    titleFont: {
-                        size: 16,
-                        weight: 'bold'
-                    }
-                },
-                legend: {
-                    labels: {
-                        font: {
-                            size: 14,
-                            weight: 'bold'
-                        }
-                    }
-                },
-                title: {
-                    display: true,
-                    font: {
-                        size: 16,
-                        weight: 'bold'
-                    }
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: {
-                        font: {
-                            size: 14,
-                            weight: 'bold'
-                        }
-                    }
-                },
-                x: {
-                    ticks: {
-                        font: {
-                            size: 14,
-                            weight: 'bold'
-                        }
-                    }
-                }
-            }
         }
     });
 </script>
 
-
-<?php
-include 'footer.php';
-?>
+<?php include 'footer.php'; ?>
