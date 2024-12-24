@@ -87,10 +87,24 @@ function printRecords() {
                         font-family: Arial, sans-serif;
                         margin: 20mm 15mm;
                     }
+                    .header-container {
+                        text-align: center;
+                        margin-bottom: 20px;
+                        width: 100%; /* Ensures alignment with table */
+                    }
+                    .header-container img {
+                        max-width: 500px; /* Adjust logo size */
+                        height: auto;
+                    }
+                    .header-container h2 {
+                        font-size: 32px; /* Adjust header size */
+                        margin: 10px 0;
+                    }
                     table {
-                        width: 100%;
+                        width: 85%;
                         border-collapse: collapse;
-                        page-break-inside: auto;
+                        border: 1px solid black;
+                        margin: 0 auto; /* Centers the table */
                     }
                     table, th, td {
                         border: 1px solid black;
@@ -98,20 +112,6 @@ function printRecords() {
                     th, td {
                         padding: 8px;
                         text-align: left;
-                    }
-                    .header-container {
-                        text-align: center;
-                        margin-bottom: 20px;
-                    }
-                    .header-container img {
-                        max-width: 300px;
-                        height: auto;
-                    }
-                    table thead {
-                        display: table-header-group;
-                    }
-                    table tbody {
-                        display: table-row-group;
                     }
                 }
             </style>
