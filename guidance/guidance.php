@@ -5,6 +5,7 @@ include('../database/db.php');
 $sql = "SELECT id, name, email, course, year_level, status, semester FROM users WHERE step_status = 'in process'";
 $result = $conn->query($sql);
 ?>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <div class="app-wrapper">
     <div class="app-content pt-3 p-md-3 p-lg-4">
