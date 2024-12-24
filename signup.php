@@ -335,37 +335,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
         </div>
     </div>
-    <style>
-        body, html {
-    overflow-x: hidden;
-    touch-action: none;
-}
-
-        @media (max-width: 768px) {
-    /* Adjust styles for smaller screens */
-    body {
-        padding: 0;
-    }
-
-    .bg-white {
-        width: 100%;
-        max-width: none;
-    }
-}
-
-        body, html {
-            overflow-x: hidden; /* Disable horizontal scrolling */
-            touch-action: none;  /* Disable touch swipe gestures */
-        }
-
-        @media (max-width: 768px) {
-            /* Adjustments for mobile layout */
-            .bg-white {
-                width: 100%;
-                max-width: none;
-            }
-        }
-    </style>
+   
 
     <script>
 
