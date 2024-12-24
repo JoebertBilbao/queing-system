@@ -104,61 +104,53 @@ html, body {
 }
 
 
-body {
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-            display: flex;
-            min-height: 100vh;
-        }
+ body {
+    display: flex;
+    flex-direction: row;
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background-image: url('assets/image/bluredd.png'); /* Update this path */
+    background-size: cover; /* Adjust to cover the whole page */
+    background-attachment: fixed; /* Optional: to make the background fixed during scrolling */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Ensure the image doesn't repeat */
+}
 
-        .sidebar {
-            width: 250px;
-            background-color: rgba(255, 255, 255, 0.9);
-            height: 100vh;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            position: fixed;
-            top: 0;
-            left: 0;
-            transition: transform 0.3s ease-in-out;
-            z-index: 1000;
-        }
+.sidebar {
+    width: 250px;
+    background-color: rgba(255, 255, 255, 0.8); /* Solid background color or slight transparency */
+    height: 100vh;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-y: auto; /* Ensure content in the sidebar is scrollable if necessary */
+    z-index: 1000; /* Ensure sidebar stays above other content */
+}
 
-        .sidebar.hidden {
-            transform: translateX(-100%);
-        }
+.sidebar .nav-link {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    text-decoration: none;
+    color: #333;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
 
-        .sidebar .header {
-            text-align: center;
-            padding: 20px 10px;
-            border-bottom: 1px solid #ddd;
-        }
+.sidebar .nav-link:hover {
+    background-color: #e9ecef;
+}
 
-        .sidebar .header img {
-            max-width: 100px;
-            height: auto;
-        }
+.sidebar .nav-link i {
+    margin-right: 10px;
+}
 
-        .sidebar .nav-link {
-            display: block;
-            padding: 10px 15px;
-            color: #333;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-        }
-
-        .sidebar .nav-link:hover {
-            background-color: #f1f1f1;
-        }
-
-        .sidebar .dropdown-menu {
-            display: none;
-            flex-direction: column;
-            padding-left: 15px;
-        }
-
-        .sidebar .dropdown-menu.show {
-            display: flex;
-        }
+.sidebar .dashboard-link {
+    margin-bottom: 20px;
+    font-weight: bold;
+}
 
 .main-content {
     margin-left: 250px; /* Match the width of the sidebar */
@@ -242,75 +234,116 @@ body {
 }
     </style>
 </head>
-<button class="toggle-btn" id="toggleSidebar">☰</button>
-    <div class="sidebar" id="sidebar">
-        <div class="header">
-            <img src="assets/image/download.png" alt="Madridejos Community College Logo">
-            <p>MADRIDEJOS COMMUNITY COLLEGE</p>
-        </div>
-        <a href="index" class="nav-link"><i class="bi bi-house-door"></i> Home</a>
-        <a href="admin/verification" class="nav-link"><i class="bi bi-person-lock"></i> Admin Dashboard</a>
-        <a href="#guidance" class="nav-link dropdown-toggle" onclick="toggleDropdown('guidanceMenu')">
-            <i class="bi bi-calendar-check"></i> Offices
-        </a>
-        <div class="dropdown-menu" id="guidanceMenu">
-            <?php if (isStepReached('step 2')): ?>
-                <a href="head/index" class="nav-link"><i class="bi bi-person-circle"></i> Department Head</a>
-            <?php endif; ?>
-            <?php if (isStepReached('step 3')): ?>
-                <a href="registrar/index" class="nav-link"><i class="bi bi-file-earmark-text"></i> Registrar Office</a>
-            <?php endif; ?>
-            <?php if (isStepReached('step 4')): ?>
-                <a href="ssc/index" class="nav-link"><i class="bi bi-clipboard-data"></i> SSC Office</a>
-            <?php endif; ?>
-            <?php if (isStepReached('step 5')): ?>
-                <a href="clinic/index" class="nav-link"><i class="bi bi-heart"></i> Clinic Office</a>
-            <?php endif; ?>
-            <?php if (isStepReached('step 6')): ?>
-                <a href="mccea/index" class="nav-link"><i class="bi bi-gear"></i> MCCEA Office</a>
-            <?php endif; ?>
-            <?php if (isStepReached('step 7')): ?>
-                <a href="cor/index" class="nav-link"><i class="bi bi-file-earmark-code"></i> COR</a>
-            <?php endif; ?>
-        </div>
+<body class="bg-light">
+<div class="sidebar">
+    <div class="header">
+        <img src="assets/image/download.png" alt="Madridejos Community College Logo" width="100" height="80">
+        <p>MADRIDEJOS COMMUNITY COLLEGE</p>
     </div>
-    <div class="main-content" id="mainContent">
-        <div class="login-box">
-            <h2 id="typewriter-title" class="typewriter-title"></h2>
-            <p id="typewriter-subtitle" class="typewriter-subtitle"></p>
-        </div>
-    </div>
-    <script>
-        // Toggle sidebar visibility
-        document.getElementById('toggleSidebar').addEventListener('click', () => {
-            const sidebar = document.getElementById('sidebar');
-            const mainContent = document.getElementById('mainContent');
-            sidebar.classList.toggle('hidden');
-            mainContent.classList.toggle('expanded');
-        });
+    <a href="index" class="nav-link"><i class="bi bi-house-door"></i>Home</a>
+    <a href="admin/verification" class="nav-link"><i class="bi bi-person-lock"></i>Admin Dashboard</a>
+    <a href="guidance/index" class="nav-link"><i class="bi bi-calendar-check"></i> Guidance Office</a>
+    
+   <?php if (isStepReached('step 2')): ?>
+    <a href="head/index" class="nav-link"><i class="bi bi-person-circle"></i> Department Head</a>
+<?php endif; ?>
 
-        // Toggle dropdown menu
-        function toggleDropdown(menuId) {
-            const menu = document.getElementById(menuId);
-            menu.classList.toggle('show');
+<?php if (isStepReached('step 3')): ?>
+    <a href="registrar/index" class="nav-link"><i class="bi bi-file-earmark-text"></i> Registrar Office</a>
+<?php endif; ?>
+
+<?php if (isStepReached('step 4')): ?>
+    <a href="ssc/index" class="nav-link"><i class="bi bi-clipboard-data"></i> SSC Office</a>
+<?php endif; ?>
+
+<?php if (isStepReached('step 5')): ?>
+    <a href="clinic/index" class="nav-link"><i class="bi bi-heart"></i> Clinic Office</a>
+<?php endif; ?>
+
+<?php if (isStepReached('step 6')): ?>
+    <a href="mccea/index" class="nav-link"><i class="bi bi-gear"></i> MCCEA Office</a>
+<?php endif; ?>
+
+<?php if (isStepReached('step 7')): ?>
+    <a href="cor/index" class="nav-link"><i class="bi bi-file-earmark-code"></i> COR</a>
+<?php endif; ?>
+</div>
+<div class="main-content">
+  <div class="login-box">
+    <h2 id="typewriter-title" class="typewriter-title"></h2>
+    <p id="typewriter-subtitle" class="typewriter-subtitle"></p>
+  </div>
+</div>
+
+
+<!-- JavaScript for Continuous Typewriter Effect -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const typewriter = (elementId, text, delay = 150, callback = null) => {
+      const element = document.getElementById(elementId);
+      let index = 0;
+
+      const type = () => {
+        if (index < text.length) {
+          const character = text.charAt(index);
+          element.innerHTML += character === " " ? "&nbsp;" : character; // Ensure spaces are rendered properly
+          index++;
+          setTimeout(type, delay);
+        } else if (callback) {
+          // Trigger the next animation when this one finishes
+          callback();
         }
-    </script>
+      };
 
-    <script>
-        // Toggle sidebar visibility
-        document.getElementById('toggleSidebar').addEventListener('click', () => {
-            const sidebar = document.getElementById('sidebar');
-            const mainContent = document.getElementById('mainContent');
-            sidebar.classList.toggle('hidden');
-            mainContent.classList.toggle('expanded');
-        });
+      type();
+    };
 
-        // Toggle dropdown menu
-        function toggleDropdown(menuId) {
-            const menu = document.getElementById(menuId);
-            menu.classList.toggle('show');
-        }
-    </script>
+    // Start animations sequentially
+    typewriter('typewriter-title', 'Login to View The Dashboard.', 100, () => {
+      typewriter('typewriter-subtitle', 'Welcome Administrators.', 150);
+    });
+  });
+</script>
+
+
+
+<!-- CSS for Typewriter Effect -->
+<style>
+  .typewriter-title,
+  .typewriter-subtitle {
+    font-family: 'Courier New', Courier, monospace;
+    white-space: nowrap; /* Prevent wrapping */
+    display: inline-block;
+    color: #333;
+    text-align: justify; /* Adjust alignment for better readability */
+  }
+
+  /* Styling for the login box */
+  .login-box {
+    max-width: 500px;
+    margin: 50px auto;
+    text-align: center;
+    padding: 20px;
+    background: #f4f4f4;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden; /* Prevent text from spilling outside */
+    resize: vertical; /* Allow box to resize dynamically */
+    min-height: 120px; /* Set a minimum height for the box */
+  }
+
+  .login-box h2 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    word-break: break-word; /* Ensure long words break properly */
+  }
+
+  .login-box p {
+    font-size: 1.2rem;
+    color: #666;
+    word-break: break-word; /* Ensure long words break properly */
+  }
+</style>
 
 </body>
 </html>
