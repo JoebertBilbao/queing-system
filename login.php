@@ -3,7 +3,7 @@ session_start();
 include 'database/db.php';
 
 if (isset($_SESSION['user_id'])) {
-    header('Location: student/index');
+    header('Location: student/index.php');
     exit();
 }
 
@@ -20,248 +20,130 @@ if (isset($_GET['verification'])) {
         $update_stmt = $conn->prepare("UPDATE users SET verification_code='', verified=1 WHERE verification_code = ?");
         $update_stmt->bind_param('s', $verification_code);
         if ($update_stmt->execute()) {
-            $msg = "<div class='bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative'>Account verification successfully completed.</div>";
-        } else {
-            $msg = "<div class='alert alert-danger'>Verification failed. Please try again.</div>";
+            $msg = "<div class='fixed top-4 right-4 flex items-center p-4 mb-4 text-green-800 border border-green-300 rounded-lg bg-green-50'>
+                      <svg class='flex-shrink-0 w-4 h-4' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 20 20'>
+                          <path d='M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z'/>
+                      </svg>
+                      <div class='ms-3 text-sm font-medium'>
+                          Account verified successfully! You can now login.
+                      </div>
+                      <button type='button' class='ms-auto -mx-1.5 -my-1.5 bg-green-50 text-green-500 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 inline-flex items-center justify-center h-8 w-8' onclick='this.parentElement.remove()'>
+                          <span class='sr-only'>Close</span>
+                          <svg class='w-3 h-3' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 14 14'>
+                              <path stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6'/>
+                          </svg>
+                      </button>
+                    </div>";
         }
-    } else {
-        header("Location: login");
-        exit();
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>LOGIN | STUDENTS</title>
-    <!-- Custom CSS File -->
-    <link rel="stylesheet" href="style.css">
     <link href="assets/image/images.png" rel="icon">
-    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-    <style>
-        /* Add some basic styling for the toggle icon */
-        .password-container {
-            position: relative;
-        }
-
-        .password-container input {
-            padding-right: 40px; /* Adjust this value based on the width of the icon */
-        }
-
-        .toggle-password {
-            position: absolute;
-            top: 40%;
-            right: 20px;
-            transform: translateY(-50%);
-            cursor: pointer;
-            z-index: 1;
-        }
-        /* Responsive table styles */
-        .table-container {
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            padding: 12px;
-            text-align: left;
-            border: 1px solid #ddd;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-
-        @media (max-width: 768px) {
-            table {
-                font-size: 12px;
-            }
-
-            th, td {
-                padding: 8px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            table {
-                font-size: 10px;
-            }
-
-            th, td {
-                padding: 5px;
-            }
-
-            .table-container {
-                overflow-x: auto;
-            }
-
-            table {
-                display: block;
-                width: 100%;
-                overflow-x: auto;
-                white-space: nowrap;
-            }
-
-            th, td {
-                display: block;
-                text-align: right;
-            }
-
-            th {
-                text-align: left;
-            }
-
-            th::after, td::after {
-                content: ':';
-            }
-
-            td {
-                position: relative;
-                padding-left: 50%;
-            }
-
-            td::before {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 50%;
-                padding-right: 10px;
-                white-space: nowrap;
-                content: attr(data-label);
-                text-align: left;
-            }
-        }
-    </style>
-
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        height: 100vh;
-        background: url('assets/image/loginbackground.jpg') no-repeat center center/cover;
-        display: justify;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .container {
-        width: 100%;
-        max-width: 400px;
-        background: #ffffff;
-        border-radius: 8px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        overflow: hidden;
-    }
-
-    .login.form {
-        padding: 20px 30px;
-    }
-
-    header {
-        font-size: 24px;
-        font-weight: bold;
-        text-align: center;
-        margin-bottom: 20px;
-        color: #333;
-    }
-
-    input[type="email"],
-    input[type="password"],
-    .button {
-        width: 100%;
-        padding: 10px;
-        margin: 10px 0;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-sizing: border-box;
-    }
-
-    .button {
-        background: #4e54c8;
-        color: #fff;
-        font-weight: bold;
-        border: none;
-        cursor: pointer;
-    }
-
-    .button:hover {
-        background: #8f94fb;
-    }
-
-    .signup {
-        text-align: center;
-        margin-top: 20px;
-    }
-
-    .signup .btn {
-        background: #4e54c8;
-        color: #fff;
-        font-size: 14px;
-        border: none;
-        padding: 5px 10px;
-        border-radius: 4px;
-        text-decoration: none;
-    }
-
-    .signup .btn:hover {
-        background: #8f94fb;
-    }
-</style>
-
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
 </head>
+<style>
+.custom-shape-divider-bottom-1734644541 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    transform: rotate(180deg);
+}
 
-<body>
-    <div class="container">
-        <div class="login form">
-            <header>Login</header>
-            <form action="action/process_login.php" method="post">
-                <?php 
-                echo $msg;
-                ?>
-                <input type="text" name="email" placeholder="Enter your email">
-                <div class="password-container">
-                    <input type="password" id="password" name="password" placeholder="Enter your password">
-                    <i class="toggle-password bi bi-eye-slash" id="togglePassword"></i>
+.custom-shape-divider-bottom-1734644541 svg {
+    position: relative;
+    display: block;
+    width: calc(100% + 1.3px);
+    height: 66px;
+}
+
+.custom-shape-divider-bottom-1734644541 .shape-fill {
+    fill: #C90C0C;
+}
+</style>
+<body class="min-h-screen bg-cover bg-center bg-no-repeat flex items-center justify-center p-4">
+    <?php echo $msg; ?>
+    <div class="custom-shape-divider-bottom-1734644541">
+    <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+        <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+    </svg>
+</div>
+    <div class="w-full max-w-md bg-white rounded-xl shadow-2xl overflow-hidden">
+        <!-- Header Section -->
+        <div class="p-6 bg-gradient-to-r from-red-600 to-red-700">
+            <div class="text-center">
+                <img src="assets/image/icon.png" alt="MCC Logo" class="w-20 h-20 mx-auto mb-4">
+                <h1 class="text-2xl font-bold text-white">Student Login</h1>
+                <p class="text-red-100 mt-1">Madridejos Community College</p>
+            </div>
+        </div>
+
+        <!-- Login Form -->
+        <div class="p-6">
+            <form action="action/process_login.php" method="post" class="space-y-4">
+                <div class="space-y-2">
+                    <label class="block text-sm font-medium text-gray-700">Email Address</label>
+                    <input type="email" name="email" required 
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500">
                 </div>
-                <!-- <a href="#">Forgot password?</a> -->
-                <input type="submit" class="button" value="Login">
+                
+                <div class="space-y-2">
+                    <label class="block text-sm font-medium text-gray-700">Password</label>
+                    <div class="relative">
+                        <input type="password" name="password" id="password" required 
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500">
+                        <i class="bi bi-eye-slash absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 cursor-pointer" id="togglePassword"></i>
+                    </div>
+                </div>
+
+                <button type="submit" 
+                        class="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition duration-200 font-medium">
+                    Login
+                </button>
             </form>
-            <div class="signup">
-                <span class="signup">Don't have an account? <br> <br> <a href="signup">Register</a>
-                </span>
-                <div class="text-center mt-3">
-                    <a href="index" class="btn btn-secondary btn-sm">Back to Home</a>
-                </div>
+
+            <div class="mt-6 text-center space-y-4">
+                <p class="text-sm text-gray-600">
+                    Don't have an account? 
+                    <a href="signup.php" class="text-red-600 hover:text-red-800 font-medium">Register</a>
+                </p>
+                <a href="index.php" 
+                   class="inline-block text-sm text-gray-600 hover:text-gray-800 font-medium">
+                    Back to Home
+                </a>
             </div>
         </div>
     </div>
 
-    <!-- Bootstrap Icons CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
-
-    <!-- JavaScript to handle password toggle -->
     <script>
+        // Password toggle functionality
         const togglePassword = document.querySelector('#togglePassword');
         const password = document.querySelector('#password');
-
-        togglePassword.addEventListener('click', function (e) {
-            // toggle the type attribute
+        
+        togglePassword.addEventListener('click', function() {
             const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
             password.setAttribute('type', type);
-            // toggle the eye slash icon
             this.classList.toggle('bi-eye');
             this.classList.toggle('bi-eye-slash');
         });
+
+        // Auto-hide success message after 5 seconds
+        setTimeout(function() {
+            const alertMessage = document.querySelector('[class*="fixed top-4"]');
+            if (alertMessage) {
+                alertMessage.remove();
+            }
+        }, 5000);
     </script>
 </body>
-
 </html>

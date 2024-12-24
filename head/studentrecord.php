@@ -4,14 +4,6 @@
 include('header.php');
 include('../database/db.php');
 
-// Check if the department session is set; if not, redirect to login
-if (!isset($_SESSION['department'])) {
-    header("Location: index.php");
-    exit;
-}
-
-$department = $_SESSION['department'];
-
 // Prepare the SQL query to fetch students for the specified department
 $sql = "SELECT id, name, email, course, year_level, status, semester FROM users WHERE course = ?";
 $stmt = $conn->prepare($sql);
@@ -28,7 +20,7 @@ $result = $stmt->get_result();
                     <h1 class="app-page-title mb-0">Student Records</h1>
                 </div>
                 <div class="col-auto">
-                    <button class="btn btn-primary" onclick="printTable()">Print</button>
+                    <button class="btn btn-primary" onclick="printRecords()">Print</button>
                 </div>
             </div>
 
@@ -40,7 +32,7 @@ $result = $stmt->get_result();
                                 <table class="table app-table-hover mb-0 text-left">
                                     <thead>
                                         <tr>
-                                            <th class="cell">Queue Numbers</th>
+                                            <th class="cell">ID</th>
                                             <th class="cell">Student Name</th>
                                             <th class="cell">Email</th>
                                             <th class="cell">Course</th>
@@ -51,11 +43,10 @@ $result = $stmt->get_result();
                                     </thead>
                                     <tbody>
                                         <?php
-                                        $display_id = 1;
                                         if ($result->num_rows > 0) {
                                             while ($row = $result->fetch_assoc()) {
                                                 echo "<tr>";
-                                                echo "<td class='cell'>" . htmlspecialchars($display_id++) . "</td>"; // Display sequential number
+                                                echo "<td class='cell'>" . htmlspecialchars($row['id']) . "</td>";
                                                 echo "<td class='cell'>" . htmlspecialchars($row['name']) . "</td>";
                                                 echo "<td class='cell'>" . htmlspecialchars($row['email']) . "</td>";
                                                 echo "<td class='cell'>" . htmlspecialchars($row['course']) . "</td>";
@@ -80,24 +71,73 @@ $result = $stmt->get_result();
         </div>
     </div>
 </div>
-
 <script>
-function printTable() {
-    var divToPrint = document.getElementById('student-records-table');
-    var newWin = window.open('');
-    newWin.document.write('<html><head><title>Print</title>');
-    newWin.document.write('<style>table { width: 100%; border-collapse: collapse; } table, th, td { border: 1px solid black; padding: 8px; } th, td { text-align: left; } img { width: 100px; height: auto; display: block; margin: 0 auto; }</style>');
-    newWin.document.write('</head><body>');
-    newWin.document.write('<div style="text-align: center;">');
-    newWin.document.write('<img src="assets/image/download.png" alt="MCC Logo">');
-    newWin.document.write('<h1>MCC QUEUEING SYSTEM</h1>');
-    newWin.document.write('<h2>Student Records</h2>');
-    newWin.document.write('</div>');
-    newWin.document.write(divToPrint.outerHTML);
-    newWin.document.write('</body></html>');
-    newWin.document.close();
-    newWin.print();
-    newWin.close();
+function printRecords() {
+    const printContent = `
+        <html>
+        <head>
+            <title>Print Student Records</title>
+            <style>
+                @media print {
+                    @page {
+                        margin: 0;
+                        size: auto;
+                    }
+                    body {
+                        font-family: Arial, sans-serif;
+                        margin: 20mm 15mm;
+                    }
+                    table {
+                        width: 100%;
+                        border-collapse: collapse;
+                        page-break-inside: auto;
+                    }
+                    table, th, td {
+                        border: 1px solid black;
+                    }
+                    th, td {
+                        padding: 8px;
+                        text-align: left;
+                    }
+                    .header-container {
+                        text-align: center;
+                        margin-bottom: 20px;
+                    }
+                    .header-container img {
+                        max-width: 300px;
+                        height: auto;
+                    }
+                    table thead {
+                        display: table-header-group;
+                    }
+                    table tbody {
+                        display: table-row-group;
+                    }
+                }
+            </style>
+        </head>
+        <body>
+            <div class="header-container">
+                <img src="https://mccqueueingsystem.com/assets/image/Picture1.png" alt="MCC Logo">
+                <h2>Student Records</h2>
+            </div>
+            ${document.getElementById('student-records-table').outerHTML}
+        </body>
+        </html>
+    `;
+
+    const iframe = document.createElement('iframe');
+    iframe.style.display = 'none';
+    document.body.appendChild(iframe);
+    
+    iframe.contentWindow.document.open();
+    iframe.contentWindow.document.write(printContent);
+    iframe.contentWindow.document.close();
+    
+    iframe.onload = function() {
+        iframe.contentWindow.print();
+        document.body.removeChild(iframe);
+    };
 }
 </script>
 

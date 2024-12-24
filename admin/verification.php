@@ -1,4 +1,5 @@
 <?php
+
 // Start the session
 session_start();
 require '../vendor/autoload.php';
@@ -40,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["email"])) {
             $mail->Subject = "Login to Your Account";
 
             // Direct login link
-            $loginUrl = "https://mccqueueingsystem.com/admin/index";
+            $loginUrl = "https://mccqueueingsystem.com/admin/index.php";
 
             $mail->Body = "
             <html>
@@ -73,121 +74,58 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["email"])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Access</title>
-    <link rel="stylesheet" href="style.css">
+    <title>ADMIN VERIFICATION | GUIDANCE</title>
     <link href="assets/image/image1.png" rel="icon">
-    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
- 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f5f5f5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        .container {
-            background-color: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
-            width: 100%;
-            text-align: center;
-        }
-
-        h1 {
-            color: #333;
-            margin-bottom: 20px;
-        }
-
-        form {
-            display: flex;
-            flex-direction: column;
-        }
-
-        input[type="email"] {
-            padding: 12px;
-            margin: 10px 0;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        input[type="submit"] {
-            background-color: #4caf50;
-            color: white;
-            font-size: 16px;
-            padding: 12px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        input[type="submit"]:hover {
-            background-color: #45a049;
-        }
-
-        .error {
-            color: #e74c3c;
-            margin-top: 15px;
-        }
-
-        .success {
-            color: #2ecc71;
-            margin-top: 15px;
-        }
-
-        .home-link {
-            margin-top: 15px;
-        }
-        .text-center .btn {
-        display: inline-block;
-        margin-top: 10px;
-        padding: 8px 20px;
-        font-size: 14px;
-        border-radius: 5px;
-        background-color: #6c757d; /* Gray button background */
-        color: white;
-        text-decoration: none;
-    }
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        height: 100vh;
-        background: url('../assets/image/loginbackground.jpg') no-repeat center center/cover;
-        display: justify;
-        justify-content: center;
-        align-items: center;
-    }
-    </style>
-    
 </head>
-<body>
-    <div class="container">
-        <h1>Login Access</h1>
-        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" id="loginAccessForm">
-            <input type="email" name="email" placeholder="Enter your email" required>
-            <input type="submit" value="Send Login Link">
-            <div class="text-center">
-        <a href="../portal" class="btn btn-secondary btn-sm">Home</a>
+<body class="min-h-screen bg-cover bg-center bg-no-repeat flex items-center justify-center p-4" >
+    <div class="w-full max-w-md bg-white rounded-xl shadow-2xl overflow-hidden">
+        <!-- Header Section -->
+        <div class="p-6 bg-gradient-to-r from-gray-50 to-white border-b">
+    <div class="text-center flex items-center justify-end">  <!-- Changed justify-center to justify-end -->
+        <img src="../assets/image/Google.png" alt="MCC Logo" class="w-25 h-20">  <!-- Changed from w-16 h-16 to w-12 h-12 -->
     </div>
-        </form>
-        
-        <?php if (!empty($error)) { ?>
-            <p class="error"><?php echo htmlspecialchars($error); ?></p>
-        <?php } ?>
+    <div class="text-center mt-4">
+        <h1 class="text-2xl font-bold text-gray-800">Admin Verification</h1>
+    </div>
+</div>
+        <!-- Verification Form -->
+        <div class="p-6">
+            <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" class="space-y-4" id="loginAccessForm">
+                <div class="space-y-2">
+                    <label class="block text-sm font-medium text-gray-700">Email Address</label>
+                    <input type="email" name="email" required 
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                           placeholder="Enter your email">
+                </div>
 
-        <?php if (!empty($success)) { ?>
-            <p class="success"><?php echo htmlspecialchars($success); ?></p>
-        <?php } ?>
+                <button type="submit" 
+                        class="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition duration-200 font-medium">
+                    Send Login Link
+                </button>
+            </form>
+
+            <div class="mt-6 text-center">
+                <a href="../portal.php" 
+                   class="inline-block text-sm text-gray-600 hover:text-gray-800 font-medium">
+                    Back to Home
+                </a>
+            </div>
+        </div>
     </div>
+
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <script>
+        // Prevent back button
+        function preventBack() {
+            window.history.forward();
+        }
+        setTimeout("preventBack()", 0);
+        window.onunload = function() { null };
+    </script>
 </body>
 </html>
