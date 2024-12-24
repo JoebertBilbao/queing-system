@@ -160,43 +160,86 @@ body {
             display: flex;
         }
 
-        .main-content {
-            flex: 1;
-            margin-left: 250px;
-            padding: 20px;
-            transition: margin-left 0.3s ease-in-out;
-        }
+.main-content {
+    margin-left: 250px; /* Match the width of the sidebar */
+    padding: 20px;
+    flex: 1;
+    overflow-y: auto; /* Ensure content is scrollable if necessary */
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Center content vertically */
+    height: calc(100vh - 40px); /* Full viewport height minus header height */
+}
 
-        .main-content.expanded {
-            margin-left: 0;
-        }
+.header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 20px 0;
+    background-color: transparent;
+}
 
-        .toggle-btn {
-            position: fixed;
-            top: 15px;
-            left: 15px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            z-index: 1100;
-        }
+.header img {
+    max-width: 100%;
+    margin-bottom: 10px;
+    opacity: 0.8;
+}
 
-        @media (max-width: 768px) {
-            .sidebar {
-                transform: translateX(-100%);
-            }
+.header p {
+    margin: 0;
+}
 
-            .main-content {
-                margin-left: 0;
-            }
+.charts-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
 
-            .toggle-btn {
-                display: block;
-            }
-        }
+.chart-container {
+    width: 100%;
+    height: 400px;
+}
+
+.chart-right {
+    grid-column: 2;
+}
+
+.login-box {
+    background-color: rgba(255, 255, 255, 0.9); /* Slight transparency for the box */
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    text-align: center;
+    max-width: 400px; /* Limit the width of the box */
+    width: 100%;
+}
+
+.login-box h2 {
+    color: rgba(0, 0, 0, 0.7); /* Semi-transparent text */
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* Optional shadow for better readability */
+}
+
+.login-box input {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.login-box button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.login-box button:hover {
+    background-color: #0056b3;
+}
     </style>
 </head>
 <button class="toggle-btn" id="toggleSidebar">☰</button>
@@ -237,6 +280,21 @@ body {
             <p id="typewriter-subtitle" class="typewriter-subtitle"></p>
         </div>
     </div>
+    <script>
+        // Toggle sidebar visibility
+        document.getElementById('toggleSidebar').addEventListener('click', () => {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('mainContent');
+            sidebar.classList.toggle('hidden');
+            mainContent.classList.toggle('expanded');
+        });
+
+        // Toggle dropdown menu
+        function toggleDropdown(menuId) {
+            const menu = document.getElementById(menuId);
+            menu.classList.toggle('show');
+        }
+    </script>
 
     <script>
         // Toggle sidebar visibility
