@@ -7,6 +7,8 @@
   <title>MCC QUEUING SYSTEM</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
 
   <!-- Favicons -->
   <link href="assets/image/images.png" rel="icon">
@@ -28,6 +30,33 @@
   <link href="assets/css/main.css" rel="stylesheet">
   <!-- Add this in your styles -->
 <style>
+  html, body {
+        overflow-x: hidden;
+        max-width: 100%;
+        position: relative;
+        touch-action: pan-y;
+    }
+
+    @media (max-width: 768px) {
+        #hero .hero-img img {
+            width: 100%;
+            height: auto;
+        }
+
+        #hero .btn-get-started {
+            font-size: 14px;
+            padding: 8px 16px;
+        }
+
+        .sitename {
+            font-size: 20px;
+        }
+
+        .typewriter-title, .typewriter-subtitle {
+            font-size: 1.5rem;
+        }
+    }
+
   /* Add background to the Hero Section */
   #hero {
     background-image: url('assets/image/mccback.jpg'); /* Replace with the path to your background image */
