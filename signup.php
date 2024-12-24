@@ -102,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <!-- Header -->
                     <tr>
                         <td style='padding: 32px 24px; text-align: center; border-bottom: 1px solid #e5e7eb;'>
-                            <img src='http://localhost/mccsystem/assets/image/download.png' alt='MCC Logo' style='width: 120px; height: auto; margin: 0 auto;'>
+                            <img src='https://mccqueueingsystem.com/assets/image/download.png' alt='MCC Logo' style='width: 120px; height: auto; margin: 0 auto;'>
                             <h1 style='margin: 20px 0 0; color: #ccc; font-size: 24px; font-weight: 700;'>Welcome to Madridejos Community College</h1>
                         </td>
                     </tr>
@@ -124,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                             <!-- Verification Button -->
                             <div style='text-align: center; margin: 32px 0;'>
-                                <a href='http://localhost/mccsystem/login.php?verification=$verification_code' 
+                                <a href='https://mccqueueingsystem.com/login.php?verification=$verification_code' 
                                    style='display: inline-block; background-color: #dc2626; color: white; padding: 12px 32px; 
                                           border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 16px;
                                           transition: background-color 0.2s;'>
