@@ -75,12 +75,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $mail->isSMTP();
                     $mail->Host = 'smtp.gmail.com';
                     $mail->SMTPAuth = true;
-                    $mail->Username = 'jbbilbao80@gmail.com';  // Your email
-                    $mail->Password = 'vgisipyttnbyrafg';  // Your app password
+                    $mail->Username = 'delacruzjohnanthon@gmail.com';  // Your email
+                    $mail->Password = 'kppeswyggcxxnsye';  // Your app password
                     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
                     $mail->Port = 465;
                 
-                    $mail->setFrom('jbbilbao80@gmail.com', 'Madridejos Community College');
+                    $mail->setFrom('delacruzjohnanthon@gmail.com', 'Madridejos Community College');
                     $mail->addAddress($email);
                 
                     $mail->isHTML(true);
@@ -177,8 +177,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SIGNUP | STUDENTS</title>
     <link href="assets/image/images.png" rel="icon">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -335,7 +335,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
         </div>
     </div>
-   
 
     <script>
 
