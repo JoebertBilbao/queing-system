@@ -184,7 +184,7 @@ if (!isset($_SESSION['user_id']) || isset($_GET['validate_session'])) {
     <!-- Panel -->
     <div x-show="openNotif" @click.away="openNotif = false" class="notification-panel">
         <div class="notification-header">
-            <h3 class="text-lg font-semibold text-gray-700">Notifications</h3>
+            <h3 class="text-lg font-semibold text-gray-700">Notificatasdions</h3>
             <button @click="openNotif = false" class="text-gray-500 hover:text-gray-700">
                 <i class="fas fa-times"></i>
             </button>
