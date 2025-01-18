@@ -13,7 +13,7 @@ if ($conn->connect_error) {
 }
 
 // Specify the table to display
-$tableName = "step_notifications";
+$tableName = "users";
 echo "<h2>Table: $tableName</h2>";
 
 // Show column names (schema)
