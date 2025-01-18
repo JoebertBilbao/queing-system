@@ -12,32 +12,13 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Query to fetch all records from the users table
-$sql = "SELECT * FROM users";
-$result = $conn->query($sql);
+// SQL query to delete all records from the users table
+$sql = "DELETE FROM users";
 
-if ($result->num_rows > 0) {
-    echo "<table border='1' style='border-collapse: collapse; width: 100%;'>";
-    echo "<tr>";
-    
-    // Output column headers dynamically
-    $fields = $result->fetch_fields();
-    foreach ($fields as $field) {
-        echo "<th style='padding: 8px; text-align: left;'>" . htmlspecialchars($field->name) . "</th>";
-    }
-    echo "</tr>";
-    
-    // Output data of each row
-    while ($row = $result->fetch_assoc()) {
-        echo "<tr>";
-        foreach ($row as $value) {
-            echo "<td style='padding: 8px;'>" . htmlspecialchars($value) . "</td>";
-        }
-        echo "</tr>";
-    }
-    echo "</table>";
+if ($conn->query($sql) === TRUE) {
+    echo "All records deleted successfully.";
 } else {
-    echo "No records found.";
+    echo "Error deleting records: " . $conn->error;
 }
 
 $conn->close();
