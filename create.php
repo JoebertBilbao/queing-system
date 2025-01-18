@@ -16,11 +16,36 @@ if ($conn->connect_error) {
 $tableName = "step_notifications";
 echo "<h2>Table: $tableName</h2>";
 
+// Show column names (schema)
+$columnsQuery = "SHOW COLUMNS FROM $tableName";
+$columnsResult = $conn->query($columnsQuery);
+
+if ($columnsResult->num_rows > 0) {
+    echo "<h3>Table Schema</h3>";
+    echo "<table border='1' style='border-collapse: collapse; width: 100%;'>";
+    echo "<tr><th style='padding: 8px;'>Field</th><th style='padding: 8px;'>Type</th><th style='padding: 8px;'>Null</th><th style='padding: 8px;'>Key</th><th style='padding: 8px;'>Default</th><th style='padding: 8px;'>Extra</th></tr>";
+
+    while ($column = $columnsResult->fetch_assoc()) {
+        echo "<tr>";
+        echo "<td style='padding: 8px;'>" . htmlspecialchars($column['Field']) . "</td>";
+        echo "<td style='padding: 8px;'>" . htmlspecialchars($column['Type']) . "</td>";
+        echo "<td style='padding: 8px;'>" . htmlspecialchars($column['Null']) . "</td>";
+        echo "<td style='padding: 8px;'>" . htmlspecialchars($column['Key']) . "</td>";
+        echo "<td style='padding: 8px;'>" . htmlspecialchars($column['Default']) . "</td>";
+        echo "<td style='padding: 8px;'>" . htmlspecialchars($column['Extra']) . "</td>";
+        echo "</tr>";
+    }
+    echo "</table><br>";
+} else {
+    echo "<p>No columns found in table $tableName.</p>";
+}
+
 // Fetch records from the specified table
 $recordsQuery = "SELECT * FROM $tableName";
 $recordsResult = $conn->query($recordsQuery);
 
 if ($recordsResult->num_rows > 0) {
+    echo "<h3>Table Data</h3>";
     echo "<table border='1' style='border-collapse: collapse; width: 100%;'>";
     echo "<tr>";
     
