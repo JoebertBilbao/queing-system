@@ -1,6 +1,6 @@
 <?php
 // Check if notifications.php is properly configured
-header('Content-Type: application/json'); // Add this at the top of notifications.php
+
 // notifications.php
 session_start();
 include '../database/db.php';
